@@ -8,6 +8,9 @@
 #include "training process\GD_momentum_process.h"
 #include <vector>
 
+#include <iostream>
+#include <fstream>
+
 namespace SNN_network
 {
 
@@ -31,6 +34,7 @@ namespace SNN_network
 		trainig_type_t training_type = Steepest_descent;
 		error_type_t error_type = mse;
 		unsigned int debug_level = 0;
+		string debug_file = "debug.txt";
 	};
 
 	class Trainer
@@ -55,6 +59,8 @@ namespace SNN_network
 
 		trainig_config_t m_config;
 		double m_error;
+
+		ofstream m_debug_file;
 
 		void init_train();
 		void close_train();

@@ -25,7 +25,7 @@ int main()
 	vector<double> Tb = { 0, 0, 0, 0, 0, 0, 2, 2 };
 	vector<double> Tc = { 0, 3, 3, 0, 3, 0, 0, 3 };
 	vector<double> Td = { 0, 1, 1, 2, 1, 2, 2, 3 };
-	vector<vector<double>*> T1 = {&Ta, &Tb, &Tc, &Td};
+	vector<vector<double>*> T1 = {/*&Ta, &Tb, &Tc,*/ &Td};
 
 	vector<double> a2 = { 0, 0, 0, 1, 1, 0, 0, 0, 1 };
 	vector<double> b2 = { 0, 0, 0, 1, 1, 0, 0, 0, 1 };
@@ -38,12 +38,12 @@ int main()
 	vector<vector<double>*> P3 = { &a3, &b3, &c3 };
 
 	trainig_config_t config;
-	//config.training_type = GD_momentum;
+	config.training_type = GD_momentum;
 	config.error_type = mae;
-	config.nb_epochs = 100000;
+	config.nb_epochs = 500;
 	config.step = 0.1;
-	config.stop_error = 0.00000001;
-	config.debug_level = 1;
+	config.stop_error = 0.00001;
+	config.debug_level = 2;
 
 	trainer.set_config(config);
 	trainer.train(&net, P1, T1);

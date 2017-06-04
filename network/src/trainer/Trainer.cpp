@@ -82,6 +82,8 @@ namespace SNN_network
 				compute_error();
 				if (m_config.debug_level)
 					cout << "epoch : " << nb_epochs + 1 << " => error " << m_error << endl;
+				if (m_config.debug_level > 1)
+					m_debug_file << m_error << endl;
 				if (m_error < m_config.stop_error)
 					small_error = true;
 			}
@@ -104,6 +106,9 @@ namespace SNN_network
 			(*it) = new vector<double>(1, 0.);
 
 		m_net->set_it_train();
+
+		if (m_config.debug_level > 1)
+			m_debug_file.open(m_config.debug_file);
 	}
 
 	void Trainer::close_train()
@@ -116,6 +121,9 @@ namespace SNN_network
 		for (vector<vector<Trainig_process*>>::iterator it_layer = m_process.begin(); it_layer != m_process.end(); ++it_layer)
 			for (vector<Trainig_process*>::iterator it_process = it_layer->begin(); it_process != it_layer->end(); ++it_process)
 				delete (*it_process);
+
+		if (m_config.debug_level > 1)
+			m_debug_file.close();
 	}
 
 	bool Trainer::can_be_train()
