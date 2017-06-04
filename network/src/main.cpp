@@ -4,6 +4,8 @@
 #include "trainer\Trainer.h"
 #include <iostream>
 
+using namespace SNN_network;
+
 int main()
 {
 	Trainer trainer;

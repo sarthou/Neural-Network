@@ -5,49 +5,53 @@
 
 #include <vector>
 
-class Trainig_process;
-
-using namespace std;
-
-class Perceptron
+namespace SNN_network
 {
-	friend class Trainig_process;
-	friend class Trainer;
-public:
-	Perceptron(int p_layer, int p_id);
-	virtual ~Perceptron();
+	using namespace std;
 
-	void set_input(vector<Perceptron*>* p_input_perceptrons);
-	bool set_input(vector<vector<double>*> p_input);
+	class Trainig_process;
 
-	void set_weigh(vector<double> p_w);
-	vector<double> get_weigh() { return m_w; };
-	void set_bia(double p_bia) { m_bia = p_bia; };
-	double get_bia() { return m_bia; };
+	class Perceptron
+	{
+		friend class Trainig_process;
+		friend class Trainer;
+	public:
+		Perceptron(int p_layer, int p_id);
+		virtual ~Perceptron();
 
-	vector<double>* get_output() { return &m_out; };
-	vector<double> get_output_cpy() { return m_out; };
-	void clr() { m_out.clear(); m_sum.clear(); m_derivate.clear(); };
+		void set_input(vector<Perceptron*>* p_input_perceptrons);
+		bool set_input(vector<vector<double>*> p_input);
 
-	virtual void activate() = 0;
-	virtual string get_type() = 0;
+		void set_weigh(vector<double> p_w);
+		vector<double> get_weigh() { return m_w; };
+		void set_bia(double p_bia) { m_bia = p_bia; };
+		double get_bia() { return m_bia; };
 
-protected:
-	int m_layer;
-	int m_id;
+		vector<double>* get_output() { return &m_out; };
+		vector<double> get_output_cpy() { return m_out; };
+		void clr() { m_out.clear(); m_sum.clear(); m_derivate.clear(); };
 
-	double m_bia;
-	vector<double> m_w;
+		virtual void activate() = 0;
+		virtual string get_type() = 0;
 
-	vector<Perceptron*>* m_input_perceptrons;
-	vector<vector<double>*> m_in;
-	vector<double> m_out;
+	protected:
+		int m_layer;
+		int m_id;
 
-	vector<double> m_sum;
-	vector<double> m_derivate;
+		double m_bia;
+		vector<double> m_w;
 
-	void sum();
-	virtual void derivate() = 0;
-};
+		vector<Perceptron*>* m_input_perceptrons;
+		vector<vector<double>*> m_in;
+		vector<double> m_out;
+
+		vector<double> m_sum;
+		vector<double> m_derivate;
+
+		void sum();
+		virtual void derivate() = 0;
+	};
+
+} // namespace SNN_network
 
 #endif

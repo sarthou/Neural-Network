@@ -5,26 +5,31 @@
 
 #include "Trainig_process.h"
 
-class Steepest_descent_process : public Trainig_process
+namespace SNN_network
 {
-public:
-	Steepest_descent_process(Perceptron* p_perceptron, double p_step);
-	~Steepest_descent_process();
 
-	void init();
-	void set_error(double T);
-	void propagate(vector<Trainig_process*> process, bool out = false);
-	void compute();
+	class Steepest_descent_process : public Trainig_process
+	{
+	public:
+		Steepest_descent_process(Perceptron* p_perceptron, double p_step);
+		~Steepest_descent_process();
 
-	void add(double value);
+		void init();
+		void set_error(double T);
+		void propagate(vector<Trainig_process*> process, bool out = false);
+		void compute();
 
-private:
-	double m_step;
-	double m_bia_gradient;
-	vector<double> m_w_gradient;
+		void add(double value);
 
-	double m_error;
-	double m_delta;
-};
+	private:
+		double m_step;
+		double m_bia_gradient;
+		vector<double> m_w_gradient;
+
+		double m_error;
+		double m_delta;
+	};
+
+} // namespace SNN_network
 
 #endif
