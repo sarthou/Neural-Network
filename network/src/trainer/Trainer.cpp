@@ -36,8 +36,8 @@ namespace SNN_network
 			ptr_perceptrons = m_net->m_perceptrons;
 
 			int m_current_layer;
-			int m_current_id;
-			int m_nb_layer = ptr_perceptrons.size();
+			unsigned int m_current_id;
+			unsigned int m_nb_layer = ptr_perceptrons.size();
 
 			bool small_error = false;
 			for (unsigned int nb_epochs = 0; (nb_epochs < m_config.nb_epochs) && !small_error; nb_epochs++)
@@ -46,7 +46,7 @@ namespace SNN_network
 
 				for (unsigned int index = 0; index < vect_size; index++)
 				{
-					for (m_current_layer = 0; m_current_layer < m_nb_layer; m_current_layer++)
+					for (m_current_layer = 0; (unsigned int)m_current_layer < m_nb_layer; m_current_layer++)
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
 							m_process[m_current_layer][m_current_id]->init();
 
@@ -69,7 +69,7 @@ namespace SNN_network
 							}
 						}
 
-					for (m_current_layer = 0; m_current_layer < m_nb_layer; m_current_layer++)
+					for (m_current_layer = 0; (unsigned int)m_current_layer < m_nb_layer; m_current_layer++)
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
 							m_process[m_current_layer][m_current_id]->compute();
 
@@ -209,7 +209,7 @@ namespace SNN_network
 
 	void Trainer::set_trainig_process()
 	{
-		int m_current_id, m_current_layer;
+		unsigned int m_current_id, m_current_layer;
 		m_process.resize(m_net->m_perceptrons.size());
 		for (m_current_layer = 0; m_current_layer < m_net->m_perceptrons.size(); m_current_layer++)
 		{
