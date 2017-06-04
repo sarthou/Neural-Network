@@ -227,6 +227,9 @@ namespace SNN_network
 		case Steepest_descent:
 			tmp_process = new Steepest_descent_process(p_instance, m_config.step);
 			break;
+		case GD_momentum:
+			tmp_process = new GD_momentum_process(p_instance, m_config.step);
+			break;
 		default:
 			tmp_process = new Steepest_descent_process(p_instance, m_config.step);
 			break;
