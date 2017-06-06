@@ -238,6 +238,9 @@ namespace SNN_network
 		case GD_momentum:
 			tmp_process = new GD_momentum_process(p_instance, m_config.step, m_config.momentum_factor);
 			break;
+		case GD_nesterov:
+			tmp_process = new GD_nesterov_process(p_instance, m_config.step, m_config.momentum_factor);
+			break;
 		default:
 			tmp_process = new Steepest_descent_process(p_instance, m_config.step);
 			break;

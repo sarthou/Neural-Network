@@ -6,6 +6,7 @@
 #include "../network/Network.h"
 #include "training process\Steepest_descent_process.h"
 #include "training process\GD_momentum_process.h"
+#include "training process\GD_nesterov_process.h"
 #include <vector>
 
 #include <iostream>
@@ -17,7 +18,8 @@ namespace SNN_network
 	enum trainig_type_t
 	{
 		Steepest_descent,
-		GD_momentum
+		GD_momentum,
+		GD_nesterov
 	};
 
 	enum error_type_t
