@@ -1,3 +1,14 @@
+//============================================================================
+// Name        : Perceptron.cpp
+// Authors     : Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 30 nov. 2016
+// Version     : V1.0
+// Copyright   : This file is part of SNN_network project which is released under
+//               MIT license.
+//============================================================================
+
+
 #include "Perceptron.h"
 
 namespace SNN_network

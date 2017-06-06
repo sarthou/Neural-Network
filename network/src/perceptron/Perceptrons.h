@@ -1,9 +1,14 @@
-/*********************************
-*
-*	Sarthou Guillaume
-*	30/11/2016
-*
-*********************************
+//============================================================================
+// Name        : Perceptrons.h
+// Authors     : Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 30 nov. 2016
+// Version     : V1.0
+// Copyright   : This file is part of SNN_network project which is released under
+//               MIT license.
+//============================================================================
+
+/*
 * Perceptron_identity
 * Perceptron_binary_step
 * Perceptron_logistic

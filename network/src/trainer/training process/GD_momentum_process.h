@@ -1,3 +1,12 @@
+//============================================================================
+// Name        : GD_momentum_process.h
+// Authors     : Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 6 jun. 2017
+// Version     : V1.2
+// Copyright   : This file is part of SNN_network project which is released under
+//               MIT license.
+//============================================================================
 #pragma once
 
 #ifndef GD_MOMENTUM_PROCESS_H
@@ -11,7 +20,7 @@ namespace SNN_network
 	class GD_momentum_process : public Trainig_process
 	{
 	public:
-		GD_momentum_process(Perceptron* p_perceptron, double p_step);
+		GD_momentum_process(Perceptron* p_perceptron, double p_step, float momentum_factor);
 		~GD_momentum_process();
 
 		void init();
@@ -23,9 +32,10 @@ namespace SNN_network
 
 	private:
 		double m_step;
-		double m_past_time_update;
 		double m_bia_gradient;
 		vector<double> m_w_gradient;
+
+		float m_momentum_factor;
 
 		double m_error;
 		double m_delta;

@@ -1,3 +1,12 @@
+//============================================================================
+// Name        : Steepest_descent_process.h
+// Authors     : Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 13 apr. 2017
+// Version     : V1.0
+// Copyright   : This file is part of SNN_network project which is released under
+//               MIT license.
+//============================================================================
 #pragma once
 
 #ifndef STEEPEST_DESCENT_PROCESS_H

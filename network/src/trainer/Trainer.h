@@ -28,11 +28,17 @@ namespace SNN_network
 
 	struct trainig_config_t
 	{
+		//general configuration
 		unsigned int nb_epochs = 50;
 		double step = 0.001;
 		double stop_error = 0.1;
 		trainig_type_t training_type = Steepest_descent;
 		error_type_t error_type = mse;
+
+		//momentum configuration
+		float momentum_factor = 0.9;
+
+		//debug configuration
 		unsigned int debug_level = 0;
 		string debug_file = "debug.txt";
 	};

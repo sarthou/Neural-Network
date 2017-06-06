@@ -1,15 +1,24 @@
+//============================================================================
+// Name        : GD_momentum_process.cpp
+// Authors     : Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 6 jun. 2017
+// Version     : V1.2
+// Copyright   : This file is part of SNN_network project which is released under
+//               MIT license.
+//============================================================================
 #include "GD_momentum_process.h"
 
 namespace SNN_network
 {
 
-	GD_momentum_process::GD_momentum_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
+	GD_momentum_process::GD_momentum_process(Perceptron* p_perceptron, double p_step, float momentum_factor) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
 		m_delta_1 = 0;
 		m_delta = 0;
 		m_error = 0;
-		m_past_time_update = 0.9;
+		m_momentum_factor = momentum_factor;
 	}
 
 	GD_momentum_process::~GD_momentum_process()
@@ -23,7 +32,7 @@ namespace SNN_network
 		m_delta_1 = m_delta;
 		m_delta = 0;
 		m_error = 0;
-		m_past_time_update = 0.9;
+		m_momentum_factor = 0.9;
 	}
 
 	void GD_momentum_process::set_error(double T)
@@ -42,9 +51,9 @@ namespace SNN_network
 		derivate_perceptron();
 
 		if (out)
-			m_delta = -m_error*get_derivate() + m_past_time_update*m_delta_1*m_step;
+			m_delta = -m_error*get_derivate() + m_momentum_factor*m_delta_1*m_step;
 		else
-			m_delta *= get_derivate() + m_past_time_update*m_delta_1*m_step;
+			m_delta *= get_derivate() + m_momentum_factor*m_delta_1*m_step;
 
 		add_to_precedent(process, m_delta);
 	}
