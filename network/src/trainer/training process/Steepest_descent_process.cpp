@@ -2,8 +2,8 @@
 // Name        : Steepest_descent_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 13 apr. 2017
-// Version     : V1.0
+// Date		   : 7 jun. 2017
+// Version     : V1.3
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -25,7 +25,7 @@ namespace SNN_network
 	void Steepest_descent_process::init()
 	{
 		m_w_gradient.resize(m_perceptron->get_weigh().size());
-		m_delta = 0;
+		m_gradient = 0;
 		m_error = 0;
 	}
 
@@ -45,17 +45,18 @@ namespace SNN_network
 		derivate_perceptron();
 
 		if (out)
-			m_delta = -m_error*get_derivate();
+			m_gradient = -m_error*get_derivate();
 		else
-			m_delta *= get_derivate();
+			m_gradient *= get_derivate();
 
-		add_to_precedent(process, m_delta);
+		add_to_precedent(process, m_gradient);
+
+		m_gradient = m_gradient*m_step;
 	}
 
 	void Steepest_descent_process::compute()
 	{
-		m_bia_gradient = m_delta;
-		m_perceptron->set_bia(m_perceptron->get_bia() - m_bia_gradient*m_step);
+		m_perceptron->set_bia(m_perceptron->get_bia() - m_gradient);
 
 		vector<double> in = get_inputs();
 		if (in.size() == m_w_gradient.size())
@@ -64,7 +65,7 @@ namespace SNN_network
 			vector<double>::iterator it_w = w.begin();
 			for (vector<double>::iterator it = in.begin(); it != in.end(); ++it)
 			{
-				(*it_w) += m_step*(*it)*m_delta;
+				(*it_w) += (*it)*m_gradient;
 				it_w++;
 			}
 
@@ -74,7 +75,7 @@ namespace SNN_network
 
 	void Steepest_descent_process::add(double value)
 	{
-		m_delta += value;
+		m_gradient += value;
 	}
 
 } // namespace SNN_trainer
