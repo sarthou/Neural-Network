@@ -250,6 +250,9 @@ namespace SNN_network
 		case GD_nesterov:
 			tmp_process = new GD_nesterov_process(p_instance, m_config.step, m_config.momentum_factor);
 			break;
+		case GD_adagrad:
+			tmp_process = new GD_adagrad_process(p_instance, m_config.step);
+			break;
 		default:
 			tmp_process = new Steepest_descent_process(p_instance, m_config.step);
 			break;

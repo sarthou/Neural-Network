@@ -2,8 +2,8 @@
 // Name        : Trainer.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 6 jun. 2017
-// Version     : V1.2
+// Date		   : 7 jun. 2017
+// Version     : V1.3
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -16,6 +16,8 @@
 #include "training process\Steepest_descent_process.h"
 #include "training process\GD_momentum_process.h"
 #include "training process\GD_nesterov_process.h"
+#include "training process\GD_adagrad_process.h"
+#include "training process\GD_adadelta_process.h"
 #include <vector>
 
 #include <iostream>
@@ -28,7 +30,8 @@ namespace SNN_network
 	{
 		Steepest_descent,
 		GD_momentum,
-		GD_nesterov
+		GD_nesterov,
+		GD_adagrad
 	};
 
 	enum error_type_t
