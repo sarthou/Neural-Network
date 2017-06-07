@@ -2,8 +2,8 @@
 // Name        : GD_nesterov_process.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 6 jun. 2017
-// Version     : V1.2
+// Date		   : 7 jun. 2017
+// Version     : V1.3
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -38,6 +38,7 @@ namespace SNN_network
 		float m_momentum_factor;
 
 		double m_error;
+		double m_gradient;
 		double m_delta;
 		double m_delta_1;
 	};

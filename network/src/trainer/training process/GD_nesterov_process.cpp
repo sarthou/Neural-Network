@@ -2,8 +2,8 @@
 // Name        : GD_nesterov_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 6 jun. 2017
-// Version     : V1.2
+// Date		   : 7 jun. 2017
+// Version     : V1.3
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -32,7 +32,6 @@ namespace SNN_network
 		m_delta_1 = m_delta;
 		m_delta = 0;
 		m_error = 0;
-		m_momentum_factor = 0.9;
 	}
 
 	void GD_nesterov_process::set_error(double T)
@@ -48,21 +47,22 @@ namespace SNN_network
 
 	void GD_nesterov_process::propagate(vector<Trainig_process*> process, bool out)
 	{
-		m_error += m_momentum_factor*m_delta_1*m_step;
+		m_error -= m_momentum_factor*m_delta_1;
 		derivate_perceptron();
 
 		if (out)
-			m_delta = -m_error*get_derivate() + m_momentum_factor*m_delta_1*m_step;
+			m_gradient = -m_error*get_derivate();
 		else
-			m_delta *= get_derivate() + m_momentum_factor*m_delta_1*m_step;
+			m_gradient *= get_derivate();
 
-		add_to_precedent(process, m_delta);
+		add_to_precedent(process, m_gradient);
+
+		m_delta = m_gradient*m_step + m_momentum_factor*m_delta_1;
 	}
 
 	void GD_nesterov_process::compute()
 	{
-		m_bia_gradient = m_delta;
-		m_perceptron->set_bia(m_perceptron->get_bia() - m_bia_gradient*m_step);
+		m_perceptron->set_bia(m_perceptron->get_bia() - m_delta);
 
 		vector<double> in = get_inputs();
 		if (in.size() == m_w_gradient.size())
@@ -71,7 +71,7 @@ namespace SNN_network
 			vector<double>::iterator it_w = w.begin();
 			for (vector<double>::iterator it = in.begin(); it != in.end(); ++it)
 			{
-				(*it_w) += (*it)*m_delta*m_step;
+				(*it_w) += (*it)*m_delta;
 				it_w++;
 			}
 
@@ -81,7 +81,7 @@ namespace SNN_network
 
 	void GD_nesterov_process::add(double value)
 	{
-		m_delta += value;
+		m_gradient += value;
 	}
 
 } // namespace SNN_trainer
