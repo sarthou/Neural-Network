@@ -18,6 +18,7 @@
 #include "training process\GD_nesterov_process.h"
 #include "training process\GD_adagrad_process.h"
 #include "training process\GD_rmsprop_process.h"
+#include "training process\GD_adam_process.h"
 #include <vector>
 
 #include <iostream>
@@ -32,7 +33,8 @@ namespace SNN_network
 		GD_momentum,
 		GD_nesterov,
 		GD_adagrad,
-		GD_RMSprop
+		GD_RMSprop,
+		GD_adam
 	};
 
 	enum error_type_t
