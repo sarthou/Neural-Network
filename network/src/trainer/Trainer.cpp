@@ -253,6 +253,9 @@ namespace SNN_network
 		case GD_adagrad:
 			tmp_process = new GD_adagrad_process(p_instance, m_config.step);
 			break;
+		case GD_RMSprop:
+			tmp_process = new GD_rmsprop_process(p_instance, m_config.step);
+			break;
 		default:
 			tmp_process = new Steepest_descent_process(p_instance, m_config.step);
 			break;

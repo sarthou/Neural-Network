@@ -17,7 +17,7 @@
 #include "training process\GD_momentum_process.h"
 #include "training process\GD_nesterov_process.h"
 #include "training process\GD_adagrad_process.h"
-#include "training process\GD_adadelta_process.h"
+#include "training process\GD_rmsprop_process.h"
 #include <vector>
 
 #include <iostream>
@@ -31,7 +31,8 @@ namespace SNN_network
 		Steepest_descent,
 		GD_momentum,
 		GD_nesterov,
-		GD_adagrad
+		GD_adagrad,
+		GD_RMSprop
 	};
 
 	enum error_type_t
