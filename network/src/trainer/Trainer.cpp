@@ -98,10 +98,12 @@ namespace SNN_network
 
 	void Trainer::init_train()
 	{
-		set_output_perceptrons();
+		if(!m_net->m_is_train)
+			set_output_perceptrons();
 		set_input();
 		set_trainig_process();
-		init_weigh();
+		if (!m_net->m_is_train)
+			init_weigh();
 
 		tmp_P.resize(m_P.size());
 		tmp_T.resize(m_T.size());
@@ -137,37 +139,39 @@ namespace SNN_network
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
 		if (m_net->is_configure())
 		{
-			if (!m_net->m_is_train)
+			if (m_net->m_is_train)
 			{
-				if (m_P.size() != 0)
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01);
+				cout << "Network will be re-train" << endl;
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
+			}
+
+			if (m_P.size() != 0)
+			{
+				if (m_T.size() != 0)
 				{
-					if (m_T.size() != 0)
+					bool uniform = m_net->vector_is_uniforme(m_P);
+					if (uniform)
 					{
-						bool uniform = m_net->vector_is_uniforme(m_P);
+						uniform = m_net->vector_is_uniforme(m_T);
 						if (uniform)
 						{
-							uniform = m_net->vector_is_uniforme(m_T);
-							if (uniform)
-							{
-								if (m_P.back()->size() == m_T.back()->size())
-									can_be = true;
-								else
-									cout << "Trainer => Vectors P and T haven't the same lenght" << endl;
-							}
+							if (m_P.back()->size() == m_T.back()->size())
+								can_be = true;
 							else
-								cout << "Trainer => Targets sizes are not the same." << endl;
+								cout << "Trainer => Vectors P and T haven't the same lenght" << endl;
 						}
 						else
-							cout << "Trainer => Inputs sizes are not the same." << endl;
+							cout << "Trainer => Targets sizes are not the same." << endl;
 					}
 					else
-						cout << "Trainer => No target detected." << endl;
+						cout << "Trainer => Inputs sizes are not the same." << endl;
 				}
 				else
-					cout << "Trainer => No input detected." << endl;
+					cout << "Trainer => No target detected." << endl;
 			}
 			else
-				cout << "Trainer => network already train" << endl;
+				cout << "Trainer => No input detected." << endl;
 		}
 		else
 			cout << "Trainer => network not configure" << endl;
