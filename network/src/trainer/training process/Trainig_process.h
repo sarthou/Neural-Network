@@ -26,7 +26,7 @@ namespace SNN_network
 		virtual ~Trainig_process() {};
 
 		virtual void init() {};
-		virtual void set_error(double T) {};
+		virtual void set_error(double T);
 		virtual void propagate(vector<Trainig_process*> process, bool out = false) {};
 		virtual void compute() {};
 
@@ -36,6 +36,7 @@ namespace SNN_network
 		Perceptron* m_perceptron;
 
 		double m_gradient;
+		double m_error;
 
 		void derivate_perceptron() { m_perceptron->derivate(); };
 		double get_derivate() { return *(m_perceptron->m_derivate.begin()); };

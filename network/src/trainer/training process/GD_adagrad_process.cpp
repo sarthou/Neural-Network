@@ -27,17 +27,6 @@ namespace SNN_network
 
 	}
 
-	void GD_adagrad_process::set_error(double T)
-	{
-		if (1 != m_perceptron->get_output()->size())
-			cout << "Internal training error" << endl;
-		else
-		{
-			vector<double>::iterator out_it = m_perceptron->get_output()->begin();
-			m_error = (*out_it) - T;
-		}
-	}
-
 	void GD_adagrad_process::propagate(vector<Trainig_process*> process, bool out)
 	{
 		derivate_perceptron();

@@ -28,17 +28,6 @@ namespace SNN_network
 
 	}
 
-	void GD_momentum_process::set_error(double T)
-	{
-		if (1 != m_perceptron->get_output()->size())
-			cout << "Internal training error" << endl;
-		else
-		{
-			vector<double>::iterator out_it = m_perceptron->get_output()->begin();
-			m_error = (*out_it) - T;
-		}
-	}
-
 	void GD_momentum_process::propagate(vector<Trainig_process*> process, bool out)
 	{
 		m_delta_1 = m_gradient;

@@ -24,6 +24,17 @@ namespace SNN_network
 		return tmp;
 	}
 
+	void Trainig_process::set_error(double T)
+	{
+		if (1 != m_perceptron->get_output()->size())
+			cout << "Internal training error" << endl;
+		else
+		{
+			vector<double>::iterator out_it = m_perceptron->get_output()->begin();
+			m_error = (*out_it) - T;
+		}
+	}
+
 	void Trainig_process::add_to_precedent(vector<Trainig_process*> process, double factor)
 	{
 		if (m_perceptron->m_input_perceptrons->size())

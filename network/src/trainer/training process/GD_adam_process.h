@@ -23,7 +23,6 @@ namespace SNN_network
 		GD_adam_process(Perceptron* p_perceptron, double p_step);
 		~GD_adam_process();
 
-		void set_error(double T);
 		void propagate(vector<Trainig_process*> process, bool out = false);
 		void compute();
 
@@ -38,7 +37,6 @@ namespace SNN_network
 		float B1;
 		float B2;
 
-		double m_error;
 		double m_delta;
 	};
 } // SNN_network
