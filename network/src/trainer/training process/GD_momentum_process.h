@@ -23,7 +23,6 @@ namespace SNN_network
 		GD_momentum_process(Perceptron* p_perceptron, double p_step, float momentum_factor);
 		~GD_momentum_process();
 
-		void init();
 		void set_error(double T);
 		void propagate(vector<Trainig_process*> process, bool out = false);
 		void compute();

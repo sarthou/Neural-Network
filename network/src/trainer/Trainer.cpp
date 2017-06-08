@@ -55,10 +55,6 @@ namespace SNN_network
 
 				for (unsigned int index = 0; index < vect_size; index++)
 				{
-					for (m_current_layer = 0; (unsigned int)m_current_layer < m_nb_layer; m_current_layer++)
-						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
-							m_process[m_current_layer][m_current_id]->init();
-
 					select_single_data(index);
 					m_net->sim(tmp_P, false);
 

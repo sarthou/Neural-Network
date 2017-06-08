@@ -22,17 +22,12 @@ namespace SNN_network
 		m_v = 0;
 		B1 = 0.9;
 		B2 = 0.999;
+		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
 	GD_adam_process::~GD_adam_process()
 	{
 
-	}
-
-	void GD_adam_process::init()
-	{
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
-		m_error = 0;
 	}
 
 	void GD_adam_process::set_error(double T)
@@ -81,6 +76,7 @@ namespace SNN_network
 
 			m_perceptron->set_weigh(w);
 		}
+		m_gradient = 0;
 	}
 
 } // namespace SNN_trainer

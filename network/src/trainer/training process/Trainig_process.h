@@ -25,7 +25,7 @@ namespace SNN_network
 		Trainig_process(Perceptron* p_perceptron) { m_perceptron = p_perceptron; };
 		virtual ~Trainig_process() {};
 
-		virtual void init() = 0;
+		virtual void init() {};
 		virtual void set_error(double T) {};
 		virtual void propagate(vector<Trainig_process*> process, bool out = false) {};
 		virtual void compute() {};

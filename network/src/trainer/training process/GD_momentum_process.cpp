@@ -20,19 +20,12 @@ namespace SNN_network
 		m_error = 0;
 		m_gradient = 0;
 		m_momentum_factor = momentum_factor;
+		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
 	GD_momentum_process::~GD_momentum_process()
 	{
 
-	}
-
-	void GD_momentum_process::init()
-	{
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
-		m_delta_1 = m_gradient;
-		m_delta = 0;
-		m_error = 0;
 	}
 
 	void GD_momentum_process::set_error(double T)
@@ -48,6 +41,8 @@ namespace SNN_network
 
 	void GD_momentum_process::propagate(vector<Trainig_process*> process, bool out)
 	{
+		m_delta_1 = m_gradient;
+		
 		derivate_perceptron();
 
 		if (out)
@@ -77,6 +72,7 @@ namespace SNN_network
 
 			m_perceptron->set_weigh(w);
 		}
+		m_gradient = 0;
 	}
 
 } // namespace SNN_trainer

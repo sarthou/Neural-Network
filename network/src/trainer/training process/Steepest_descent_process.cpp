@@ -15,18 +15,14 @@ namespace SNN_network
 	Steepest_descent_process::Steepest_descent_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
+		m_w_gradient.resize(m_perceptron->get_weigh().size());
+		m_gradient = 0;
+		m_error = 0;
 	}
 
 	Steepest_descent_process::~Steepest_descent_process()
 	{
 
-	}
-
-	void Steepest_descent_process::init()
-	{
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
-		m_gradient = 0;
-		m_error = 0;
 	}
 
 	void Steepest_descent_process::set_error(double T)
@@ -71,6 +67,7 @@ namespace SNN_network
 
 			m_perceptron->set_weigh(w);
 		}
+		m_gradient = 0;
 	}
 
 } // namespace SNN_trainer

@@ -19,17 +19,12 @@ namespace SNN_network
 		m_error = 0;
 		m_gradient = 0;
 		m_Eg = 0;
+		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
 	GD_rmsprop_process::~GD_rmsprop_process()
 	{
 
-	}
-
-	void GD_rmsprop_process::init()
-	{
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
-		m_error = 0;
 	}
 
 	void GD_rmsprop_process::set_error(double T)
@@ -77,6 +72,7 @@ namespace SNN_network
 
 			m_perceptron->set_weigh(w);
 		}
+		m_gradient = 0;
 	}
 
 } // namespace SNN_trainer

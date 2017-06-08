@@ -15,24 +15,16 @@ namespace SNN_network
 	GD_adagrad_process::GD_adagrad_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
-		m_delta_1 = 0;
 		m_delta = 0;
 		m_error = 0;
 		m_gradient = 0;
 		ss_gradient = 0;
+		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
 	GD_adagrad_process::~GD_adagrad_process()
 	{
 
-	}
-
-	void GD_adagrad_process::init()
-	{
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
-		m_delta_1 = m_delta;
-		m_delta = 0;
-		m_error = 0;
 	}
 
 	void GD_adagrad_process::set_error(double T)
@@ -49,7 +41,6 @@ namespace SNN_network
 	void GD_adagrad_process::propagate(vector<Trainig_process*> process, bool out)
 	{
 		derivate_perceptron();
-
 
 		if (out)
 			m_gradient = -m_error*get_derivate();
@@ -80,6 +71,7 @@ namespace SNN_network
 
 			m_perceptron->set_weigh(w);
 		}
+		m_gradient = 0;
 	}
 
 } // namespace SNN_trainer
