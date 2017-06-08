@@ -24,16 +24,10 @@ namespace SNN_network
 		~GD_adagrad_process();
 
 		void propagate(vector<Trainig_process*> process, bool out = false);
-		void compute();
 
 	private:
 		double m_step;
-		double m_bia_gradient;
-		vector<double> m_w_gradient;
-
 		double ss_gradient;
-
-		double m_delta;
 	};
 } // SNN_network
 

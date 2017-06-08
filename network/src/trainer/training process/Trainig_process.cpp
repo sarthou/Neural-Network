@@ -35,6 +35,26 @@ namespace SNN_network
 		}
 	}
 
+	void Trainig_process::compute()
+	{
+		m_perceptron->set_bia(m_perceptron->get_bia() - m_delta);
+
+		vector<double> in = get_inputs();
+		if (in.size() == m_w_gradient.size())
+		{
+			vector<double> w = m_perceptron->get_weigh();
+			vector<double>::iterator it_w = w.begin();
+			for (vector<double>::iterator it = in.begin(); it != in.end(); ++it)
+			{
+				(*it_w) += (*it)*m_delta;
+				it_w++;
+			}
+
+			m_perceptron->set_weigh(w);
+		}
+		m_gradient = 0;
+	}
+
 	void Trainig_process::add_to_precedent(vector<Trainig_process*> process, double factor)
 	{
 		if (m_perceptron->m_input_perceptrons->size())

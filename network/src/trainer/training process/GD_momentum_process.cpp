@@ -44,24 +44,4 @@ namespace SNN_network
 		m_delta = m_gradient*m_step + m_momentum_factor*m_delta_1;
 	}
 
-	void GD_momentum_process::compute()
-	{
-		m_perceptron->set_bia(m_perceptron->get_bia() - m_delta);
-
-		vector<double> in = get_inputs();
-		if (in.size() == m_w_gradient.size())
-		{
-			vector<double> w = m_perceptron->get_weigh();
-			vector<double>::iterator it_w = w.begin();
-			for (vector<double>::iterator it = in.begin(); it != in.end(); ++it)
-			{
-				(*it_w) += (*it)*m_delta;
-				it_w++;
-			}
-
-			m_perceptron->set_weigh(w);
-		}
-		m_gradient = 0;
-	}
-
 } // namespace SNN_trainer

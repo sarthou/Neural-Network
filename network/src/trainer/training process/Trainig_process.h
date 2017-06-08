@@ -25,18 +25,21 @@ namespace SNN_network
 		Trainig_process(Perceptron* p_perceptron) { m_perceptron = p_perceptron; };
 		virtual ~Trainig_process() {};
 
-		virtual void init() {};
 		virtual void set_error(double T);
 		virtual void propagate(vector<Trainig_process*> process, bool out = false) {};
-		virtual void compute() {};
+		virtual void compute();
 
 		virtual void add_to_gradient(double value) { m_gradient += value; };
 
 	protected:
 		Perceptron* m_perceptron;
 
+		double m_bia_gradient;
+		vector<double> m_w_gradient;
+
 		double m_gradient;
 		double m_error;
+		double m_delta;
 
 		void derivate_perceptron() { m_perceptron->derivate(); };
 		double get_derivate() { return *(m_perceptron->m_derivate.begin()); };

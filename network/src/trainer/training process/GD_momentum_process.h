@@ -24,16 +24,11 @@ namespace SNN_network
 		~GD_momentum_process();
 
 		void propagate(vector<Trainig_process*> process, bool out = false);
-		void compute();
 
 	private:
 		double m_step;
-		double m_bia_gradient;
-		vector<double> m_w_gradient;
-
 		float m_momentum_factor;
 
-		double m_delta;
 		double m_delta_1;
 	};
 } // SNN_network
