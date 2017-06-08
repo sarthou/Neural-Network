@@ -11,8 +11,14 @@
 
 namespace SNN_network
 {
-
-	using namespace SNN_network;
+	Trainig_process::Trainig_process(Perceptron* p_perceptron) 
+	{ 
+		m_perceptron = p_perceptron; 
+		m_delta = 0;
+		m_error = 0;
+		m_gradient = 0;
+		m_w_gradient.resize(m_perceptron->get_weigh().size());
+	}
 
 	vector<double> Trainig_process::get_inputs()
 	{

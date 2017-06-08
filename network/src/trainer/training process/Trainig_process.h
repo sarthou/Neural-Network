@@ -22,7 +22,7 @@ namespace SNN_network
 	class Trainig_process
 	{
 	public:
-		Trainig_process(Perceptron* p_perceptron) { m_perceptron = p_perceptron; };
+		Trainig_process(Perceptron* p_perceptron);
 		virtual ~Trainig_process() {};
 
 		virtual void set_error(double T);

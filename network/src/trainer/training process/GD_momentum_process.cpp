@@ -16,11 +16,7 @@ namespace SNN_network
 	{
 		m_step = p_step;
 		m_delta_1 = 0;
-		m_delta = 0;
-		m_error = 0;
-		m_gradient = 0;
 		m_momentum_factor = momentum_factor;
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
 	GD_momentum_process::~GD_momentum_process()

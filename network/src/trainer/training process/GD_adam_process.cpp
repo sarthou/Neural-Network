@@ -15,14 +15,10 @@ namespace SNN_network
 	GD_adam_process::GD_adam_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
-		m_delta = 0;
-		m_error = 0;
-		m_gradient = 0;
 		m_m = 0;
 		m_v = 0;
 		B1 = 0.9;
 		B2 = 0.999;
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
 	GD_adam_process::~GD_adam_process()

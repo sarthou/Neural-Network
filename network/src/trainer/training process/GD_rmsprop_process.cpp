@@ -15,11 +15,7 @@ namespace SNN_network
 	GD_rmsprop_process::GD_rmsprop_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
-		m_delta = 0;
-		m_error = 0;
-		m_gradient = 0;
 		m_Eg = 0;
-		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
 	GD_rmsprop_process::~GD_rmsprop_process()
