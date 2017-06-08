@@ -81,6 +81,7 @@ namespace SNN_network
 		void init();
 		void faile_to_configure();
 		bool vector_is_uniforme(vector<vector<double>*>& p_vector);
+		bool vector_is_positive(vector<int>& p_vector);
 
 		Perceptron* creat_perceptron(int layer, int id, perceptron_type_t type, double param = 0);
 	};

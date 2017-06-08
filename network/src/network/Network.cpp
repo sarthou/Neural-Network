@@ -25,11 +25,17 @@ namespace SNN_network
 
 	Network::Network(vector<int> p_nb_perceptrons)
 	{
-		m_is_train = false;
-		m_nb_perceptrons = p_nb_perceptrons;
-		generate_network();
-		link_network();
-		m_is_configure = true;
+		if(!vector_is_positive(p_nb_perceptrons))
+			cout << "non positive numbers of perceptrons" << endl;
+		else
+		{
+			m_is_train = false;
+			m_nb_perceptrons = p_nb_perceptrons;
+			generate_network();
+			link_network();
+			m_is_configure = true;
+		}
+		faile_to_configure();
 	}
 
 	Network::Network(vector<perceptron_type_t> p_types)
@@ -79,11 +85,16 @@ namespace SNN_network
 		}
 		else
 		{
-			m_nb_perceptrons = p_nb_perceptrons;
-			m_types = p_types;
-			generate_network();
-			link_network();
-			m_is_configure = true;
+			if (!vector_is_positive(p_nb_perceptrons))
+				cout << "non positive numbers of perceptrons" << endl;
+			else
+			{
+				m_nb_perceptrons = p_nb_perceptrons;
+				m_types = p_types;
+				generate_network();
+				link_network();
+				m_is_configure = true;
+			}
 		}
 		faile_to_configure();
 	}
@@ -106,12 +117,17 @@ namespace SNN_network
 			cout << "Incompatible size of parameter's vector" << endl;
 		else
 		{
-			m_nb_perceptrons = p_nb_perceptrons;
-			m_types = p_types;
-			m_params = p_params;
-			generate_network();
-			link_network();
-			m_is_configure = true;
+			if (!vector_is_positive(p_nb_perceptrons))
+				cout << "non positive numbers of perceptrons" << endl;
+			else
+			{
+				m_nb_perceptrons = p_nb_perceptrons;
+				m_types = p_types;
+				m_params = p_params;
+				generate_network();
+				link_network();
+				m_is_configure = true;
+			}
 		}
 		faile_to_configure();
 	}
@@ -321,6 +337,18 @@ namespace SNN_network
 			uniform = false;
 
 		return uniform;
+	}
+
+
+	bool Network::vector_is_positive(vector<int>& p_vector)
+	{
+		bool positive = true;
+		for (vector<int>::iterator it = p_vector.begin(); it != p_vector.end(); ++it)
+		{
+			if ((*it) <= 0)
+				positive = false;
+		}
+		return positive;
 	}
 
 	Perceptron* Network::creat_perceptron(int layer, int id, perceptron_type_t type, double param)
