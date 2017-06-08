@@ -2,8 +2,8 @@
 // Name        : GD_adagrad_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 7 jun. 2017
-// Version     : V1.3
+// Date		   : 8 jun. 2017
+// Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -80,11 +80,6 @@ namespace SNN_network
 
 			m_perceptron->set_weigh(w);
 		}
-	}
-
-	void GD_adagrad_process::add(double value)
-	{
-		m_gradient += value;
 	}
 
 } // namespace SNN_trainer

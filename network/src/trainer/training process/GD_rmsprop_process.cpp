@@ -79,9 +79,4 @@ namespace SNN_network
 		}
 	}
 
-	void GD_rmsprop_process::add(double value)
-	{
-		m_gradient += value;
-	}
-
 } // namespace SNN_trainer

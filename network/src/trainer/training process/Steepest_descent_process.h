@@ -2,8 +2,8 @@
 // Name        : Steepest_descent_process.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 7 jun. 2017
-// Version     : V1.3
+// Date		   : 8 jun. 2017
+// Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -28,15 +28,12 @@ namespace SNN_network
 		void propagate(vector<Trainig_process*> process, bool out = false);
 		void compute();
 
-		void add(double value);
-
 	private:
 		double m_step;
 		double m_bia_gradient;
 		vector<double> m_w_gradient;
 
 		double m_error;
-		double m_gradient;
 	};
 
 } // namespace SNN_network

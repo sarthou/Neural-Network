@@ -2,8 +2,8 @@
 // Name        : Trainig_process.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 6 jun. 2017
-// Version     : V1.2
+// Date		   : 8 jun. 2017
+// Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -30,10 +30,12 @@ namespace SNN_network
 		virtual void propagate(vector<Trainig_process*> process, bool out = false) {};
 		virtual void compute() {};
 
-		virtual void add(double value) {};
+		virtual void add_to_gradient(double value) { m_gradient += value; };
 
 	protected:
 		Perceptron* m_perceptron;
+
+		double m_gradient;
 
 		void derivate_perceptron() { m_perceptron->derivate(); };
 		double get_derivate() { return *(m_perceptron->m_derivate.begin()); };
