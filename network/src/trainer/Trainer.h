@@ -2,8 +2,8 @@
 // Name        : Trainer.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 7 jun. 2017
-// Version     : V1.3
+// Date		   : 11 jun. 2017
+// Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -24,41 +24,10 @@
 #include <iostream>
 #include <fstream>
 
+#include "Training_configuration.h"
+
 namespace SNN_network
 {
-
-	enum trainig_type_t
-	{
-		Steepest_descent,
-		GD_momentum,
-		GD_nesterov,
-		GD_adagrad,
-		GD_RMSprop,
-		GD_adam
-	};
-
-	enum error_type_t
-	{
-		mae,
-		mse
-	};
-
-	struct trainig_config_t
-	{
-		//general configuration
-		unsigned int nb_epochs = 50;
-		double step = 0.001;
-		double stop_error = 0.1;
-		trainig_type_t training_type = Steepest_descent;
-		error_type_t error_type = mse;
-
-		//momentum configuration
-		float momentum_factor = 0.9;
-
-		//debug configuration
-		unsigned int debug_level = 0;
-		string debug_file = "debug.txt";
-	};
 
 	class Trainer
 	{
@@ -92,6 +61,7 @@ namespace SNN_network
 		void set_output_perceptrons();
 		void set_input();
 
+		void set_default_configuration();
 		void set_trainig_process();
 		Trainig_process* creat_process(SNN_network::Perceptron* p_instances);
 

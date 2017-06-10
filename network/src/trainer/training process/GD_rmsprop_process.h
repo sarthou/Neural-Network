@@ -2,7 +2,7 @@
 // Name        : GD_rmsprop_process.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 8 jun. 2017
+// Date		   : 11 jun. 2017
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
@@ -24,6 +24,8 @@ namespace SNN_network
 		~GD_rmsprop_process();
 
 		void propagate(vector<Trainig_process*> process, bool out = false);
+
+		static void set_default_configuration(trainig_config_t* configuration);
 
 	private:
 		double m_step;

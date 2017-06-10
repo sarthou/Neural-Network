@@ -2,8 +2,8 @@
 // Name        : GD_rmsprop_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 7 jun. 2017
-// Version     : V1.3
+// Date		   : 11 jun. 2017
+// Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -38,6 +38,13 @@ namespace SNN_network
 		add_to_precedent(process, m_gradient);
 
 		m_delta = m_step * m_gradient / sqrtf(m_Eg + 0.0001);
+	}
+
+	void GD_rmsprop_process::set_default_configuration(trainig_config_t* configuration)
+	{
+		
+		if (configuration->step == INFINITY)
+			configuration->step = 0.002;
 	}
 
 } // namespace SNN_trainer

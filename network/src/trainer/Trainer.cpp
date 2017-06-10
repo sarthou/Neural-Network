@@ -2,8 +2,8 @@
 // Name        : Trainer.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 6 jun. 2017
-// Version     : V1.2
+// Date		   : 11 jun. 2017
+// Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -100,8 +100,11 @@ namespace SNN_network
 	{
 		if(!m_net->m_is_train)
 			set_output_perceptrons();
+
 		set_input();
+		set_default_configuration();
 		set_trainig_process();
+
 		if (!m_net->m_is_train)
 			init_weigh();
 
@@ -222,6 +225,34 @@ namespace SNN_network
 		vector<vector<Perceptron*>>::iterator it_input_layer = m_net->m_perceptrons.begin();
 		for (vector<Perceptron*>::iterator it_perceptron = it_input_layer->begin(); it_perceptron != it_input_layer->end(); ++it_perceptron)
 			(*it_perceptron)->set_input(m_P);
+	}
+
+	void Trainer::set_default_configuration()
+	{
+		switch (m_config.training_type)
+		{
+		case Steepest_descent:
+			Steepest_descent_process::set_default_configuration(&m_config);
+			break;
+		case GD_momentum:
+			GD_momentum_process::set_default_configuration(&m_config);
+			break;
+		case GD_nesterov:
+			GD_nesterov_process::set_default_configuration(&m_config);
+			break;
+		case GD_adagrad:
+			GD_adagrad_process::set_default_configuration(&m_config);
+			break;
+		case GD_RMSprop:
+			GD_rmsprop_process::set_default_configuration(&m_config);
+			break;
+		case GD_adam:
+			GD_adam_process::set_default_configuration(&m_config);
+			break;
+		default:
+			Steepest_descent_process::set_default_configuration(&m_config);
+			break;
+		}
 	}
 
 	void Trainer::set_trainig_process()

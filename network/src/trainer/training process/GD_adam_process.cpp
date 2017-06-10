@@ -2,7 +2,7 @@
 // Name        : GD_adam_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 8 jun. 2017
+// Date		   : 11 jun. 2017
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
@@ -42,6 +42,12 @@ namespace SNN_network
 		add_to_precedent(process, m_gradient);
 
 		m_delta = m_step * m_m / sqrtf(m_v + 0.00000001);
+	}
+
+	void GD_adam_process::set_default_configuration(trainig_config_t* configuration)
+	{
+		if (configuration->step == INFINITY)
+			configuration->step = 0.001;
 	}
 
 } // namespace SNN_trainer
