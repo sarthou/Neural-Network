@@ -37,7 +37,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_identity(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_identity(Perceptron_identity const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_identity() {};
+
+		Perceptron_identity& operator=(Perceptron_identity const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "identity"; };
@@ -49,7 +52,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_binary_step(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_binary_step(Perceptron_binary_step const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_binary_step() {};
+
+		Perceptron_binary_step& operator=(Perceptron_binary_step const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "binary_step"; };
@@ -61,7 +67,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_logistic(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_logistic(Perceptron_logistic const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_logistic() {};
+
+		Perceptron_logistic& operator=(Perceptron_logistic const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "logistic"; };
@@ -73,7 +82,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_tanH(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_tanH(Perceptron_tanH const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_tanH() {};
+
+		Perceptron_tanH& operator=(Perceptron_tanH const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "tanH"; };
@@ -85,7 +97,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_arcTan(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_arcTan(Perceptron_arcTan const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_arcTan() {};
+
+		Perceptron_arcTan& operator=(Perceptron_arcTan const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "arcTan"; };
@@ -97,7 +112,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_softsign(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_softsign(Perceptron_softsign const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_softsign() {};
+
+		Perceptron_softsign& operator=(Perceptron_softsign const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "softsign"; };
@@ -109,7 +127,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_rectifier(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_rectifier(Perceptron_rectifier const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_rectifier() {};
+
+		Perceptron_rectifier& operator=(Perceptron_rectifier const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "rectifier"; };
@@ -121,7 +142,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_rectifier_param(int p_layer, int p_id, double a = 0.) : Perceptron(p_layer, p_id) { m_a = a; };
+		Perceptron_rectifier_param(Perceptron_rectifier_param const& perceptron) : Perceptron(perceptron) { m_a = perceptron.m_a; };
 		~Perceptron_rectifier_param() {};
+
+		Perceptron_rectifier_param& operator=(Perceptron_rectifier_param const& perceptron) { Perceptron::operator=(perceptron); m_a = perceptron.m_a; };
 
 		void activate();
 		string get_type() { return "rectifier_param"; };
@@ -135,7 +159,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_ELU(int p_layer, int p_id, double a = 0.) : Perceptron(p_layer, p_id) { m_a = a; };
+		Perceptron_ELU(Perceptron_ELU const& perceptron) : Perceptron(perceptron) { m_a = perceptron.m_a; };
 		~Perceptron_ELU() {};
+
+		Perceptron_ELU& operator=(Perceptron_ELU const& perceptron) { Perceptron::operator=(perceptron); m_a = perceptron.m_a; };
 
 		void activate();
 		string get_type() { return "ELU"; };
@@ -149,7 +176,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_softPlus(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_softPlus(Perceptron_softPlus const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_softPlus() {};
+
+		Perceptron_softPlus& operator=(Perceptron_softPlus const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "softPlus"; };
@@ -161,7 +191,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_bent_identity(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_bent_identity(Perceptron_bent_identity const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_bent_identity() {};
+
+		Perceptron_bent_identity& operator=(Perceptron_bent_identity const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "bent_identity"; };
@@ -173,7 +206,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_sinusoid(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_sinusoid(Perceptron_sinusoid const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_sinusoid() {};
+
+		Perceptron_sinusoid& operator=(Perceptron_sinusoid const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "sinusoid"; };
@@ -185,7 +221,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_sinc(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_sinc(Perceptron_sinc const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_sinc() {};
+
+		Perceptron_sinc& operator=(Perceptron_sinc const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "sinc"; };
@@ -197,7 +236,10 @@ namespace SNN_network
 	{
 	public:
 		Perceptron_gaussian(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_gaussian(Perceptron_gaussian const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_gaussian() {};
+
+		Perceptron_gaussian& operator=(Perceptron_gaussian const& perceptron) { Perceptron::operator=(perceptron); };
 
 		void activate();
 		string get_type() { return "gaussian"; };

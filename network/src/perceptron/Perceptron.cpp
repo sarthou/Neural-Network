@@ -21,11 +21,51 @@ namespace SNN_network
 		m_input_perceptrons = nullptr;
 	}
 
+	Perceptron::Perceptron(Perceptron const& perceptron)
+	{
+		if (this != &perceptron)
+		{
+			m_layer = perceptron.m_layer;
+			m_id = perceptron.m_id;
+
+			m_bia = perceptron.m_bia;
+			m_w = perceptron.m_w;
+
+			m_input_perceptrons = nullptr;
+			m_out = perceptron.m_out;
+
+			m_sum = perceptron.m_sum;
+			m_derivate = perceptron.m_derivate;
+		}
+	}
+
 	Perceptron::~Perceptron()
 	{
 		if (m_input_perceptrons)
 			if (m_input_perceptrons->size() == 0)
 				delete m_input_perceptrons;
+	}
+
+	Perceptron& Perceptron::operator=(Perceptron const& perceptron)
+	{
+		if (this != &perceptron)
+		{
+			m_layer = perceptron.m_layer;
+			m_id = perceptron.m_id;
+
+			m_bia = perceptron.m_bia;
+			m_w = perceptron.m_w;
+
+			if (m_input_perceptrons)
+				if (m_input_perceptrons->size() == 0)
+					delete m_input_perceptrons;
+			m_input_perceptrons = nullptr;
+			m_out = perceptron.m_out;
+
+			m_sum = perceptron.m_sum;
+			m_derivate = perceptron.m_derivate;
+		}
+		return *this;
 	}
 
 	void Perceptron::set_input(vector<Perceptron*>* p_input_perceptrons)

@@ -51,7 +51,10 @@ namespace SNN_network
 		Network(vector<perceptron_type_t> p_types, vector<double> p_params);
 		Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types);
 		Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types, vector<double> p_params);
+		Network(Network const& network);
 		~Network();
+
+		Network& operator=(Network const& network);
 
 		void print();
 		void print_output();
@@ -76,7 +79,9 @@ namespace SNN_network
 		void set_it_train() { if (m_is_configure) m_is_train = true; };
 
 		void generate_network();
+		void generate_copy_network(Network const& network);
 		void link_network();
+		void link_network_copy();
 
 		void init();
 		void faile_to_configure();
@@ -84,6 +89,7 @@ namespace SNN_network
 		bool vector_is_positive(vector<int>& p_vector);
 
 		Perceptron* creat_perceptron(int layer, int id, perceptron_type_t type, double param = 0);
+		Perceptron* copy_perceptron(Perceptron& perceptron);
 	};
 
 } // namespace SNN_network

@@ -27,7 +27,10 @@ namespace SNN_network
 		friend class Trainer;
 	public:
 		Perceptron(int p_layer, int p_id);
+		Perceptron(Perceptron const& perceptron);
 		virtual ~Perceptron();
+
+		Perceptron& operator=(Perceptron const& perceptron);
 
 		void set_input(vector<Perceptron*>* p_input_perceptrons);
 		bool set_input(vector<vector<double>*> p_input);

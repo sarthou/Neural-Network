@@ -132,6 +132,20 @@ namespace SNN_network
 		faile_to_configure();
 	}
 
+	Network::Network(Network const& network)
+	{
+		m_out = network.m_out;
+		vector<vector<Perceptron*>> m_perceptrons;
+		m_nb_perceptrons = network.m_nb_perceptrons;
+		m_types = network.m_types;
+		m_params = network.m_params;
+		m_is_train = network.m_is_train;
+		m_is_configure = network.m_is_configure;
+
+		generate_copy_network(network);
+		link_network_copy();
+	}
+
 	Network::~Network()
 	{
 		for (vector<vector<Perceptron*>>::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
@@ -142,6 +156,24 @@ namespace SNN_network
 				*it_perceptron = nullptr;
 			}
 		}
+	}
+
+	Network& Network::operator=(Network const& network)
+	{
+		if (this != &network)
+		{
+			m_out = network.m_out;
+			vector<vector<Perceptron*>> m_perceptrons;
+			m_nb_perceptrons = network.m_nb_perceptrons;
+			m_types = network.m_types;
+			m_params = network.m_params;
+			m_is_train = network.m_is_train;
+			m_is_configure = network.m_is_configure;
+
+			generate_copy_network(network);
+			link_network_copy();
+		}
+		return *this;
 	}
 
 	void Network::print()
@@ -289,9 +321,59 @@ namespace SNN_network
 		}
 	}
 
+	void Network::generate_copy_network(Network const& network)
+	{
+		int layer = 0;
+		for (vector<vector<Perceptron*>>::const_iterator it = network.m_perceptrons.begin(); it != network.m_perceptrons.end(); ++it)
+		{
+			vector<Perceptron*> temp_vect;
+
+			perceptron_type_t type = logistic;
+			if (m_types.size() > 0)
+			{
+				if (m_types.size() <= 2)
+					type = m_types[0];
+				else
+					type = m_types[layer];
+			}
+
+			double param = 0;
+			if (m_params.size() > 0)
+			{
+				if (m_params.size() <= 2)
+					param = m_params[0];
+				else
+					param = m_params[layer];
+			}
+
+			for (int i = 0; i < (*it).size(); i++)
+			{
+				temp_vect.push_back(copy_perceptron(*(network.m_perceptrons[layer][i])));
+			}
+			m_perceptrons.push_back(temp_vect);
+			layer++;
+		}
+	}
+
 	void Network::link_network()
 	{
 		if (m_nb_perceptrons.size() > 1)
+		{
+			vector<vector<Perceptron*>>::iterator init_it = m_perceptrons.begin();
+			for (vector<vector<Perceptron*>>::iterator it = init_it + 1; it != m_perceptrons.end(); ++it)
+			{
+				for (vector<Perceptron*>::iterator percept_it = it->begin(); percept_it != it->end(); percept_it++)
+				{
+					(*percept_it)->set_input(&(*init_it));
+				}
+				init_it++;
+			}
+		}
+	}
+
+	void Network::link_network_copy()
+	{
+		if (m_nb_perceptrons.size() > 0)
 		{
 			vector<vector<Perceptron*>>::iterator init_it = m_perceptrons.begin();
 			for (vector<vector<Perceptron*>>::iterator it = init_it + 1; it != m_perceptrons.end(); ++it)
@@ -402,6 +484,43 @@ namespace SNN_network
 			tmp_perceptron = new Perceptron_identity(layer, id);
 			break;
 		}
+		return tmp_perceptron;
+	}
+
+	Perceptron* Network::copy_perceptron(Perceptron& perceptron)
+	{
+		Perceptron* tmp_perceptron = nullptr;
+		if (perceptron.get_type() == "identity")
+			tmp_perceptron = new Perceptron_identity((Perceptron_identity&)perceptron);
+		else if (perceptron.get_type() == "binary_step")
+			tmp_perceptron = new Perceptron_binary_step((Perceptron_binary_step&)perceptron);
+		else if (perceptron.get_type() == "logistic")
+			tmp_perceptron = new Perceptron_logistic((Perceptron_logistic&)perceptron);
+		else if (perceptron.get_type() == "tanH")
+			tmp_perceptron = new Perceptron_tanH((Perceptron_tanH&)perceptron);
+		else if (perceptron.get_type() == "arcTan")
+			tmp_perceptron = new Perceptron_arcTan((Perceptron_arcTan&)perceptron);
+		else if (perceptron.get_type() == "softsign")
+			tmp_perceptron = new Perceptron_softsign((Perceptron_softsign&)perceptron);
+		else if (perceptron.get_type() == "rectifier")
+			tmp_perceptron = new Perceptron_rectifier((Perceptron_rectifier&)perceptron);
+		else if (perceptron.get_type() == "rectifier_param")
+			tmp_perceptron = new Perceptron_rectifier_param((Perceptron_rectifier_param&)perceptron);
+		else if (perceptron.get_type() == "ELU")
+			tmp_perceptron = new Perceptron_ELU((Perceptron_ELU&)perceptron);
+		else if (perceptron.get_type() == "softPlus")
+			tmp_perceptron = new Perceptron_softPlus((Perceptron_softPlus&)perceptron);
+		else if (perceptron.get_type() == "bent_identity")
+			tmp_perceptron = new Perceptron_bent_identity((Perceptron_bent_identity&)perceptron);
+		else if (perceptron.get_type() == "sinusoid")
+			tmp_perceptron = new Perceptron_sinusoid((Perceptron_sinusoid&)perceptron);
+		else if (perceptron.get_type() == "sinc")
+			tmp_perceptron = new Perceptron_sinc((Perceptron_sinc&)perceptron);
+		else if (perceptron.get_type() == "gaussian")
+			tmp_perceptron = new Perceptron_gaussian((Perceptron_gaussian&)perceptron);
+		else
+			tmp_perceptron = new Perceptron_identity((Perceptron_identity&)perceptron);
+
 		return tmp_perceptron;
 	}
 
