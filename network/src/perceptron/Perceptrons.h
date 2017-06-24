@@ -2,8 +2,8 @@
 // Name        : Perceptrons.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 30 nov. 2016
-// Version     : V1.0
+// Date		   : 24 jun. 2016
+// Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
