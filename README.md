@@ -77,7 +77,27 @@ With respect to the error of training, there are two ways to calculate this erro
 
 ```
 config.error_type = mae;
-config.nb_epochs = 5000;
-
 config.stop_error = 0.00001;
+
+config.nb_epochs = 5000;
+```
+
+### Configure the training process
+
+Six training processes are available. For each of them, the "step" parameter can be configured.
+For the GD_momentum and GD_nesterov processes, a momentum factor can also be configured.
+
+```
+config.training_type = GD_adagrad;
+config.step = 0.1;
+config.momentum_factor = 0.05;
+```
+n.b : If the parameters "step" and "momentum_factor" are not specified, default values will be used depending on the training process.
+
+### Set the configuration
+
+The configuration must be set on a trainer object. If you want a default training, you don't need to set any configuration.
+```
+Trainer trainer;
+trainer.set_config(config);
 ```
