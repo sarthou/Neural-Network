@@ -1,5 +1,3 @@
-#include "perceptron\Perceptron.h"
-#include "perceptron\Perceptrons.h"
 #include "network\Network.h"
 #include "trainer\Trainer.h"
 #include <iostream>
@@ -7,62 +5,67 @@
 using namespace SNN_network;
 
 int main()
-{
-	Trainer trainer;
-		
-	vector<int> nb = {5 };//, 10, 10, 10
-	vector<perceptron_type_t> type = { logistic, identities };//identities logistic
-	vector<double> param = { 1.};
-	Network net(nb, type);
+{	
+	/*Create your network*/
+	vector<int> nb = { 1 };
+	vector<perceptron_type_t> type = { identities };
+	vector<double> param = { };
+	Network net(nb, type, param);
+
 	net.print();
 
-	vector<double> a = { 0, 0, 0, 0, 1, 1, 1, 1 };
-	vector<double> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
-	vector<double> c = { 0, 1, 0, 1, 0, 0, 0, 1 };
-	vector<vector<double>*> P1 = { &a, &b, &c};
-
-	vector<double> Ta = { 0, 1, 2, 3, 4, 4, 4, 7 };
-	vector<double> Tb = { 0, 0, 0, 0, 0, 0, 2, 2 };
-	vector<double> Tc = { 0, 3, 3, 0, 3, 0, 0, 3 };
-	vector<double> Td = { 0, 1, 1, 2, 1, 2, 2, 3 };
-	vector<vector<double>*> T1 = {/*&Ta, &Tb, */&Tc/*, &Td*/};
-
-	vector<double> a2 = { 0, 0, 0, 1, 1, 0, 0, 0, 1 };
-	vector<double> b2 = { 0, 0, 0, 1, 1, 0, 0, 0, 1 };
-	vector<double> c2 = { 0, 0, 1, 1, 0, 0, 0, 0, 1 };
-	vector<vector<double>*> P2 = { &a2, &b2, &c2 };
-
-	vector<double> a3 = { 1, 0, 0, 0, 1, 1, 1, 1 };
-	vector<double> b3 = { 0, 0, 1, 1, 1, 0, 1, 1 };
-	vector<double> c3 = { 0, 1, 0, 1, 0, 1, 0, 1 };
-	vector<vector<double>*> P3 = { &a3, &b3, &c3 };
+	/*Configure your training*/
 
 	trainig_config_t config;
-	config.training_type = GD_nesterov;
-	config.error_type = mse;
-	config.nb_epochs = 500;
-	config.step = 0.1;
-	config.stop_error = 0.00001;
 
-	//momentum factor
-	config.momentum_factor = 0.9;
-
-	//debug config
 	config.debug_level = 2;
+	config.debug_file = "debug.txt";
 
+	config.error_type = mae;
+	config.stop_error = 0.00001;
+	config.nb_epochs = 5000;
+
+	config.training_type = GD_adagrad;
+	config.step = 0.1;
+	//config.momentum_factor = 0.05;
+
+	Trainer trainer;
 	trainer.set_config(config);
-	trainer.train(&net, P1, T1);
-	net.print();
+
+	/*Train your network*/
+
+	vector<double> d = { 0, 0, 0, 0, 0, 1, 1, 0 };
+	vector<double> c = { 0, 0, 0, 0, 1, 1, 0, 1 };
+	vector<double> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
+	vector<double> a = { 0, 1, 0, 1, 0, 0, 0, 1 };
+	vector<vector<double>*> P = { &a, &b, &c, &d };
+
+	vector<double> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
+	vector<vector<double>*> T = { &Ta };
+
+	trainer.train(&net, P, T);
+
+	/*Use your training network*/
+
+	vector<double> d2 = { 1, 0, 0, 0, 1, 0, 0, 1, 1 };
+	vector<double> c2 = { 0, 1, 0, 0, 0, 1, 1, 0, 1 };
+	vector<double> b2 = { 0, 0, 1, 0, 1, 0, 1, 0, 1 };
+	vector<double> a2 = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
+	vector<vector<double>*> P2 = { &a2, &b2, &c2, &d2 };
 
 	net.sim(P2);
-	net.print_output();
-	net.round_output();
-	net.print_output();
 
-	net.sim(P3);
-	net.print_output();
 	net.round_output();
 	net.print_output();
+	vector<vector<double>> out = net.get_output_cpy();
+
+
+	/*Additionals features*/
+	net.print();
+
+	Network net2;
+	net2 = net;
+	net2.print();
 
 	system("PAUSE");
 
