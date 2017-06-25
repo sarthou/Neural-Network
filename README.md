@@ -46,3 +46,38 @@ Network net(type, param);
 Network net(nb, type);
 Network net(nb, type, param);
 ```
+
+## Configure your training
+
+First, you must create a configuration structure:
+```
+trainig_config_t config;
+```
+
+### Configure the debug
+
+Three level of debug are available.
+* Level 0 : No debugging. Just print the errors.
+* Level 1 : For each epoch of training, the training error is printed.
+* Level 2 : The training error will be saved in a text file at each epoch.
+
+If you use the debug level 2, you can also set the debug file name. The default one is "debug.txt".
+
+```
+config.debug_level = 2;
+config.debug_file = "name.txt";
+```
+
+### Configure the stop condition
+
+You can either set a maximum number of epoch or set the target training error to reach.
+When one of these conditions is reached, the training will stop.
+
+With respect to the error of training, there are two ways to calculate this error: mean square error (mse) and average mean error (mae).
+
+```
+config.error_type = mae;
+config.nb_epochs = 5000;
+
+config.stop_error = 0.00001;
+```
