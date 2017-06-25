@@ -2,7 +2,7 @@
 // Name        : Perceptrons.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 24 jun. 2016
+// Date		   : 25 jun. 2016
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
@@ -30,7 +30,7 @@
 #ifndef PERCEPTRONS_H
 #define PERCEPTRONS_H
 
-namespace SNN_network
+namespace SNN
 {
 
 	class Perceptron_identity : public Perceptron

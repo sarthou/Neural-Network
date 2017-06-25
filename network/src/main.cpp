@@ -2,7 +2,7 @@
 #include "trainer\Trainer.h"
 #include <iostream>
 
-using namespace SNN_network;
+using namespace SNN;
 
 int main()
 {	

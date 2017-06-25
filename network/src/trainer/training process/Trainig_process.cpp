@@ -2,14 +2,14 @@
 // Name        : Trainig_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 6 jun. 2017
+// Date		   : 25 jun. 2017
 // Version     : V1.2
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
 #include "Trainig_process.h"
 
-namespace SNN_network
+namespace SNN
 {
 	Trainig_process::Trainig_process(Perceptron* p_perceptron) 
 	{ 

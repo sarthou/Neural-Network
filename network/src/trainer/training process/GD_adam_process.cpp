@@ -2,14 +2,14 @@
 // Name        : GD_adam_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 11 jun. 2017
+// Date		   : 25 jun. 2017
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
 #include "GD_adam_process.h"
 
-namespace SNN_network
+namespace SNN
 {
 
 	GD_adam_process::GD_adam_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)

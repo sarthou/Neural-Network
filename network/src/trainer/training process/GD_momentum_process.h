@@ -2,7 +2,7 @@
 // Name        : GD_momentum_process.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 11 jun. 2017
+// Date		   : 25 jun. 2017
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
@@ -14,7 +14,7 @@
 
 #include "Trainig_process.h"
 
-namespace SNN_network
+namespace SNN
 {
 
 	class GD_momentum_process : public Trainig_process

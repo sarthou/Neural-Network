@@ -2,7 +2,7 @@
 // Name        : Trainer.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 11 jun. 2017
+// Date		   : 25 jun. 2017
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
@@ -11,7 +11,7 @@
 #include <windows.h>
 #include <random>
 
-namespace SNN_network
+namespace SNN
 {
 
 	Trainer::Trainer()
@@ -25,6 +25,7 @@ namespace SNN_network
 		m_config.error_type = mae;
 
 		m_error = 0.;
+		m_stop = 0.;
 	}
 
 	Trainer::~Trainer()
@@ -85,10 +86,21 @@ namespace SNN_network
 
 				m_net->sim(m_P);
 				compute_error();
+
+				/////
+				m_stop_vector.push_back(m_error);
+				if (m_stop_vector.size() == 3)
+				{
+					m_stop += m_stop_vector[0];
+					m_stop_vector.erase(m_stop_vector.begin());
+				}
+				m_stop = -m_stop + m_error;
+				/////
+
 				if (m_config.debug_level)
 					cout << "epoch : " << nb_epochs + 1 << " => error " << m_error << endl;
 				if (m_config.debug_level > 1)
-					m_debug_file << m_error << endl;
+					m_debug_file << fabs(m_stop)/m_error << endl;
 				if (m_error < m_config.stop_error)
 					small_error = true;
 			}
@@ -134,6 +146,9 @@ namespace SNN_network
 
 		if (m_config.debug_level > 1)
 			m_debug_file.close();
+
+		trainig_config_t tmp_config;
+		m_config = tmp_config;
 	}
 
 	bool Trainer::can_be_train()

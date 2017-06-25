@@ -2,14 +2,14 @@
 // Name        : GD_nesterov_process.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 11 jun. 2017
+// Date		   : 25 jun. 2017
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
 #include "GD_nesterov_process.h"
 
-namespace SNN_network
+namespace SNN
 {
 
 	GD_nesterov_process::GD_nesterov_process(Perceptron* p_perceptron, double p_step, double momentum_factor) : Trainig_process(p_perceptron)

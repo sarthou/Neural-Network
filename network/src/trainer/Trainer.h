@@ -2,7 +2,7 @@
 // Name        : Trainer.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 11 jun. 2017
+// Date		   : 25 jun. 2017
 // Version     : V1.4
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
@@ -26,7 +26,7 @@
 
 #include "Training_configuration.h"
 
-namespace SNN_network
+namespace SNN
 {
 
 	class Trainer
@@ -51,6 +51,8 @@ namespace SNN_network
 
 		trainig_config_t m_config;
 		double m_error;
+		vector<double> m_stop_vector;
+		double m_stop;
 
 		ofstream m_debug_file;
 
@@ -63,7 +65,7 @@ namespace SNN_network
 
 		void set_default_configuration();
 		void set_trainig_process();
-		Trainig_process* creat_process(SNN_network::Perceptron* p_instances);
+		Trainig_process* creat_process(SNN::Perceptron* p_instances);
 
 		void init_weigh();
 		void randomise();
