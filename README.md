@@ -134,7 +134,7 @@ vector<double> b = { 0, 0, 1, 0, 1, 0, 1, 0, 1 };
 vector<double> a = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
 vector<vector<double>*> P = { &a, &b, &c, &d };
 
-net2.sim(P);
+net.sim(P);
 ```
 
 You can get the output by using the get_output or get_output_cpy functions.
@@ -145,4 +145,16 @@ Finally you can print the output data with the print_output function.
 net.round_output();
 net.print_output();
 vector<vector<double>> out = net.get_output_cpy();
+```
+
+## additionals features
+
+* Use the print function on your network to have a textual description of the network.
+```
+net.print();
+```
+* You can copy your network into an other by using the operator = or the copy constructor.
+```
+Network cpy_net;
+cpy_net = net;
 ```
