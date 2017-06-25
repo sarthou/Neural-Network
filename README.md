@@ -124,7 +124,7 @@ trainer.train(&net, P, T);
 
 n.b : You can continue training your network as many times as you want.
 
-# Use your training network
+## Use your training network
 
 To use the network, you just have to put your input data into a vector and run the network.
 ```
@@ -144,5 +144,5 @@ Finally you can print the output data with the print_output function.
 ```
 net.round_output();
 net.print_output();
-vector<vector<double>*> out = net.get_output_cpy();
+vector<vector<double>> out = net.get_output_cpy();
 ```
