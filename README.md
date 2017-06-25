@@ -1,17 +1,17 @@
 # Neural-Network
 
-This project is an easy tool to creat and train neurals networks. Fully modular, you will be able to create a personalized network with several layers and many types of perceptrons.
+This project is an easy tool to create and train neuralsnetworks in C++. Fully modular, you will be able to create a personalized network with several layers and many types of perceptrons.
 
 ## Create your network
 
 First, you must define the number of internal layers and the number of perceptrons in each of them. For this we use a vector in which each element represents a layer and the value of the element represents the number of perceptrons in this layer.
-In the example below, we have three internal layers. The layer closest to the input has two perceptrons and the furthest one has four.
+In the example below, we have three internal layers. The closest layer to the input has two perceptrons and the furthest one has four.
 ```
 vector<int> nb = {2, 6, 4 };
 ```
 n.b : If this vector is empty, the network will only have one layer, that of output.
 
-Now, you have to describe the kind of perceptrons you want to use on each layer. To do it, different methods are available.
+Now, you have to describe the kind of perceptrons you want to use on each layer. To do that, different methods are available.
 ```
 // We describe the kind of perceptrons for each layer (internals + output)
 vector<perceptron_type_t> type = {tanH, rectifier_param, logistic, identities };
@@ -56,7 +56,7 @@ trainig_config_t config;
 
 ### Configure the debug
 
-Three level of debug are available.
+Three levels of debug are available.
 * Level 0 : No debugging. Just print the errors.
 * Level 1 : For each epoch of training, the training error is printed.
 * Level 2 : The training error will be saved in a text file at each epoch.
@@ -70,16 +70,18 @@ config.debug_file = "name.txt";
 
 ### Configure the stop condition
 
-You can either set a maximum number of epoch or set the target training error to reach.
+You can either set a maximum number of epoch or set the target training error to reach or allow the trainer to detect an evolution stop.
 When one of these conditions is reached, the training will stop.
 
-With respect to the error of training, there are two ways to calculate this error: mean square error (mse) and average mean error (mae).
+Regarding the error of training, there are two ways to calculate this error: mean square error (mse) and average mean error (mae).
 
 ```
 config.error_type = mae;
 config.stop_error = 0.00001;
 
 config.nb_epochs = 5000;
+
+config.stop_evolution = true;
 ```
 
 ### Configure the training process
@@ -122,7 +124,7 @@ Once you you have created your data, you just have to train your network.
 trainer.train(&net, P, T);
 ```
 
-n.b : You can continue training your network as many times as you want.
+n.b : You can continue to train your network as many times as you want.
 
 ## Use your training network
 
@@ -138,7 +140,7 @@ net.sim(P);
 ```
 
 You can get the output by using the get_output or get_output_cpy functions.
-If you want to work only with interger data, you can use the round_output function.
+If you want to work only with integer data, you can use the round_output function.
 Finally you can print the output data with the print_output function.
 
 ```
@@ -147,7 +149,7 @@ net.print_output();
 vector<vector<double>> out = net.get_output_cpy();
 ```
 
-## additionals features
+## Additionals features
 
 * Use the print function on your network to have a textual description of the network.
 ```
