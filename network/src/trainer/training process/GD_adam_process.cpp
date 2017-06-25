@@ -41,7 +41,7 @@ namespace SNN_network
 
 		add_to_precedent(process, m_gradient);
 
-		m_delta = m_step * m_m / sqrtf(m_v + 0.00000001);
+		m_delta = m_step * m_m / sqrt(m_v + 0.00000001);
 	}
 
 	void GD_adam_process::set_default_configuration(trainig_config_t* configuration)

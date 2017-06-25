@@ -12,7 +12,7 @@
 namespace SNN_network
 {
 
-	GD_nesterov_process::GD_nesterov_process(Perceptron* p_perceptron, double p_step, float momentum_factor) : Trainig_process(p_perceptron)
+	GD_nesterov_process::GD_nesterov_process(Perceptron* p_perceptron, double p_step, double momentum_factor) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
 		m_delta_1 = 0;

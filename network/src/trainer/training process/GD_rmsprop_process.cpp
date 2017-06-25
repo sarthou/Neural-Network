@@ -37,7 +37,7 @@ namespace SNN_network
 
 		add_to_precedent(process, m_gradient);
 
-		m_delta = m_step * m_gradient / sqrtf(m_Eg + 0.0001);
+		m_delta = m_step * m_gradient / sqrt(m_Eg + 0.0001);
 	}
 
 	void GD_rmsprop_process::set_default_configuration(trainig_config_t* configuration)

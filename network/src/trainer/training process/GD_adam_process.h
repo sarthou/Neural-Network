@@ -33,8 +33,8 @@ namespace SNN_network
 		double m_m;
 		double m_v;
 
-		float B1;
-		float B2;
+		double B1;
+		double B2;
 	};
 } // SNN_network
 

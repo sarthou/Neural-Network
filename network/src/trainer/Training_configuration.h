@@ -43,7 +43,7 @@ namespace SNN_network
 		error_type_t error_type = mse;
 
 		//momentum configuration
-		float momentum_factor = INFINITY;
+		double momentum_factor = INFINITY;
 
 		//debug configuration
 		unsigned int debug_level = 0;

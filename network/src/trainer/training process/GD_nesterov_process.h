@@ -20,7 +20,7 @@ namespace SNN_network
 	class GD_nesterov_process : public Trainig_process
 	{
 	public:
-		GD_nesterov_process(Perceptron* p_perceptron, double p_step, float momentum_factor);
+		GD_nesterov_process(Perceptron* p_perceptron, double p_step, double momentum_factor);
 		~GD_nesterov_process();
 
 		void propagate(vector<Trainig_process*> process, bool out = false);
@@ -30,7 +30,7 @@ namespace SNN_network
 	private:
 		double m_step;
 
-		float m_momentum_factor;
+		double m_momentum_factor;
 
 		double m_delta_1;
 	};

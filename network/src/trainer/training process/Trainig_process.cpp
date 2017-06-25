@@ -67,7 +67,7 @@ namespace SNN_network
 		{
 			if (m_perceptron->m_w.size() == process.size())
 			{
-				for (int i = 0; i < process.size(); i++)
+				for (unsigned int i = 0; i < process.size(); i++)
 					process[i]->add_to_gradient(factor*m_perceptron->m_w[i]);
 			}
 		}

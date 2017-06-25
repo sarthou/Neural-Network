@@ -346,7 +346,7 @@ namespace SNN_network
 					param = m_params[layer];
 			}
 
-			for (int i = 0; i < (*it).size(); i++)
+			for (unsigned int i = 0; i < (*it).size(); i++)
 			{
 				temp_vect.push_back(copy_perceptron(*(network.m_perceptrons[layer][i])));
 			}

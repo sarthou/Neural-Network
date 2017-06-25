@@ -36,7 +36,7 @@ namespace SNN_network
 
 		add_to_precedent(process, m_gradient);
 
-		m_delta = m_gradient*m_step*20/ sqrtf(ss_gradient + 0.00000001);
+		m_delta = m_gradient*m_step*20/ sqrt(ss_gradient + 0.00000001);
 	}
 
 	void GD_adagrad_process::set_default_configuration(trainig_config_t* configuration)
