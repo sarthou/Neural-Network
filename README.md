@@ -96,8 +96,53 @@ n.b : If the parameters "step" and "momentum_factor" are not specified, default 
 
 ### Set the configuration
 
-The configuration must be set on a trainer object. If you want a default training, you don't need to set any configuration.
+The configuration must be set on a Trainer object. If you want a default training, you don't need to set any configuration.
 ```
 Trainer trainer;
 trainer.set_config(config);
+```
+
+## Train your network
+
+You must specify the input training data (P) and the expected output (T) related to the input.
+The example below is to learn how to count in four-bit binary.
+```
+vector<double> d = { 0, 0, 0, 0, 0, 1, 1, 0 };
+vector<double> c = { 0, 0, 0, 0, 1, 1, 0, 1 };
+vector<double> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
+vector<double> a = { 0, 1, 0, 1, 0, 0, 0, 1 };
+vector<vector<double>*> P = { &a, &b, &c, &d};
+
+vector<double> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
+vector<vector<double>*> T = {&Ta};
+```
+
+Once you you have created your data, you just have to train your network.
+```
+trainer.train(&net, P, T);
+```
+
+n.b : You can continue training your network as many times as you want.
+
+# Use your training network
+
+To use the network, you just have to put your input data into a vector and run the network.
+```
+vector<double> d = { 1, 0, 0, 0, 1, 0, 0, 1, 1 };
+vector<double> c = { 0, 1, 0, 0, 0, 1, 1, 0, 1 };
+vector<double> b = { 0, 0, 1, 0, 1, 0, 1, 0, 1 };
+vector<double> a = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
+vector<vector<double>*> P = { &a, &b, &c, &d };
+
+net2.sim(P);
+```
+
+You can get the output by using the get_output or get_output_cpy functions.
+If you want to work only with interger data, you can use the round_output function.
+Finally you can print the output data with the print_output function.
+
+```
+net.round_output();
+net.print_output();
+vector<vector<double>*> out = net.get_output_cpy();
 ```
