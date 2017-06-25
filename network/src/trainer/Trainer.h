@@ -51,8 +51,11 @@ namespace SNN
 
 		trainig_config_t m_config;
 		double m_error;
+
 		vector<double> m_stop_vector;
 		double m_stop;
+		double m_mean_error;
+		bool m_dont_evolve;
 
 		ofstream m_debug_file;
 

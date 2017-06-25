@@ -86,23 +86,29 @@ namespace SNN
 
 				m_net->sim(m_P);
 				compute_error();
-
-				/////
-				m_stop_vector.push_back(m_error);
-				if (m_stop_vector.size() == 3)
-				{
-					m_stop += m_stop_vector[0];
-					m_stop_vector.erase(m_stop_vector.begin());
-				}
-				m_stop = -m_stop + m_error;
-				/////
+				
 
 				if (m_config.debug_level)
 					cout << "epoch : " << nb_epochs + 1 << " => error " << m_error << endl;
 				if (m_config.debug_level > 1)
-					m_debug_file << fabs(m_stop)/m_error << endl;
+					m_debug_file << m_error << endl;
 				if (m_error < m_config.stop_error)
 					small_error = true;
+
+				/*detect no evolution*/
+				m_mean_error += m_error;
+				m_stop_vector.push_back(m_mean_error / (nb_epochs + 1));
+				if (m_stop_vector.size() == 9)
+				{
+					m_stop += m_stop_vector[0];
+					m_stop_vector.erase(m_stop_vector.begin());
+				}
+				m_stop = -m_stop + m_mean_error / (nb_epochs + 1);
+
+				if ((fabs(m_stop) < m_config.stop_error) && m_dont_evolve && m_config.stop_evolution)
+					small_error = true; //break the training process
+				else if (fabs(m_stop) < m_config.stop_error)
+					m_dont_evolve = true;
 			}
 			close_train();
 		}
@@ -126,6 +132,9 @@ namespace SNN
 			(*it) = new vector<double>(1, 0.);
 		for (vector<vector<double>*>::iterator it = tmp_T.begin(); it != tmp_T.end(); ++it)
 			(*it) = new vector<double>(1, 0.);
+
+		m_mean_error = 0;
+		m_dont_evolve = false;
 
 		m_net->set_it_train();
 

@@ -24,6 +24,7 @@ int main()
 	config.error_type = mae;
 	config.stop_error = 0.00001;
 	config.nb_epochs = 5000;
+	config.stop_evolution = false;
 
 	config.training_type = GD_adagrad;
 	config.step = 0.1;

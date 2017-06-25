@@ -35,19 +35,18 @@ namespace SNN
 
 	struct trainig_config_t
 	{
-		//general configuration
-		unsigned int nb_epochs = 50;
-		double step = INFINITY;
-		double stop_error = 0.1;
-		trainig_type_t training_type = Steepest_descent;
-		error_type_t error_type = mse;
-
-		//momentum configuration
-		double momentum_factor = INFINITY;
-
 		//debug configuration
 		unsigned int debug_level = 0;
 		string debug_file = "debug.txt";
+
+		error_type_t error_type = mse;
+		double stop_error = 0.00001;
+		unsigned int nb_epochs = 5000;
+		bool stop_evolution = false;
+
+		trainig_type_t training_type = Steepest_descent;
+		double step = INFINITY;
+		double momentum_factor = INFINITY;
 	};
 
 } //namespace SNN_network
