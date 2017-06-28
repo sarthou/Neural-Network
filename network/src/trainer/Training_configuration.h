@@ -14,6 +14,8 @@
 
 #include <string>
 
+#define INFINITY -999
+
 namespace SNN
 {
 

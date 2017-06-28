@@ -58,7 +58,7 @@ int main()
 
 	net.round_output();
 	net.print_output();
-	vector<vector<double>> out = net.get_output_cpy();
+	vector<vector<double> > out = net.get_output_cpy();
 
 
 	/*Additionals features*/
@@ -68,7 +68,7 @@ int main()
 	net2 = net;
 	net2.print();
 
-	system("PAUSE");
+	//system("PAUSE"); // only if you use windows
 
 	return 0;
 }
