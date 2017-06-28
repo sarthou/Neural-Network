@@ -208,9 +208,13 @@ namespace SNN
 
 			if (m_perceptrons.size() == m_nb_perceptrons.size())
 			{
+#ifdef WINDOWS
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01);
+#endif
 				cout << "Output not gererate yet" << endl;
+#ifdef WINDOWS
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+#endif
 			}
 		}
 	}
@@ -231,15 +235,21 @@ namespace SNN
 		}
 		else
 		{
+#ifdef WINDOWS
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0E);
+#endif
 			cout << "no output" << endl;
+#ifdef WINDOWS
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+#endif
 		}
 	}
 
 	void Network::sim(vector<vector<double>*> P, bool clr)
 	{
+#ifdef WINDOWS
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
+#endif
 		if (m_is_train)
 		{
 			m_out.clear();
@@ -276,8 +286,9 @@ namespace SNN
 		}
 		else
 			cout << "Sim => Network not train." << endl;
-
+#ifdef WINDOWS
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+#endif
 	}
 
 	void Network::clr_internal_values()
@@ -389,7 +400,9 @@ namespace SNN
 
 	void Network::init()
 	{
+#ifdef WINDOWS
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0E);
+#endif
 		m_is_train = false;
 		m_is_configure = false;
 	}
@@ -398,10 +411,14 @@ namespace SNN
 	{
 		if (!m_is_configure)
 		{
+#ifdef WINDOWS
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
+#endif
 			cout << "Network => Fail to configure the network" << endl;
 		}
+#ifdef WINDOWS
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+#endif
 	}
 
 	bool Network::vector_is_uniforme(vector<vector<double>*>& p_vector)

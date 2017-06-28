@@ -1,5 +1,5 @@
-#include "network\Network.h"
-#include "trainer\Trainer.h"
+#include "network/Network.h"
+#include "trainer/Trainer.h"
 #include <iostream>
 
 using namespace SNN;

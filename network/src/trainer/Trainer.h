@@ -13,12 +13,12 @@
 #define TRAINER_H
 
 #include "../network/Network.h"
-#include "training process\Steepest_descent_process.h"
-#include "training process\GD_momentum_process.h"
-#include "training process\GD_nesterov_process.h"
-#include "training process\GD_adagrad_process.h"
-#include "training process\GD_rmsprop_process.h"
-#include "training process\GD_adam_process.h"
+#include "training process/Steepest_descent_process.h"
+#include "training process/GD_momentum_process.h"
+#include "training process/GD_nesterov_process.h"
+#include "training process/GD_adagrad_process.h"
+#include "training process/GD_rmsprop_process.h"
+#include "training process/GD_adam_process.h"
 #include <vector>
 
 #include <iostream>

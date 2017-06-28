@@ -163,14 +163,20 @@ namespace SNN
 	bool Trainer::can_be_train()
 	{
 		bool can_be = false;
+#ifdef WINDOWS
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
+#endif
 		if (m_net->is_configure())
 		{
 			if (m_net->m_is_train)
 			{
+#ifdef WINDOWS
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01);
+#endif
 				cout << "Network will be re-train" << endl;
+#ifdef WINDOWS
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
+#endif
 			}
 
 			if (m_P.size() != 0)
@@ -202,7 +208,9 @@ namespace SNN
 		}
 		else
 			cout << "Trainer => network not configure" << endl;
+#ifdef WINDOWS
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+#endif
 
 		return can_be;
 	}
