@@ -61,8 +61,8 @@ namespace SNN
 		void sim(vector<vector<double>*> P, bool clr = true);
 		void clr_internal_values();
 
-		vector<vector<double>>* get_output() { return &m_out; };
-		vector<vector<double>> get_output_cpy() { return m_out; };
+		vector<vector<double> >* get_output() { return &m_out; };
+		vector<vector<double> > get_output_cpy() { return m_out; };
 
 		void round_output();
 

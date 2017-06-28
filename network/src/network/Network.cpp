@@ -135,7 +135,7 @@ namespace SNN
 	Network::Network(Network const& network)
 	{
 		m_out = network.m_out;
-		vector<vector<Perceptron*>> m_perceptrons;
+		vector<vector<Perceptron*> > m_perceptrons;
 		m_nb_perceptrons = network.m_nb_perceptrons;
 		m_types = network.m_types;
 		m_params = network.m_params;
@@ -148,7 +148,7 @@ namespace SNN
 
 	Network::~Network()
 	{
-		for (vector<vector<Perceptron*>>::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
+		for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
 		{
 			for (vector<Perceptron*>::iterator it_perceptron = it_layer->begin(); it_perceptron != it_layer->end(); ++it_perceptron)
 			{
@@ -163,7 +163,7 @@ namespace SNN
 		if (this != &network)
 		{
 			m_out = network.m_out;
-			vector<vector<Perceptron*>> m_perceptrons;
+			vector<vector<Perceptron*> > m_perceptrons;
 			m_nb_perceptrons = network.m_nb_perceptrons;
 			m_types = network.m_types;
 			m_params = network.m_params;
@@ -195,7 +195,7 @@ namespace SNN
 		if (m_is_configure)
 		{
 			int layer = 0;
-			for (vector<vector<Perceptron*>>::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
+			for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
 			{
 				vector<Perceptron*>::iterator it_perceptron = it_layer->begin();
 				string type = (*it_perceptron)->get_type();
@@ -223,7 +223,7 @@ namespace SNN
 	{
 		if (m_out.size() > 0)
 		{
-			for (vector<vector<double>>::iterator it = m_out.begin(); it != m_out.end(); ++it)
+			for (vector<vector<double> >::iterator it = m_out.begin(); it != m_out.end(); ++it)
 			{
 				for (vector<double>::iterator it2 = it->begin(); it2 != it->end(); ++it2)
 				{
@@ -261,14 +261,14 @@ namespace SNN
 
 				bool input_set = true;
 
-				vector<vector<Perceptron*>>::iterator it_layer0 = m_perceptrons.begin();
+				vector<vector<Perceptron*> >::iterator it_layer0 = m_perceptrons.begin();
 				for (vector<Perceptron*>::iterator it_perceptron = it_layer0->begin(); it_perceptron != it_layer0->end(); ++it_perceptron)
 					input_set &= (*it_perceptron)->set_input(P);
 
 				if (input_set)
 				{
 
-					for (vector<vector<Perceptron*>>::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
+					for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
 						for (vector<Perceptron*>::iterator it_perceptron = it_layer->begin(); it_perceptron != it_layer->end(); ++it_perceptron)
 							(*it_perceptron)->activate();
 
@@ -293,7 +293,7 @@ namespace SNN
 
 	void Network::clr_internal_values()
 	{
-		for (vector<vector<Perceptron*>>::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
+		for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
 			for (vector<Perceptron*>::iterator it_perceptron = it_layer->begin(); it_perceptron != it_layer->end(); ++it_perceptron)
 				(*it_perceptron)->clr();
 	}
@@ -335,7 +335,7 @@ namespace SNN
 	void Network::generate_copy_network(Network const& network)
 	{
 		int layer = 0;
-		for (vector<vector<Perceptron*>>::const_iterator it = network.m_perceptrons.begin(); it != network.m_perceptrons.end(); ++it)
+		for (vector<vector<Perceptron*> >::const_iterator it = network.m_perceptrons.begin(); it != network.m_perceptrons.end(); ++it)
 		{
 			vector<Perceptron*> temp_vect;
 
@@ -370,8 +370,8 @@ namespace SNN
 	{
 		if (m_nb_perceptrons.size() > 1)
 		{
-			vector<vector<Perceptron*>>::iterator init_it = m_perceptrons.begin();
-			for (vector<vector<Perceptron*>>::iterator it = init_it + 1; it != m_perceptrons.end(); ++it)
+			vector<vector<Perceptron*> >::iterator init_it = m_perceptrons.begin();
+			for (vector<vector<Perceptron*> >::iterator it = init_it + 1; it != m_perceptrons.end(); ++it)
 			{
 				for (vector<Perceptron*>::iterator percept_it = it->begin(); percept_it != it->end(); percept_it++)
 				{
@@ -386,8 +386,8 @@ namespace SNN
 	{
 		if (m_nb_perceptrons.size() > 0)
 		{
-			vector<vector<Perceptron*>>::iterator init_it = m_perceptrons.begin();
-			for (vector<vector<Perceptron*>>::iterator it = init_it + 1; it != m_perceptrons.end(); ++it)
+			vector<vector<Perceptron*> >::iterator init_it = m_perceptrons.begin();
+			for (vector<vector<Perceptron*> >::iterator it = init_it + 1; it != m_perceptrons.end(); ++it)
 			{
 				for (vector<Perceptron*>::iterator percept_it = it->begin(); percept_it != it->end(); percept_it++)
 				{
@@ -543,7 +543,7 @@ namespace SNN
 
 	void Network::round_output()
 	{
-		for (vector<vector<double>>::iterator it_vect = m_out.begin(); it_vect != m_out.end(); ++it_vect)
+		for (vector<vector<double> >::iterator it_vect = m_out.begin(); it_vect != m_out.end(); ++it_vect)
 			for (vector<double>::iterator it = it_vect->begin(); it != it_vect->end(); ++it)
 				(*it) = std::round(*it);
 	}
