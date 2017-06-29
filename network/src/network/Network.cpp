@@ -2,14 +2,13 @@
 // Name        : Network.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 25 jun. 2017
-// Version     : V1.4
+// Date		   : 29 jun. 2017
+// Version     : V1.5
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
 
 #include "Network.h"
-#include <windows.h>
 #include <math.h>
 
 namespace SNN
@@ -25,7 +24,7 @@ namespace SNN
 
 	Network::Network(vector<int> p_nb_perceptrons)
 	{
-		if(!vector_is_positive(p_nb_perceptrons))
+		if (!vector_is_positive(p_nb_perceptrons))
 			cout << "non positive numbers of perceptrons" << endl;
 		else
 		{
@@ -156,6 +155,9 @@ namespace SNN
 				*it_perceptron = nullptr;
 			}
 		}
+
+		for (vector<vector<double>*>::iterator it = m_P.begin(); it != m_P.end();)
+			m_P.erase(it);
 	}
 
 	Network& Network::operator=(Network const& network)
@@ -245,16 +247,17 @@ namespace SNN
 		}
 	}
 
-	void Network::sim(vector<vector<double>*> P, bool clr)
+	void Network::sim(vector<vector<double> > P, bool clr)
 	{
 #ifdef WINDOWS
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
 #endif
 		if (m_is_train)
 		{
+			set_P_as_pointer(P);
 			m_out.clear();
 
-			bool same_size = vector_is_uniforme(P);
+			bool same_size = vector_is_uniforme(m_P);
 
 			if (same_size)
 			{
@@ -263,7 +266,7 @@ namespace SNN
 
 				vector<vector<Perceptron*> >::iterator it_layer0 = m_perceptrons.begin();
 				for (vector<Perceptron*>::iterator it_perceptron = it_layer0->begin(); it_perceptron != it_layer0->end(); ++it_perceptron)
-					input_set &= (*it_perceptron)->set_input(P);
+					input_set &= (*it_perceptron)->set_input(m_P);
 
 				if (input_set)
 				{
@@ -546,6 +549,16 @@ namespace SNN
 		for (vector<vector<double> >::iterator it_vect = m_out.begin(); it_vect != m_out.end(); ++it_vect)
 			for (vector<double>::iterator it = it_vect->begin(); it != it_vect->end(); ++it)
 				(*it) = std::round(*it);
+	}
+
+	void Network::set_P_as_pointer(vector<vector<double>> P)
+	{
+		for (int i =0; i < m_P.size(); i++)
+			delete(m_P[i]);
+
+		m_P.clear();
+		for (int i = 0; i < P.size(); i++)
+			m_P.push_back(new vector<double>(P[i]));
 	}
 
 } // namespace SNN_network

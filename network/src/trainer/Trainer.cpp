@@ -2,14 +2,17 @@
 // Name        : Trainer.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 25 jun. 2017
-// Version     : V1.4
+// Date		   : 29 jun. 2017
+// Version     : V1.5
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
 #include "Trainer.h"
-#include <windows.h>
+#include <cmath>
 #include <random>
+
+#include <chrono>
+#include <ctime>
 
 namespace SNN
 {
@@ -33,7 +36,7 @@ namespace SNN
 
 	}
 
-	void Trainer::train(Network* net, vector<vector<double>*>& P, vector<vector<double>*>& T)
+	void Trainer::train(Network* net, vector<vector<double> >& P, vector<vector<double> >& T)
 	{
 		m_P = P;
 		m_T = T;
@@ -42,7 +45,7 @@ namespace SNN
 		if (can_be_train())
 		{
 			init_train();
-			unsigned int vect_size = m_P.back()->size();
+			unsigned int vect_size = m_P.back().size();
 			ptr_perceptrons = m_net->m_perceptrons;
 
 			int m_current_layer;
@@ -52,6 +55,9 @@ namespace SNN
 			bool small_error = false;
 			for (unsigned int nb_epochs = 0; (nb_epochs < m_config.nb_epochs) && !small_error; nb_epochs++)
 			{
+				std::chrono::time_point<std::chrono::system_clock> start, end;
+				start = std::chrono::system_clock::now();
+
 				randomise();
 
 				for (unsigned int index = 0; index < vect_size; index++)
@@ -61,7 +67,7 @@ namespace SNN
 
 					m_current_layer = m_nb_layer - 1;
 					for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
-						m_process[m_current_layer][m_current_id]->set_error(tmp_T[m_current_id]->front());
+						m_process[m_current_layer][m_current_id]->set_error(tmp_T[m_current_id].front());
 
 					for (m_current_layer = m_nb_layer - 1; m_current_layer >= 0; m_current_layer--)
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
@@ -86,7 +92,7 @@ namespace SNN
 
 				m_net->sim(m_P);
 				compute_error();
-				
+
 
 				if (m_config.debug_level)
 					cout << "epoch : " << nb_epochs + 1 << " => error " << m_error << endl;
@@ -109,6 +115,12 @@ namespace SNN
 					small_error = true; //break the training process
 				else if (fabs(m_stop) < m_config.stop_error)
 					m_dont_evolve = true;
+
+				end = std::chrono::system_clock::now();
+				int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+				std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+				std::cout << "time: " << elapsed_seconds << endl;
 			}
 			close_train();
 		}
@@ -116,8 +128,10 @@ namespace SNN
 
 	void Trainer::init_train()
 	{
-		if(!m_net->m_is_train)
+		if (!m_net->m_is_train)
 			set_output_perceptrons();
+
+		set_as_pointer();
 
 		set_input();
 		set_default_configuration();
@@ -128,10 +142,10 @@ namespace SNN
 
 		tmp_P.resize(m_P.size());
 		tmp_T.resize(m_T.size());
-		for (vector<vector<double>*>::iterator it = tmp_P.begin(); it != tmp_P.end(); ++it)
-			(*it) = new vector<double>(1, 0.);
-		for (vector<vector<double>*>::iterator it = tmp_T.begin(); it != tmp_T.end(); ++it)
-			(*it) = new vector<double>(1, 0.);
+		for (vector<vector<double> >::iterator it = tmp_P.begin(); it != tmp_P.end(); ++it)
+			(*it) = vector<double>(1, 0.);
+		for (vector<vector<double> >::iterator it = tmp_T.begin(); it != tmp_T.end(); ++it)
+			(*it) = vector<double>(1, 0.);
 
 		m_mean_error = 0;
 		m_dont_evolve = false;
@@ -144,9 +158,7 @@ namespace SNN
 
 	void Trainer::close_train()
 	{
-		for (vector<vector<double>*>::iterator it = tmp_P.begin(); it != tmp_P.end(); ++it)
-			delete (*it);
-		for (vector<vector<double>*>::iterator it = tmp_T.begin(); it != tmp_T.end(); ++it)
+		for (vector<vector<double>*>::iterator it = m_P_ptr.begin(); it != m_P_ptr.end(); ++it)
 			delete (*it);
 
 		for (vector<vector<Trainig_process*>>::iterator it_layer = m_process.begin(); it_layer != m_process.end(); ++it_layer)
@@ -183,13 +195,13 @@ namespace SNN
 			{
 				if (m_T.size() != 0)
 				{
-					bool uniform = m_net->vector_is_uniforme(m_P);
+					bool uniform = vector_is_uniforme(m_P);
 					if (uniform)
 					{
-						uniform = m_net->vector_is_uniforme(m_T);
+						uniform = vector_is_uniforme(m_T);
 						if (uniform)
 						{
-							if (m_P.back()->size() == m_T.back()->size())
+							if (m_P.back().size() == m_T.back().size())
 								can_be = true;
 							else
 								cout << "Trainer => Vectors P and T haven't the same lenght" << endl;
@@ -256,7 +268,7 @@ namespace SNN
 	{
 		vector<vector<Perceptron*>>::iterator it_input_layer = m_net->m_perceptrons.begin();
 		for (vector<Perceptron*>::iterator it_perceptron = it_input_layer->begin(); it_perceptron != it_input_layer->end(); ++it_perceptron)
-			(*it_perceptron)->set_input(m_P);
+			(*it_perceptron)->set_input(m_P_ptr);
 	}
 
 	void Trainer::set_default_configuration()
@@ -353,7 +365,7 @@ namespace SNN
 	void Trainer::randomise()
 	{
 		unsigned long int index = 0;
-		unsigned long int vect_size = m_P.back()->size();
+		unsigned long int vect_size = m_P.back().size();
 
 		default_random_engine generator;
 		uniform_int_distribution<unsigned long int> distribution(0, vect_size - 1);
@@ -363,44 +375,35 @@ namespace SNN
 		unsigned long int from = 0;
 		unsigned long int to = 0;
 		double tmp_value = 0.;
-		vector<vector<double>*>::iterator it;
 
 		for (index = 0; index < vect_size; index++)
 		{
 			from = distribution(generator);
 			to = distribution(generator);
 
-			for (it = m_P.begin(); it != m_P.end(); ++it)
+			for (unsigned int i = 0; i < m_P.size(); i++)
 			{
-				tmp_value = (*(*it))[from];
-				(*(*it))[from] = (*(*it))[to];
-				(*(*it))[to] = tmp_value;
+				tmp_value = m_P[i][from];
+				m_P[i][from] = m_P[i][to];
+				m_P[i][to] = tmp_value;
 			}
 
-			for (it = m_T.begin(); it != m_T.end(); ++it)
+			for (unsigned int i = 0; i < m_T.size(); i++)
 			{
-				tmp_value = (*(*it))[from];
-				(*(*it))[from] = (*(*it))[to];
-				(*(*it))[to] = tmp_value;
+				tmp_value = m_T[i][from];
+				m_T[i][from] = m_T[i][to];
+				m_T[i][to] = tmp_value;
 			}
 		}
 	}
 
 	void Trainer::select_single_data(unsigned int p_index)
 	{
-		vector<vector<double>*>::iterator it_single = tmp_P.begin();
-		for (vector<vector<double>*>::iterator it_ref = m_P.begin(); it_ref != m_P.end(); ++it_ref)
-		{
-			(*(*it_single))[0] = (*(*it_ref))[p_index];
-			++it_single;
-		}
+		for (unsigned int i = 0; i < m_P.size(); i++)
+			tmp_P[i][0] = m_P[i][p_index];
 
-		it_single = tmp_T.begin();
-		for (vector<vector<double>*>::iterator it_ref = m_T.begin(); it_ref != m_T.end(); ++it_ref)
-		{
-			(*(*it_single))[0] = (*(*it_ref))[p_index];
-			++it_single;
-		}
+		for (unsigned int i = 0; i < m_T.size(); i++)
+			tmp_T[i][0] = m_T[i][p_index];
 	}
 
 	void Trainer::compute_error()
@@ -410,36 +413,54 @@ namespace SNN
 
 		if (m_config.error_type == mae)
 		{
-			vector<vector<double>>::iterator out_vect_it = m_net->get_output()->begin();
-			for (vector<vector<double>*>::iterator in_vect_it = m_T.begin(); in_vect_it != m_T.end(); ++in_vect_it)
+			vector<vector<double> >* output = m_net->get_output();
+			for (unsigned int vect_i = 0; vect_i < m_T.size(); vect_i++)
 			{
-				vector<double>::iterator out_it = out_vect_it->begin();
-				for (vector<double>::iterator in_it = (*in_vect_it)->begin(); in_it != (*in_vect_it)->end(); ++in_it)
+				for (unsigned int i = 0; i < m_T[vect_i].size(); i++)
 				{
-					m_error += abs((*out_it) - (*in_it));
+					m_error += abs((*output)[vect_i][i] - m_T[vect_i][i]);
 					cpt++;
-					++out_it;
 				}
-				++out_vect_it;
 			}
 			m_error = abs(m_error);
 		}
 		else
 		{
-			vector<vector<double>>::iterator out_vect_it = m_net->get_output()->begin();
-			for (vector<vector<double>*>::iterator in_vect_it = m_T.begin(); in_vect_it != m_T.end(); ++in_vect_it)
+			vector<vector<double> >* output = m_net->get_output();
+			for (unsigned int vect_i = 0; vect_i < m_T.size(); vect_i++)
 			{
-				vector<double>::iterator out_it = out_vect_it->begin();
-				for (vector<double>::iterator in_it = (*in_vect_it)->begin(); in_it != (*in_vect_it)->end(); ++in_it)
+				for (unsigned int i = 0; i < m_T[vect_i].size(); i++)
 				{
-					m_error += ((*out_it) - (*in_it))*((*out_it) - (*in_it));
+					m_error += ((*output)[vect_i][i] - m_T[vect_i][i])*((*output)[vect_i][i] - m_T[vect_i][i]);
 					cpt++;
-					++out_it;
 				}
-				++out_vect_it;
 			}
 		}
 		m_error = m_error / cpt;
+	}
+
+	void Trainer::set_as_pointer()
+	{
+		
+		for (int i = 0; i < m_P.size(); i++)
+			m_P_ptr.push_back(new vector<double>(m_P[i]));
+	}
+
+	bool Trainer::vector_is_uniforme(vector<vector<double> >& p_vector)
+	{
+		bool uniform = true;
+		vector<vector<double> >::iterator it_begin = p_vector.begin();
+		int size = (*it_begin).size();
+		for (vector<vector<double> >::iterator it = it_begin + 1; it != p_vector.end(); ++it)
+		{
+			if (size != (*it).size())
+				uniform = false;
+		}
+
+		if (p_vector.size() == 0)
+			uniform = false;
+
+		return uniform;
 	}
 
 } // namespace SNN_network

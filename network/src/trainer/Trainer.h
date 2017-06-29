@@ -2,8 +2,8 @@
 // Name        : Trainer.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 25 jun. 2017
-// Version     : V1.4
+// Date		   : 29 jun. 2017
+// Version     : V1.5
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -35,7 +35,7 @@ namespace SNN
 		Trainer();
 		~Trainer();
 
-		void train(Network* net, vector<vector<double>*>& P, vector<vector<double>*>& T);
+		void train(Network* net, vector<vector<double> >& P, vector<vector<double> >& T);
 
 		void set_config(trainig_config_t p_config) { m_config = p_config; };
 
@@ -44,10 +44,11 @@ namespace SNN
 		vector<vector<Perceptron*>> ptr_perceptrons;
 		vector<vector<Trainig_process*>> m_process;
 
-		vector<vector<double>*> m_P;
-		vector<vector<double>*> m_T;
-		vector<vector<double>*> tmp_P;
-		vector<vector<double>*> tmp_T;
+		vector<vector<double>*> m_P_ptr;
+		vector<vector<double> > m_P;
+		vector<vector<double> > m_T;
+		vector<vector<double> > tmp_P;
+		vector<vector<double> > tmp_T;
 
 		trainig_config_t m_config;
 		double m_error;
@@ -76,6 +77,9 @@ namespace SNN
 		void select_single_data(unsigned int p_index);
 
 		void compute_error();
+
+		bool vector_is_uniforme(vector<vector<double> >& p_vector);
+		void set_as_pointer();
 	};
 
 } // namespace SNN_network
