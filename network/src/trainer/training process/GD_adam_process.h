@@ -2,8 +2,8 @@
 // Name        : GD_adam_process.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 25 jun. 2017
-// Version     : V1.4
+// Date		   : 29 jun. 2017
+// Version     : V1.5
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================

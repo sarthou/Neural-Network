@@ -2,8 +2,8 @@
 // Name        : Network.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 25 jun. 2017
-// Version     : V1.4
+// Date		   : 29 jun. 2017
+// Version     : V1.5
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
@@ -58,7 +58,7 @@ namespace SNN
 
 		void print();
 		void print_output();
-		void sim(vector<vector<double>*> P, bool clr = true);
+		void sim(vector<vector<double> > P, bool clr = true);
 		void clr_internal_values();
 
 		vector<vector<double> >* get_output() { return &m_out; };
@@ -67,6 +67,7 @@ namespace SNN
 		void round_output();
 
 	private:
+		vector<vector<double>*> m_P;
 		vector<vector<double>> m_out;
 		vector<vector<Perceptron*>> m_perceptrons;
 		vector<int> m_nb_perceptrons;
@@ -90,6 +91,8 @@ namespace SNN
 
 		Perceptron* creat_perceptron(int layer, int id, perceptron_type_t type, double param = 0);
 		Perceptron* copy_perceptron(Perceptron& perceptron);
+
+		void set_P_as_pointer(vector<vector<double>> P);
 	};
 
 } // namespace SNN_network

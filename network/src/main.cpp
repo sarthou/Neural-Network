@@ -4,7 +4,7 @@
 
 using namespace SNN;
 
-int main()
+int test()
 {	
 	/*Create your network*/
 	vector<int> nb = { 1 };
@@ -39,10 +39,10 @@ int main()
 	vector<double> c = { 0, 0, 0, 0, 1, 1, 0, 1 };
 	vector<double> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
 	vector<double> a = { 0, 1, 0, 1, 0, 0, 0, 1 };
-	vector<vector<double>*> P = { &a, &b, &c, &d };
+	vector<vector<double> > P = { a, b, c, d };
 
 	vector<double> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
-	vector<vector<double>*> T = { &Ta };
+	vector<vector<double> > T = { Ta };
 
 	trainer.train(&net, P, T);
 
@@ -52,7 +52,7 @@ int main()
 	vector<double> c2 = { 0, 1, 0, 0, 0, 1, 1, 0, 1 };
 	vector<double> b2 = { 0, 0, 1, 0, 1, 0, 1, 0, 1 };
 	vector<double> a2 = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
-	vector<vector<double>*> P2 = { &a2, &b2, &c2, &d2 };
+	vector<vector<double> > P2 = { a2, b2, c2, d2 };
 
 	net.sim(P2);
 
@@ -68,7 +68,7 @@ int main()
 	net2 = net;
 	net2.print();
 
-	//system("PAUSE"); // only if you use windows
+	system("PAUSE"); // only if you use windows
 
 	return 0;
 }
