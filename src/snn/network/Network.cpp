@@ -250,7 +250,7 @@ namespace SNN
 		}
 	}
 
-	void Network::sim(vector<vector<double> > P, bool clr)
+	void Network::sim(vector<vector<double> >* P, bool clr)
 	{
 #ifdef _WIN32
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
@@ -267,19 +267,22 @@ namespace SNN
 
 				bool input_set = true;
 
-				vector<vector<Perceptron*> >::iterator it_layer0 = m_perceptrons.begin();
-				for (vector<Perceptron*>::iterator it_perceptron = it_layer0->begin(); it_perceptron != it_layer0->end(); ++it_perceptron)
-					input_set &= (*it_perceptron)->set_input(m_P);
+				for(unsigned int id = 0; id < m_perceptrons[0].size(); id++)
+					input_set &= m_perceptrons[0][id]->set_input(m_P);
 
 				if (input_set)
 				{
+					unsigned int last_layer = m_perceptrons.size() - 1;
+					
+					for (unsigned int layer = 0; layer < last_layer; layer++)
+						for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
+							m_perceptrons[layer][id]->activate();
 
-					for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
-						for (vector<Perceptron*>::iterator it_perceptron = it_layer->begin(); it_perceptron != it_layer->end(); ++it_perceptron)
-							(*it_perceptron)->activate();
-
-					for (vector<Perceptron*>::iterator it_perceptron = (m_perceptrons.back()).begin(); it_perceptron != (m_perceptrons.back()).end(); ++it_perceptron)
-						m_out.push_back((*it_perceptron)->get_output_cpy());
+					for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
+					{
+						m_perceptrons[last_layer][id]->activate();
+						m_out.push_back(m_perceptrons[last_layer][id]->get_output_cpy());
+					}
 
 					if (clr)
 						clr_internal_values();
@@ -299,9 +302,9 @@ namespace SNN
 
 	void Network::clr_internal_values()
 	{
-		for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
-			for (vector<Perceptron*>::iterator it_perceptron = it_layer->begin(); it_perceptron != it_layer->end(); ++it_perceptron)
-				(*it_perceptron)->clr();
+		for (unsigned int layer = 0; layer < m_perceptrons.size(); layer++)
+			for (unsigned int percept = 0; percept < m_perceptrons[layer].size(); percept++)
+				m_perceptrons[layer][percept]->clr();
 	}
 
 	void Network::generate_network()
@@ -554,14 +557,14 @@ namespace SNN
 				(*it) = std::round(*it);
 	}
 
-	void Network::set_P_as_pointer(vector<vector<double>> P)
+	void Network::set_P_as_pointer(vector<vector<double>>* P)
 	{
 		for (unsigned int i =0; i < m_P.size(); i++)
 			delete(m_P[i]);
 
 		m_P.clear();
-		for (unsigned int i = 0; i < P.size(); i++)
-			m_P.push_back(new vector<double>(P[i]));
+		for (unsigned int i = 0; i < (*P).size(); i++)
+			m_P.push_back(new vector<double>((*P)[i]));
 	}
 
 } // namespace SNN_network

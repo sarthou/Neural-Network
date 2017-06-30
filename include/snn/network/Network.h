@@ -57,7 +57,7 @@ namespace SNN
 
 		void print();
 		void print_output();
-		void sim(vector<vector<double> > P, bool clr = true);
+		void sim(vector<vector<double> >* P, bool clr = true);
 		void clr_internal_values();
 
 		vector<vector<double> >* get_output() { return &m_out; };
@@ -91,7 +91,7 @@ namespace SNN
 		Perceptron* creat_perceptron(int layer, int id, perceptron_type_t type, double param = 0);
 		Perceptron* copy_perceptron(Perceptron& perceptron);
 
-		void set_P_as_pointer(vector<vector<double>> P);
+		void set_P_as_pointer(vector<vector<double>>* P);
 	};
 
 } // namespace SNN_network

@@ -68,20 +68,23 @@ namespace SNN
 				for (unsigned int index = 0; index < vect_size; index++)
 				{
 					select_single_data(index);
-					m_net->sim(tmp_P, false);
+					m_net->sim(&tmp_P, false);
 
-					m_current_layer = m_nb_layer - 1;
+					m_current_layer = m_nb_layer - 1; //last layer
 					for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
 						m_process[m_current_layer][m_current_id]->set_error(tmp_T[m_current_id].front());
 
 					for (m_current_layer = m_nb_layer - 1; m_current_layer >= 0; m_current_layer--)
+					{
+						bool is_last = m_current_layer == int(ptr_perceptrons.size() - 1);
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
 						{
 							if (m_current_layer > 0)
-								m_process[m_current_layer][m_current_id]->propagate(&m_process[m_current_layer - 1], m_current_layer == int(ptr_perceptrons.size() - 1));
+								m_process[m_current_layer][m_current_id]->propagate(&m_process[m_current_layer - 1], is_last);
 							else
-								m_process[m_current_layer][m_current_id]->propagate(&empty_process, m_current_layer == int(ptr_perceptrons.size() - 1));
+								m_process[m_current_layer][m_current_id]->propagate(&empty_process, is_last);
 						}
+					}
 
 					for (m_current_layer = 0; (unsigned int)m_current_layer < m_nb_layer; m_current_layer++)
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
@@ -92,7 +95,7 @@ namespace SNN
 					m_net->clr_internal_values();
 				}
 
-				m_net->sim(m_P);
+				m_net->sim(&m_P);
 				compute_error();
 
 

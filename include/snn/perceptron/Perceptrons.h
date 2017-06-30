@@ -40,7 +40,7 @@ namespace SNN
 		Perceptron_identity(Perceptron_identity const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_identity() {};
 
-		Perceptron_identity& operator=(Perceptron_identity const& perceptron) { Perceptron::operator=(perceptron); };
+		Perceptron_identity& operator=(Perceptron_identity const& perceptron) { Perceptron::operator=(perceptron); return *this; };
 
 		void activate();
 		string get_type() { return "identity"; };
