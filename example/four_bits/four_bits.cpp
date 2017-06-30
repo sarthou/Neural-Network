@@ -4,7 +4,7 @@
 
 using namespace SNN;
 
-int main()
+int test()
 {	
 	/*Create your network*/
 	vector<int> nb = { 1 };
@@ -54,7 +54,7 @@ int main()
 	vector<double> a2 = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
 	vector<vector<double> > P2 = { a2, b2, c2, d2 };
 
-	net.sim(P2);
+	net.sim(&P2);
 
 	net.round_output();
 	net.print_output();
