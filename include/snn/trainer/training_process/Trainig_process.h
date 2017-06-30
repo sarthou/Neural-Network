@@ -27,7 +27,7 @@ namespace SNN
 		virtual ~Trainig_process() {};
 
 		virtual void set_error(double T);
-		virtual void propagate(vector<Trainig_process*>* process, bool out = false) {};
+		virtual void propagate(vector<Trainig_process*>* process, bool out = false) { process; out; };
 		virtual void compute();
 
 		virtual void add_to_gradient(double value) { m_gradient += value; };

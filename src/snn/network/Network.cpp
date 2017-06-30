@@ -137,7 +137,7 @@ namespace SNN
 	Network::Network(Network const& network)
 	{
 		m_out = network.m_out;
-		vector<vector<Perceptron*> > m_perceptrons;
+		m_perceptrons = vector<vector<Perceptron*> >();
 		m_nb_perceptrons = network.m_nb_perceptrons;
 		m_types = network.m_types;
 		m_params = network.m_params;
@@ -159,8 +159,8 @@ namespace SNN
 			}
 		}
 
-		for (vector<vector<double>*>::iterator it = m_P.begin(); it != m_P.end();)
-			m_P.erase(it);
+		for (vector<vector<double>*>::iterator it = m_P.begin(); it != m_P.end(); ++it)
+			delete(*it);
 	}
 
 	Network& Network::operator=(Network const& network)
@@ -168,7 +168,7 @@ namespace SNN
 		if (this != &network)
 		{
 			m_out = network.m_out;
-			vector<vector<Perceptron*> > m_perceptrons;
+			m_perceptrons = vector<vector<Perceptron*> >();
 			m_nb_perceptrons = network.m_nb_perceptrons;
 			m_types = network.m_types;
 			m_params = network.m_params;
@@ -431,7 +431,7 @@ namespace SNN
 	{
 		bool uniform = true;
 		vector<vector<double>*>::iterator it_begin = p_vector.begin();
-		int size = (*it_begin)->size();
+		unsigned int size = (*it_begin)->size();
 		for (vector<vector<double>*>::iterator it = it_begin + 1; it != p_vector.end(); ++it)
 		{
 			if (size != (*it)->size())

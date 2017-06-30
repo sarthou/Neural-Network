@@ -78,9 +78,9 @@ namespace SNN
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
 						{
 							if (m_current_layer > 0)
-								m_process[m_current_layer][m_current_id]->propagate(&m_process[m_current_layer - 1], m_current_layer == ptr_perceptrons.size() - 1);
+								m_process[m_current_layer][m_current_id]->propagate(&m_process[m_current_layer - 1], m_current_layer == int(ptr_perceptrons.size() - 1));
 							else
-								m_process[m_current_layer][m_current_id]->propagate(&empty_process, m_current_layer == ptr_perceptrons.size() - 1);
+								m_process[m_current_layer][m_current_id]->propagate(&empty_process, m_current_layer == int(ptr_perceptrons.size() - 1));
 						}
 
 					for (m_current_layer = 0; (unsigned int)m_current_layer < m_nb_layer; m_current_layer++)
@@ -120,7 +120,6 @@ namespace SNN
 
 				end = std::chrono::system_clock::now();
 				long long int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-				std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 
 				std::cout << "time: " << elapsed_seconds << endl;
 			}
@@ -452,7 +451,7 @@ namespace SNN
 	{
 		bool uniform = true;
 		vector<vector<double> >::iterator it_begin = p_vector.begin();
-		int size = (*it_begin).size();
+		unsigned int size = (*it_begin).size();
 		for (vector<vector<double> >::iterator it = it_begin + 1; it != p_vector.end(); ++it)
 		{
 			if (size != (*it).size())
