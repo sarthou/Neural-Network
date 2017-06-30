@@ -43,10 +43,10 @@ namespace SNN
 
 	void GD_momentum_process::set_default_configuration(trainig_config_t* configuration)
 	{
-		if (configuration->step == INFINITY)
+		if (configuration->step == UNDEFINED)
 			configuration->step = 0.05;
 
-		if (configuration->momentum_factor == INFINITY)
+		if (configuration->momentum_factor == UNDEFINED)
 			configuration->momentum_factor = 0.05;
 	}
 

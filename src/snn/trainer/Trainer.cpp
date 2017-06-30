@@ -119,7 +119,7 @@ namespace SNN
 					m_dont_evolve = true;
 
 				end = std::chrono::system_clock::now();
-				int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+				long long int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 				std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 
 				std::cout << "time: " << elapsed_seconds << endl;

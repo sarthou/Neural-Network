@@ -13,7 +13,7 @@
 
 #include <string>
 
-#define INFINITY -999
+#define UNDEFINED -999
 
 namespace SNN
 {
@@ -46,8 +46,8 @@ namespace SNN
 		bool stop_evolution = false;
 
 		trainig_type_t training_type = Steepest_descent;
-		double step = INFINITY;
-		double momentum_factor = INFINITY;
+		double step = UNDEFINED;
+		double momentum_factor = UNDEFINED;
 	};
 
 } //namespace SNN_network

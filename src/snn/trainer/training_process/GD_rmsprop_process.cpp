@@ -44,7 +44,7 @@ namespace SNN
 	void GD_rmsprop_process::set_default_configuration(trainig_config_t* configuration)
 	{
 		
-		if (configuration->step == INFINITY)
+		if (configuration->step == UNDEFINED)
 			configuration->step = 0.002;
 	}
 
