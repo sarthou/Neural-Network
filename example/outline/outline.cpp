@@ -76,7 +76,7 @@ bool generate_img(Network* net, char* file_name)
 int main()
 {
 	/*Create your network*/
-	vector<int> nb = { 5, 5 };
+	vector<int> nb = { 6,6 };
 	vector<perceptron_type_t> type = { logistic, sinusoid };
 	vector<double> param = {};
 	Network net(nb, type, param);
@@ -91,12 +91,12 @@ int main()
 	config.debug_file = "debug.txt";
 
 	config.error_type = mae;
-	config.stop_error = 0.00001;
+	config.stop_error = 0.15;
 	config.nb_epochs = 500;
 	config.stop_evolution = false;
 
-	config.training_type = Steepest_descent;
-	config.step = 0.001;
+	config.training_type = GD_nesterov;
+	config.step = 0.00025;
 	//config.momentum_factor = 0.0005;
 
 	Trainer trainer;
@@ -109,8 +109,6 @@ int main()
 
 	Get_P_T(&T, &P);
 
-	std::cout << "train" << std::endl;
-
 	trainer.train(&net, P, T);
 
 	config.training_type = Steepest_descent;
@@ -122,7 +120,7 @@ int main()
 
 	/*Use your training network*/
 
-	generate_img(&net, "test.bmp");
+	generate_img(&net, "moto.bmp");
 
 
 	/*Additionals features*/
