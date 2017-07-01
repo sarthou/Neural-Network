@@ -81,7 +81,7 @@ namespace SNN
 	bool Perceptron::set_input(vector<vector<double>*> p_input)
 	{
 		bool ok = true;
-		m_input_perceptrons = new vector<Perceptron*>;
+		m_input_perceptrons = nullptr;
 
 		if (m_w.size() == 0)
 			m_w.resize(p_input.size());

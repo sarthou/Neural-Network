@@ -64,14 +64,15 @@ namespace SNN
 
 	void Trainig_process::add_to_precedent(vector<Trainig_process*>* process, double factor)
 	{
-		if (m_perceptron->m_input_perceptrons->size())
-		{
-			if (m_perceptron->m_w.size() == process->size())
+		if(m_perceptron->m_input_perceptrons != nullptr)
+			if (m_perceptron->m_input_perceptrons->size())
 			{
-				for (unsigned int i = 0; i < process->size(); i++)
-					(*process)[i]->add_to_gradient(factor*m_perceptron->m_w[i]);
+				if (m_perceptron->m_w.size() == process->size())
+				{
+					for (unsigned int i = 0; i < process->size(); i++)
+						(*process)[i]->add_to_gradient(factor*m_perceptron->m_w[i]);
+				}
 			}
-		}
 	}
 
 } // namespace SNN_network
