@@ -125,7 +125,7 @@ void bmp::generate_bmp_header(FILE* file)
 {
     output_bmp = input_bmp;
     for(unsigned int i = 0; i < output_bmp.palette_size/4; i++)
-        output_bmp.palette[i] = 255*i/(output_bmp.palette_size/4 - 1);
+        output_bmp.palette[i] = (unsigned char)(255*i/(output_bmp.palette_size/4 - 1));
 
     unsigned char empty_tab[4] = {0,0,0,0};
     unsigned char tmp[4];
@@ -186,7 +186,7 @@ void bmp::generate_image(FILE* file)
             for(pixel = nb_byte_per_pixel - 1; pixel >= 0 ; pixel--)
             {
                 if(nb_byte_per_pixel*bytes + pixel < (int)output_bmp.width)
-                    data = data | ((output_bmp.image[output_bmp.height - line - 1][nb_byte_per_pixel*bytes + pixel] * (output_bmp.palette_size/4) / 255) << (((8/input_bmp.nb_bit_per_pixel - pixel - 1))*input_bmp.nb_bit_per_pixel));
+                    data = data | (unsigned char)((output_bmp.image[output_bmp.height - line - 1][nb_byte_per_pixel*bytes + pixel] * (output_bmp.palette_size/4) / 255) << (((8/input_bmp.nb_bit_per_pixel - pixel - 1))*input_bmp.nb_bit_per_pixel));
                 else
                     data = data & ~(output_bmp.mask << ((8/input_bmp.nb_bit_per_pixel - pixel - 1))*input_bmp.nb_bit_per_pixel);
             }
@@ -262,7 +262,7 @@ void bmp::generate_image_real_color(FILE* file)
         {
             data = 0x00;
             if(8*bytes/input_bmp.nb_bit_per_pixel < input_bmp.width)
-                data = input_bmp.image[output_bmp.height - line - 1][8*bytes/output_bmp.nb_bit_per_pixel];
+                data = (unsigned char)(input_bmp.image[output_bmp.height - line - 1][8*bytes/output_bmp.nb_bit_per_pixel]);
             else
                 data = 0;
             fwrite (&data, sizeof(char), 1, file);
