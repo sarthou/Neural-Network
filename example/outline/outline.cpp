@@ -16,15 +16,13 @@ bool Get_P_T(vector<vector<double> >* T, vector<vector<double> >* P)
 
 	int x = min(input.width, output.width);
 	int y = min(output.height, output.height);
-	x = 120;
-	y = 10;
 
 	if ((T->size() == 1) && (P->size() == 9))
 	{
 		for (int xi = 1 + half_size; xi < x - half_size; xi++)
 			for (int yi = 1 + half_size; yi < y - half_size; yi++)
 			{
-				T->at(0).push_back(output.image[xi][yi]);
+				T->at(0).push_back(output.image[xi][yi] / 255.);
 				for(int local_x = -half_size; local_x <= half_size; local_x++)
 					for (int local_y = -half_size; local_y <= half_size; local_y++)
 					{
@@ -44,27 +42,33 @@ bool generate_img(Network* net, char* file_name)
 	bmp bmp_editor;
 	bmp_t input = bmp_editor.read_bmp(file_name);
 
-	int x = input.width;
-	int y = input.height;
+	int x = input.height;
+	int y = input.width;
 
 	vector<vector<double> > P(9, vector<double>());
 
-	for (int xi = 1 + half_size; xi < x - half_size; xi++)
-		for (int yi = 1 + half_size; y - half_size; yi++)
+	for (int xi = half_size; xi < x - half_size; xi++)
+		for (int yi = half_size; yi < y - half_size; yi++)
 		{
-			for (int local_x = -half_size; local_x < half_size; local_x++)
-				for (int local_y = -half_size; local_y < half_size; local_y++)
-					P[x*3+y].push_back(input.image[xi + local_x][yi + local_y]);
+			for (int local_x = -half_size; local_x <= half_size; local_x++)
+				for (int local_y = -half_size; local_y <= half_size; local_y++)
+					P[(local_x + half_size) * 3 + (local_y + half_size)].push_back(input.image[xi + local_x][yi + local_y]);
 		}
 
 	net->sim(&P);
 
 	net->round_output();
 	vector<vector<double> > out = net->get_output_cpy();
+	for (unsigned int i = 0; i < out.size(); i++)
+		for(unsigned int j = 0; j < out[i].size(); j++)
+		out[i][j] = out[i][j]*255;
 
-	/*out = answer * 255;
-	out = reshape(out, (y - 2 * half_S), (x - 2 * half_S));
-	imwrite(out','out.tif')*/
+	for (int xi = half_size; xi < x - half_size; xi++)
+		for (int yi = half_size; yi < y - half_size; yi++)
+			input.image[xi][yi] = out[0][(xi - half_size)* (y - 2 * half_size) + (yi - half_size)];
+
+	bmp_editor.input_bmp = input;
+	bmp_editor.write_bmp("out.bmp");
 
 	return true;
 }
@@ -73,7 +77,7 @@ int main()
 {
 	/*Create your network*/
 	vector<int> nb = { 5, 5 };
-	vector<perceptron_type_t> type = { logistic, identities };
+	vector<perceptron_type_t> type = { logistic, sinusoid };
 	vector<double> param = {};
 	Network net(nb, type, param);
 
@@ -87,13 +91,13 @@ int main()
 	config.debug_file = "debug.txt";
 
 	config.error_type = mae;
-	config.stop_error = 0.01;
-	config.nb_epochs = 5000;
-	config.stop_evolution = true;
+	config.stop_error = 0.00001;
+	config.nb_epochs = 500;
+	config.stop_evolution = false;
 
-	config.training_type = GD_adagrad;
-	config.step = 0.01;
-	//config.momentum_factor = 0.05;
+	config.training_type = Steepest_descent;
+	config.step = 0.001;
+	//config.momentum_factor = 0.0005;
 
 	Trainer trainer;
 	trainer.set_config(config);
@@ -114,7 +118,7 @@ int main()
 	config.stop_evolution = false;
 
 	trainer.set_config(config);
-	trainer.train(&net, P, T);
+	//trainer.train(&net, P, T);
 
 	/*Use your training network*/
 
