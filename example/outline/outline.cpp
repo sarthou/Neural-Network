@@ -91,12 +91,12 @@ int main()
 	config.debug_file = "debug.txt";
 
 	config.error_type = mae;
-	config.stop_error = 0.15;
+	config.stop_error = 0.16;
 	config.nb_epochs = 500;
 	config.stop_evolution = false;
 
 	config.training_type = GD_nesterov;
-	config.step = 0.00025;
+	config.step = 0.0003;
 	//config.momentum_factor = 0.0005;
 
 	Trainer trainer;
