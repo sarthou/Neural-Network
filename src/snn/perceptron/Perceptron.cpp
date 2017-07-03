@@ -102,27 +102,28 @@ namespace SNN
 
 	void Perceptron::sum()
 	{
-		vector<double> tmp_sum;
 		if (m_w.size() > 0)
 		{
-			int size = m_in.at(0)->size();
-			tmp_sum.resize(size);
-			for (vector<double>::iterator it = tmp_sum.begin(); it != tmp_sum.end(); ++it)
-				(*it) = -m_bia;
+			m_sum.resize(m_in.at(0)->size());
+			for (unsigned int i = 0; i < m_sum.size(); i++)
+				m_sum[i] = -m_bia;
 
-			vector<double>::iterator it_w = m_w.begin();
+			for (unsigned int vect = 0; vect < m_in.size(); vect++)
+				for (unsigned int i = 0; i < m_in[vect]->size(); i++)
+					m_sum[i] += m_w[vect] * (*m_in[vect])[i];
+
+			/*vector<double>::iterator it_w = m_w.begin();
 			for (vector<vector<double>*>::iterator it_vect = m_in.begin(); it_vect != m_in.end(); ++it_vect)
 			{
-				vector<double>::iterator it_out = tmp_sum.begin();
+				vector<double>::iterator it_out = m_sum.begin();
 				for (vector<double>::iterator it_in = (*it_vect)->begin(); it_in != (*it_vect)->end(); ++it_in)
 				{
 					(*it_out) += (*it_w)*(*it_in);
 					++it_out;
 				}
 				++it_w;
-			}
+			}*/
 		}
-		m_sum = tmp_sum;
 	}
 
 } // namespace SNN_network

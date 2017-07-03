@@ -60,8 +60,10 @@ namespace SNN
 			bool small_error = false;
 			for (unsigned int nb_epochs = 0; (nb_epochs < m_config.nb_epochs) && !small_error; nb_epochs++)
 			{
-				std::chrono::time_point<std::chrono::system_clock> start, end;
-				start = std::chrono::system_clock::now();
+				//std::chrono::time_point<std::chrono::system_clock> start, end;
+				//start = std::chrono::system_clock::now();
+				time_t start, end;
+				start = clock();
 
 				randomise();
 
@@ -121,9 +123,11 @@ namespace SNN
 				else if (abs(m_stop) < m_config.stop_error)
 					m_dont_evolve = true;
 
-				end = std::chrono::system_clock::now();
-				long long int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-
+				//end = std::chrono::system_clock::now();
+				//long long int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+				end = clock();
+				long long int elapsed_seconds = 1000.f * (double)(end - start) / CLOCKS_PER_SEC;
+				
 				std::cout << "time: " << elapsed_seconds << endl;
 			}
 			close_train();
