@@ -554,7 +554,7 @@ namespace SNN
 	{
 		for (vector<vector<double> >::iterator it_vect = m_out.begin(); it_vect != m_out.end(); ++it_vect)
 			for (vector<double>::iterator it = it_vect->begin(); it != it_vect->end(); ++it)
-				(*it) = std::round(*it);
+				(*it) = round(*it);
 	}
 
 	void Network::set_P_as_pointer(vector<vector<double>>* P)
