@@ -36,10 +36,7 @@ namespace SNN
 		if (1 != m_perceptron->m_out.size())
 			cout << "Internal training error" << endl;
 		else
-		{
-			vector<double>::iterator out_it = m_perceptron->get_output()->begin();
-			m_error = (*out_it) - T;
-		}
+			m_error = m_perceptron->m_out[0] - T;
 	}
 
 	void Trainig_process::compute()

@@ -33,6 +33,11 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_identity::derivate_single()
+	{
+		return 1.;
+	}
+
 	void Perceptron_binary_step::activate()
 	{
 		sum();
@@ -66,6 +71,14 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_binary_step::derivate_single()
+	{
+		if (m_sum[0] != 0.)
+			return 0.;
+		else
+			return INFINITY;
+	}
+
 	void Perceptron_logistic::activate()
 	{
 		sum();
@@ -91,6 +104,11 @@ namespace SNN
 
 			++it_deriv;
 		}
+	}
+
+	double Perceptron_logistic::derivate_single()
+	{
+		return m_out[0] * (1 - m_out[0]);
 	}
 
 	void Perceptron_tanH::activate()
@@ -120,6 +138,11 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_tanH::derivate_single()
+	{
+		return (1 - m_out[0]* m_out[0]);
+	}
+
 	void Perceptron_arcTan::activate()
 	{
 		sum();
@@ -147,6 +170,11 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_arcTan::derivate_single()
+	{
+		return 1. / (m_out[0] *m_out[0] + 1.);
+	}
+
 	void Perceptron_softsign::activate()
 	{
 		sum();
@@ -172,6 +200,11 @@ namespace SNN
 
 			++it_deriv;
 		}
+	}
+
+	double Perceptron_softsign::derivate_single()
+	{
+		return  1. / ((abs(m_out[0]) + 1.)*(abs(m_out[0]) + 1.)); 
 	}
 
 	void Perceptron_rectifier::activate()
@@ -207,6 +240,14 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_rectifier::derivate_single()
+	{
+		if (m_out[0] < 0.)
+			return 0.;
+		else
+			return 1.;
+	}
+
 	void Perceptron_rectifier_param::activate()
 	{
 		sum();
@@ -238,6 +279,14 @@ namespace SNN
 
 			++it_deriv;
 		}
+	}
+
+	double Perceptron_rectifier_param::derivate_single()
+	{
+		if (m_out[0] < 0.)
+			return m_a;
+		else
+			return 1.;
 	}
 
 	void Perceptron_ELU::activate()
@@ -275,6 +324,14 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_ELU::derivate_single()
+	{
+		if (m_out[0] < 0.)
+			return m_a + m_out[0];
+		else
+			return 1.;
+	}
+
 	void Perceptron_softPlus::activate()
 	{
 		sum();
@@ -300,6 +357,11 @@ namespace SNN
 
 			++it_deriv;
 		}
+	}
+
+	double Perceptron_softPlus::derivate_single()
+	{
+		return 1. / (1. + exp(-m_out[0]));
 	}
 
 	void Perceptron_bent_identity::activate()
@@ -329,6 +391,11 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_bent_identity::derivate_single()
+	{
+		return m_out[0] / (2. * sqrt(m_out[0] * m_out[0] + 1.)) + 1.;
+	}
+
 	void Perceptron_sinusoid::activate()
 	{
 		sum();
@@ -354,6 +421,11 @@ namespace SNN
 
 			++it_deriv;
 		}
+	}
+
+	double Perceptron_sinusoid::derivate_single()
+	{
+		return cos(m_out[0]);
 	}
 
 	void Perceptron_sinc::activate()
@@ -389,6 +461,14 @@ namespace SNN
 		}
 	}
 
+	double Perceptron_sinc::derivate_single()
+	{
+		if (m_out[0] == 0.)
+			return 0.;
+		else
+			return cos(m_out[0]) / m_out[0] + sin(m_out[0]) / (m_out[0] * m_out[0]);
+	}
+
 	void Perceptron_gaussian::activate()
 	{
 		sum();
@@ -414,6 +494,11 @@ namespace SNN
 
 			++it_deriv;
 		}
+	}
+
+	double Perceptron_gaussian::derivate_single()
+	{
+		return -2. * exp(-m_out[0]* m_out[0]);
 	}
 
 } // namespace SNN_network

@@ -26,13 +26,10 @@ namespace SNN
 
 	void GD_rmsprop_process::propagate(vector<Trainig_process*>* process, bool out)
 	{
-		derivate_perceptron();
-
-
 		if (out)
-			m_gradient = -m_error*get_derivate();
+			m_gradient = -m_error*get_single_derivate();
 		else
-			m_gradient *= get_derivate();
+			m_gradient *= get_single_derivate();
 
 		m_Eg = 0.9*m_Eg + 0.1*m_gradient*m_gradient;
 

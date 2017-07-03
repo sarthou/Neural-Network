@@ -29,12 +29,11 @@ namespace SNN
 	{
 		m_delta_1 = m_delta;
 		m_error -= m_momentum_factor*m_delta_1;
-		derivate_perceptron();
 
 		if (out)
-			m_gradient = -m_error*get_derivate();
+			m_gradient = -m_error*get_single_derivate();
 		else
-			m_gradient *= get_derivate();
+			m_gradient *= get_single_derivate();
 
 		add_to_precedent(process, m_gradient);
 

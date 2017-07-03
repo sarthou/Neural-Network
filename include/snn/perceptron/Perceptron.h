@@ -62,6 +62,7 @@ namespace SNN
 
 		void sum();
 		virtual void derivate() = 0;
+		virtual double derivate_single() = 0;
 	};
 
 } // namespace SNN_network

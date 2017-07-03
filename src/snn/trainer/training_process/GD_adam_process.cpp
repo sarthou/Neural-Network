@@ -29,13 +29,10 @@ namespace SNN
 
 	void GD_adam_process::propagate(vector<Trainig_process*>* process, bool out)
 	{
-		derivate_perceptron();
-
-
 		if (out)
-			m_gradient = -m_error*get_derivate();
+			m_gradient = -m_error*get_single_derivate();
 		else
-			m_gradient *= get_derivate();
+			m_gradient *= get_single_derivate();
 
 		m_m = ((1 - B1)*m_m /B1  + m_gradient) ;
 		m_v = ((1 - B2)*m_v /B2  + m_gradient*m_gradient) ;

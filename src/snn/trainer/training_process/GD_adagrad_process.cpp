@@ -26,12 +26,10 @@ namespace SNN
 
 	void GD_adagrad_process::propagate(vector<Trainig_process*>* process, bool out)
 	{
-		derivate_perceptron();
-
 		if (out)
-			m_gradient = -m_error*get_derivate();
+			m_gradient = -m_error*get_single_derivate();
 		else
-			m_gradient *= get_derivate();
+			m_gradient *= get_single_derivate();
 
 		ss_gradient += m_gradient*m_gradient;
 

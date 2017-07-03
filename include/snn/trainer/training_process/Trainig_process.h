@@ -44,6 +44,7 @@ namespace SNN
 
 		void derivate_perceptron() { m_perceptron->derivate(); };
 		double get_derivate() { return *(m_perceptron->m_derivate.begin()); };
+		double get_single_derivate() { return m_perceptron->derivate_single(); };
 		vector<double> get_inputs();
 		void add_to_precedent(vector<Trainig_process*>* process, double factor);
 	};

@@ -28,13 +28,11 @@ namespace SNN
 	void GD_momentum_process::propagate(vector<Trainig_process*>* process, bool out)
 	{
 		m_delta_1 = m_gradient;
-		
-		derivate_perceptron();
 
 		if (out)
-			m_gradient = -m_error*get_derivate();
+			m_gradient = -m_error*get_single_derivate();
 		else
-			m_gradient *= get_derivate();
+			m_gradient *= get_single_derivate();
 
 		add_to_precedent(process, m_gradient);
 
