@@ -32,9 +32,9 @@ namespace SNN
 		Perceptron& operator=(Perceptron const& perceptron);
 
 		void set_input(vector<Perceptron*>* p_input_perceptrons);
-		bool set_input(vector<vector<double>*> p_input);
+		bool set_input(const vector<vector<double>*>& p_input);
 
-		void set_weigh(vector<double> p_w);
+		void set_weigh(const vector<double>& p_w);
 		vector<double> get_weigh() { return m_w; };
 		void set_bia(double p_bia) { m_bia = p_bia; };
 		double get_bia() { return m_bia; };
