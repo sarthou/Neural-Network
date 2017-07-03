@@ -159,8 +159,8 @@ namespace SNN
 			}
 		}
 
-		for (unsigned int i = 0; i < m_P.size(); i++)
-			delete(m_P[i]);
+		for (vector<vector<double>*>::iterator it = m_P.begin(); it != m_P.end(); ++it)
+			delete(*it);
 	}
 
 	Network& Network::operator=(Network const& network)
