@@ -97,7 +97,7 @@ int main()
 
 	config.training_type = GD_nesterov;
 	config.step = 0.0003;
-	//config.momentum_factor = 0.0005;
+	config.momentum_factor = 0.00015;
 
 	Trainer trainer;
 	trainer.set_config(config);
