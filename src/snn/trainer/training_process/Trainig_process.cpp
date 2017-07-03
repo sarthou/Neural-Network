@@ -21,16 +21,6 @@ namespace SNN
 		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
-	vector<double> Trainig_process::get_inputs()
-	{
-		vector<double> tmp;
-		for (vector<vector<double>*>::iterator it = m_perceptron->m_in.begin(); it != m_perceptron->m_in.end(); ++it)
-		{
-			tmp.push_back(*((*it)->begin()));
-		}
-		return tmp;
-	}
-
 	void Trainig_process::set_error(double T)
 	{
 		if (1 != m_perceptron->m_out.size())

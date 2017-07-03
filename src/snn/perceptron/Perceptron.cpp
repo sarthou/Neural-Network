@@ -109,20 +109,10 @@ namespace SNN
 				m_sum[i] = -m_bia;
 
 			for (unsigned int vect = 0; vect < m_in.size(); vect++)
+			{
 				for (unsigned int i = 0; i < m_in[vect]->size(); i++)
 					m_sum[i] += m_w[vect] * (*m_in[vect])[i];
-
-			/*vector<double>::iterator it_w = m_w.begin();
-			for (vector<vector<double>*>::iterator it_vect = m_in.begin(); it_vect != m_in.end(); ++it_vect)
-			{
-				vector<double>::iterator it_out = m_sum.begin();
-				for (vector<double>::iterator it_in = (*it_vect)->begin(); it_in != (*it_vect)->end(); ++it_in)
-				{
-					(*it_out) += (*it_w)*(*it_in);
-					++it_out;
-				}
-				++it_w;
-			}*/
+			}
 		}
 	}
 

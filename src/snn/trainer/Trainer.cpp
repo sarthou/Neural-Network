@@ -60,8 +60,6 @@ namespace SNN
 			bool small_error = false;
 			for (unsigned int nb_epochs = 0; (nb_epochs < m_config.nb_epochs) && !small_error; nb_epochs++)
 			{
-				//std::chrono::time_point<std::chrono::system_clock> start, end;
-				//start = std::chrono::system_clock::now();
 				time_t start, end;
 				start = clock();
 
@@ -92,8 +90,6 @@ namespace SNN
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
 							m_process[m_current_layer][m_current_id]->compute();
 
-					//std::cout << "-----" << std::endl;
-
 					m_net->clr_internal_values();
 				}
 
@@ -123,8 +119,6 @@ namespace SNN
 				else if (abs(m_stop) < m_config.stop_error)
 					m_dont_evolve = true;
 
-				//end = std::chrono::system_clock::now();
-				//long long int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 				end = clock();
 				long long int elapsed_seconds = 1000.f * (double)(end - start) / CLOCKS_PER_SEC;
 				
