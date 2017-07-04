@@ -54,7 +54,7 @@ namespace SNN
 
 			int m_current_layer;
 			unsigned int m_current_id;
-			unsigned int m_nb_layer = ptr_perceptrons.size();
+			unsigned int m_nb_layer = ptr_perceptrons.size() - 1;
 			vector<Trainig_process*> empty_process;
 
 			bool small_error = false;
@@ -70,14 +70,16 @@ namespace SNN
 					select_single_data(index);
 					m_net->sim(&tmp_P, false);
 
+					//set eroor on last layer
 					m_current_layer = m_nb_layer - 1; //last layer
-					for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
+					for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer + 1].size(); m_current_id++)
 						m_process[m_current_layer][m_current_id]->set_error(tmp_T[m_current_id].front());
 
+					//propagate on all layers
 					for (m_current_layer = m_nb_layer - 1; m_current_layer >= 0; m_current_layer--)
 					{
-						bool is_last = m_current_layer == int(ptr_perceptrons.size() - 1);
-						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
+						bool is_last = m_current_layer == int(ptr_perceptrons.size() - 2);
+						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer + 1].size(); m_current_id++)
 						{
 							if (m_current_layer > 0)
 								m_process[m_current_layer][m_current_id]->propagate(&m_process[m_current_layer - 1], is_last);
@@ -86,8 +88,9 @@ namespace SNN
 						}
 					}
 
+					//compute on all layers
 					for (m_current_layer = 0; (unsigned int)m_current_layer < m_nb_layer; m_current_layer++)
-						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer].size(); m_current_id++)
+						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer + 1].size(); m_current_id++)
 							m_process[m_current_layer][m_current_id]->compute();
 
 					m_net->clr_internal_values();
@@ -328,12 +331,12 @@ namespace SNN
 	void Trainer::set_trainig_process()
 	{
 		unsigned int m_current_id, m_current_layer;
-		m_process.resize(m_net->m_perceptrons.size());
-		for (m_current_layer = 0; m_current_layer < m_net->m_perceptrons.size(); m_current_layer++)
+		m_process.resize(m_net->m_perceptrons.size() - 1); //don't create process for input layer
+		for (m_current_layer = 0; m_current_layer < m_net->m_perceptrons.size() -1; m_current_layer++)
 		{
-			m_process[m_current_layer].resize(m_net->m_perceptrons[m_current_layer].size());
-			for (m_current_id = 0; m_current_id < m_net->m_perceptrons[m_current_layer].size(); m_current_id++)
-				m_process[m_current_layer][m_current_id] = creat_process(m_net->m_perceptrons[m_current_layer][m_current_id]);
+			m_process[m_current_layer].resize(m_net->m_perceptrons[m_current_layer + 1].size());
+			for (m_current_id = 0; m_current_id < m_net->m_perceptrons[m_current_layer + 1].size(); m_current_id++)
+				m_process[m_current_layer][m_current_id] = creat_process(m_net->m_perceptrons[m_current_layer + 1][m_current_id]);
 		}
 	}
 
