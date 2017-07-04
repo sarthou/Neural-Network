@@ -267,6 +267,7 @@ namespace SNN
 
 				bool input_set = true;
 
+				//set data into input layer
 				for(unsigned int id = 0; id < m_perceptrons[0].size(); id++)
 					input_set &= m_perceptrons[0][id]->set_input(m_P);
 
@@ -274,10 +275,12 @@ namespace SNN
 				{
 					unsigned int last_layer = m_perceptrons.size() - 1;
 					
-					for (unsigned int layer = 0; layer < last_layer; layer++)
+					//activate internal layers
+					for (unsigned int layer = 1; layer < last_layer; layer++)
 						for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
 							m_perceptrons[layer][id]->activate();
 
+					//activate output layer
 					for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
 					{
 						m_perceptrons[last_layer][id]->activate();
