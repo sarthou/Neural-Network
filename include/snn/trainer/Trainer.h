@@ -63,6 +63,7 @@ namespace SNN
 		void close_train();
 		bool can_be_train();
 
+		void set_input_perceptrons();
 		void set_output_perceptrons();
 		void set_input();
 

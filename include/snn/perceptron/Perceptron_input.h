@@ -27,7 +27,7 @@ namespace SNN
 		void activate() {};
 		string get_type() { return "input"; };
 
-		bool set_input(const vector<vector<double>*>& p_input) { m_out = *p_input[m_id]; };
+		bool set_input(const vector<vector<double>*>& p_input) { m_out = *p_input[m_id]; return true; };
 	private:
 		void derivate() {};
 		double derivate_single() { return INFINITY; };

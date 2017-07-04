@@ -159,8 +159,6 @@ namespace SNN
 			}
 		}
 
-		//for (vector<vector<double>*>::iterator it = m_P.begin(); it != m_P.end(); ++it)
-		//	delete(*it);
 		for (unsigned int i = 0; i < m_P.size(); i++)
 			delete(m_P[i]);
 	}
@@ -218,7 +216,7 @@ namespace SNN
 #ifdef _WIN32
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01);
 #endif
-				cout << "Output not gererate yet" << endl;
+				cout << "Output and input not gererated yet" << endl;
 #ifdef _WIN32
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
 #endif
