@@ -519,7 +519,9 @@ namespace SNN
 	Perceptron* Network::copy_perceptron(Perceptron& perceptron)
 	{
 		Perceptron* tmp_perceptron = nullptr;
-		if (perceptron.get_type() == "identity")
+		if(perceptron.get_type() == "input")
+			tmp_perceptron = new Perceptron_input((Perceptron_input&)perceptron);
+		else if (perceptron.get_type() == "identity")
 			tmp_perceptron = new Perceptron_identity((Perceptron_identity&)perceptron);
 		else if (perceptron.get_type() == "binary_step")
 			tmp_perceptron = new Perceptron_binary_step((Perceptron_binary_step&)perceptron);
