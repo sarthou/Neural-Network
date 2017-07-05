@@ -33,6 +33,7 @@ namespace SNN
 
 		void set_input(vector<Perceptron*>* p_input_perceptrons);
 		virtual bool set_input(const vector<vector<double>*>& p_input);
+		virtual bool set_input(const vector<double>& p_input) { p_input; return true; };
 
 		void set_weigh(const vector<double>& p_w);
 		vector<double> get_weigh() { return m_w; };

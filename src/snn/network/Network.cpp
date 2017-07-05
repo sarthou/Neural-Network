@@ -266,49 +266,46 @@ namespace SNN
 
 	void Network::sim(vector<vector<double> >* P, bool clr)
 	{
+		Matrix<double> mat(P->size(), (*P)[0].size(), *P);
+		sim(mat, clr);
+	}
+
+	void Network::sim(Matrix<double>&  P, bool clr)
+	{
 #ifdef _WIN32
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
 #endif
 		if (m_is_train)
 		{
-			set_P_as_pointer(P);
 			m_out.clear();
 
-			bool same_size = vector_is_uniforme(m_P);
+			bool input_set = true;
 
-			if (same_size)
+			//set data into input layer
+			for (unsigned int id = 0; id < m_perceptrons[0].size(); id++)
+				input_set &= m_perceptrons[0][id]->set_input(P.get_row(id));
+
+			if (input_set)
 			{
+				unsigned int last_layer = m_perceptrons.size() - 1;
 
-				bool input_set = true;
+				//activate internal layers
+				for (unsigned int layer = 1; layer < last_layer; layer++)
+					for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
+						m_perceptrons[layer][id]->activate();
 
-				//set data into input layer
-				for(unsigned int id = 0; id < m_perceptrons[0].size(); id++)
-					input_set &= m_perceptrons[0][id]->set_input(m_P);
-
-				if (input_set)
+				//activate output layer
+				for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
 				{
-					unsigned int last_layer = m_perceptrons.size() - 1;
-					
-					//activate internal layers
-					for (unsigned int layer = 1; layer < last_layer; layer++)
-						for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
-							m_perceptrons[layer][id]->activate();
-
-					//activate output layer
-					for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
-					{
-						m_perceptrons[last_layer][id]->activate();
-						m_out.push_back(m_perceptrons[last_layer][id]->get_output_cpy());
-					}
-
-					if (clr)
-						clr_internal_values();
+					m_perceptrons[last_layer][id]->activate();
+					m_out.push_back(m_perceptrons[last_layer][id]->get_output_cpy());
 				}
-				else
-					cout << "Sim => Inputs sizes error." << endl;
+
+				if (clr)
+					clr_internal_values();
 			}
 			else
-				cout << "Sim => Inputs sizes are not the same." << endl;
+				cout << "Sim => Inputs sizes error." << endl;
 		}
 		else
 			cout << "Sim => Network not train." << endl;

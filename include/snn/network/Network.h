@@ -14,6 +14,8 @@
 #include "snn/perceptron/Perceptron.h"
 #include "snn/perceptron/Perceptrons.h"
 #include "snn/perceptron/Perceptron_input.h"
+
+#include "snn/utility/Matrix.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -78,6 +80,8 @@ namespace SNN
 
 		bool is_configure() { return m_is_configure; };
 		void set_it_train() { if (m_is_configure) m_is_train = true; };
+
+		void sim(Matrix<double>&  P, bool clr = true);
 
 		void generate_network();
 		void generate_copy_network(Network const& network);
