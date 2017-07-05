@@ -33,10 +33,10 @@ namespace SNN
 	{
 		m_perceptron->m_bia -= m_delta;
 
-		if (m_perceptron->m_in.size() == m_w_gradient.size())
+		if (m_perceptron->m_input_perceptrons->size() == m_w_gradient.size())
 		{
-			for (unsigned int i = 0; i < m_perceptron->m_in.size(); i++)
-				m_perceptron->m_w[i] += (*m_perceptron->m_in[i])[0] * m_delta;
+			for (unsigned int i = 0; i < m_perceptron->m_input_perceptrons->size(); i++)
+				m_perceptron->m_w[i] += (*m_perceptron->m_input_perceptrons)[i]->m_out[0] * m_delta;
 		}
 		m_gradient = 0;
 	}

@@ -54,7 +54,6 @@ namespace SNN
 		vector<double> m_w;
 
 		vector<Perceptron*>* m_input_perceptrons;
-		vector<vector<double>*> m_in;
 		vector<double> m_out;
 
 		vector<double> m_sum;

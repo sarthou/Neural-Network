@@ -71,25 +71,13 @@ namespace SNN
 	void Perceptron::set_input(vector<Perceptron*>* p_input_perceptrons)
 	{
 		m_input_perceptrons = p_input_perceptrons;
-		for (vector<Perceptron*>::iterator it = m_input_perceptrons->begin(); it != m_input_perceptrons->end(); ++it)
-		{
-			m_in.push_back((*it)->get_output());
-		}
+
 		m_w.resize(m_input_perceptrons->size());
 	}
 
 	bool Perceptron::set_input(const vector<vector<double>*>& p_input)
 	{
 		bool ok = true;
-		m_input_perceptrons = nullptr;
-
-		if (m_w.size() == 0)
-			m_w.resize(p_input.size());
-		else if (m_w.size() != p_input.size())
-			ok = false;
-
-		if (ok)
-			m_in = p_input;
 
 		return ok;
 	}
@@ -104,15 +92,15 @@ namespace SNN
 	{
 		if (m_w.size() > 0)
 		{
-			//m_sum.resize(m_input_perceptrons->at(0)->m_out.size());
-			m_sum.resize(m_in.at(0)->size());
+			int size = (*m_input_perceptrons)[0]->m_out.size();
+			m_sum.resize(size);
 			for (unsigned int i = 0; i < m_sum.size(); i++)
 				m_sum[i] = -m_bia;
 
-			for (unsigned int vect = 0; vect < m_in.size(); vect++)
+			for (unsigned int vect = 0; vect < m_input_perceptrons->size(); vect++)
 			{
-				for (unsigned int i = 0; i < m_in[vect]->size(); i++)
-					m_sum[i] += m_w[vect] * (*m_in[vect])[i];
+				for (unsigned int i = 0; i < (*m_input_perceptrons)[vect]->m_out.size(); i++)
+					m_sum[i] += m_w[vect] * (*m_input_perceptrons)[vect]->m_out[i];
 			}
 		}
 	}
