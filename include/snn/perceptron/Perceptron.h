@@ -32,7 +32,7 @@ namespace SNN
 		Perceptron& operator=(Perceptron const& perceptron);
 
 		void set_input(vector<Perceptron*>* p_input_perceptrons);
-		bool set_input(const vector<vector<double>*>& p_input);
+		virtual bool set_input(const vector<vector<double>*>& p_input);
 
 		void set_weigh(const vector<double>& p_w);
 		vector<double> get_weigh() { return m_w; };
@@ -54,7 +54,6 @@ namespace SNN
 		vector<double> m_w;
 
 		vector<Perceptron*>* m_input_perceptrons;
-		vector<vector<double>*> m_in;
 		vector<double> m_out;
 
 		vector<double> m_sum;

@@ -13,6 +13,7 @@
 
 #include "snn/perceptron/Perceptron.h"
 #include "snn/perceptron/Perceptrons.h"
+#include "snn/perceptron/Perceptron_input.h"
 #include <vector>
 #include <string>
 #include <iostream>

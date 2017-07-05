@@ -159,8 +159,6 @@ namespace SNN
 			}
 		}
 
-		//for (vector<vector<double>*>::iterator it = m_P.begin(); it != m_P.end(); ++it)
-		//	delete(*it);
 		for (unsigned int i = 0; i < m_P.size(); i++)
 			delete(m_P[i]);
 	}
@@ -201,24 +199,38 @@ namespace SNN
 
 		if (m_is_configure)
 		{
-			int layer = 0;
-			for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
-			{
-				vector<Perceptron*>::iterator it_perceptron = it_layer->begin();
-				string type = (*it_perceptron)->get_type();
-				int nb_percep = (*it_layer).size();
-
-				cout << "Layer " << layer << "\t:\t" << nb_percep << "\tperceptrons " << type << endl;
-
-				layer++;
-			}
-
-			if (m_perceptrons.size() == m_nb_perceptrons.size())
+			if (m_perceptrons[0].size() == 0)
 			{
 #ifdef _WIN32
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01);
 #endif
-				cout << "Output not gererate yet" << endl;
+				cout << "Input not gererated yet" << endl;
+#ifdef _WIN32
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+#endif
+			}
+
+			int layer = 0;
+			for (vector<vector<Perceptron*> >::iterator it_layer = m_perceptrons.begin(); it_layer != m_perceptrons.end(); ++it_layer)
+			{
+				if ((*it_layer).size() != 0)
+				{
+					vector<Perceptron*>::iterator it_perceptron = it_layer->begin();
+					string type = (*it_perceptron)->get_type();
+					int nb_percep = (*it_layer).size();
+
+					cout << "Layer " << layer << "\t:\t" << nb_percep << "\tperceptrons " << type << endl;
+
+					layer++;
+				}
+			}
+
+			if (m_perceptrons[m_nb_perceptrons.size() + 1].size() == 0)
+			{
+#ifdef _WIN32
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x01);
+#endif
+				cout << "Output not gererated yet" << endl;
 #ifdef _WIN32
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
 #endif
@@ -269,6 +281,7 @@ namespace SNN
 
 				bool input_set = true;
 
+				//set data into input layer
 				for(unsigned int id = 0; id < m_perceptrons[0].size(); id++)
 					input_set &= m_perceptrons[0][id]->set_input(m_P);
 
@@ -276,10 +289,12 @@ namespace SNN
 				{
 					unsigned int last_layer = m_perceptrons.size() - 1;
 					
-					for (unsigned int layer = 0; layer < last_layer; layer++)
+					//activate internal layers
+					for (unsigned int layer = 1; layer < last_layer; layer++)
 						for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
 							m_perceptrons[layer][id]->activate();
 
+					//activate output layer
 					for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
 					{
 						m_perceptrons[last_layer][id]->activate();
@@ -312,6 +327,7 @@ namespace SNN
 	void Network::generate_network()
 	{
 		int layer = 0;
+		m_perceptrons.push_back(vector<Perceptron*>()); // insert empty vector pour input
 		for (vector<int>::iterator it = m_nb_perceptrons.begin(); it != m_nb_perceptrons.end(); ++it)
 		{
 			vector<Perceptron*> temp_vect;
@@ -341,6 +357,7 @@ namespace SNN
 			m_perceptrons.push_back(temp_vect);
 			layer++;
 		}
+		m_perceptrons.push_back(vector<Perceptron*>()); // insert empty vector pour output
 	}
 
 	void Network::generate_copy_network(Network const& network)
@@ -381,8 +398,8 @@ namespace SNN
 	{
 		if (m_nb_perceptrons.size() > 1)
 		{
-			vector<vector<Perceptron*> >::iterator init_it = m_perceptrons.begin();
-			for (vector<vector<Perceptron*> >::iterator it = init_it + 1; it != m_perceptrons.end(); ++it)
+			vector<vector<Perceptron*> >::iterator init_it = m_perceptrons.begin() + 1; // don't link with input layer
+			for (vector<vector<Perceptron*> >::iterator it = init_it + 1; it != m_perceptrons.end() - 1; ++it)
 			{
 				for (vector<Perceptron*>::iterator percept_it = it->begin(); percept_it != it->end(); percept_it++)
 				{
@@ -518,7 +535,9 @@ namespace SNN
 	Perceptron* Network::copy_perceptron(Perceptron& perceptron)
 	{
 		Perceptron* tmp_perceptron = nullptr;
-		if (perceptron.get_type() == "identity")
+		if(perceptron.get_type() == "input")
+			tmp_perceptron = new Perceptron_input((Perceptron_input&)perceptron);
+		else if (perceptron.get_type() == "identity")
 			tmp_perceptron = new Perceptron_identity((Perceptron_identity&)perceptron);
 		else if (perceptron.get_type() == "binary_step")
 			tmp_perceptron = new Perceptron_binary_step((Perceptron_binary_step&)perceptron);
