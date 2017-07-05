@@ -4,7 +4,7 @@
 
 using namespace SNN;
 
-int main()
+int test()
 {	
 	/*Create your network*/
 	vector<int> nb = { 1 };

@@ -104,6 +104,7 @@ namespace SNN
 	{
 		if (m_w.size() > 0)
 		{
+			//m_sum.resize(m_input_perceptrons->at(0)->m_out.size());
 			m_sum.resize(m_in.at(0)->size());
 			for (unsigned int i = 0; i < m_sum.size(); i++)
 				m_sum[i] = -m_bia;

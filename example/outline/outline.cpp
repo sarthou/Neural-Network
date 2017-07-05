@@ -73,7 +73,7 @@ bool generate_img(Network* net, char* file_name)
 	return true;
 }
 
-int test()
+int main()
 {
 	/*Create your network*/
 	vector<int> nb = { 6,6 };

@@ -237,14 +237,12 @@ namespace SNN
 
 	void Trainer::set_input_perceptrons()
 	{
-		if (m_net->m_perceptrons.size() == m_net->m_nb_perceptrons.size())
+		if (m_net->m_perceptrons[0].size() == 0)
 		{
 			//creat input perceptrons vector
-			vector<Perceptron*> input_vect;
 			for (unsigned int i = 0; i < m_P.size(); i++)
-				input_vect.push_back(new Perceptron_input(-1, i));
+				m_net->m_perceptrons[0].push_back(new Perceptron_input(-1, i));
 			
-			m_net->m_perceptrons.insert(m_net->m_perceptrons.begin(), input_vect);
 
 			//link with others layers
 			if (m_net->m_nb_perceptrons.size() != 0)
@@ -255,7 +253,7 @@ namespace SNN
 
 	void Trainer::set_output_perceptrons()
 	{
-		if (m_net->m_perceptrons.size() == m_net->m_nb_perceptrons.size() + 1)
+		if (m_net->m_perceptrons[m_net->m_nb_perceptrons.size() + 1].size() == 0)
 		{
 			perceptron_type_t type;
 			if (m_net->m_nb_perceptrons.size() == 0)
@@ -277,8 +275,6 @@ namespace SNN
 			if (m_net->m_params.size() > 0)
 				param = m_net->m_params.back();
 
-			vector<Perceptron*> temp_vect;
-			m_net->m_perceptrons.push_back(temp_vect);
 			for (unsigned int i = 0; i < m_T.size(); i++)
 			{
 				Perceptron* perceptron = m_net->creat_perceptron(m_net->m_nb_perceptrons.size(), i, type, param);
