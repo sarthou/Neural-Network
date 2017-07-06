@@ -9,7 +9,7 @@ int test()
 	/*Create your network*/
 	vector<int> nb = { 1 };
 	vector<perceptron_type_t> type = { identities };
-	vector<double> param = { };
+	vector<float> param = { };
 	Network net(nb, type, param);
 
 	net.print();
@@ -22,12 +22,12 @@ int test()
 	config.debug_file = "debug.txt";
 
 	config.error_type = mae;
-	config.stop_error = 0.00001;
+	config.stop_error = 0.00001f;
 	config.nb_epochs = 5000;
 	config.stop_evolution = false;
 
 	config.training_type = GD_adagrad;
-	config.step = 0.1;
+	config.step = 0.1f;
 	//config.momentum_factor = 0.05;
 
 	Trainer trainer;
@@ -35,30 +35,30 @@ int test()
 
 	/*Train your network*/
 
-	vector<double> d = { 0, 0, 0, 0, 0, 1, 1, 0 };
-	vector<double> c = { 0, 0, 0, 0, 1, 1, 0, 1 };
-	vector<double> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
-	vector<double> a = { 0, 1, 0, 1, 0, 0, 0, 1 };
-	vector<vector<double> > P = { a, b, c, d };
+	vector<float> d = { 0, 0, 0, 0, 0, 1, 1, 0 };
+	vector<float> c = { 0, 0, 0, 0, 1, 1, 0, 1 };
+	vector<float> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
+	vector<float> a = { 0, 1, 0, 1, 0, 0, 0, 1 };
+	vector<vector<float> > P = { a, b, c, d };
 
-	vector<double> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
-	vector<vector<double> > T = { Ta };
+	vector<float> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
+	vector<vector<float> > T = { Ta };
 
 	trainer.train(&net, P, T);
 
 	/*Use your training network*/
 
-	vector<double> d2 = { 1, 0, 0, 0, 1, 0, 0, 1, 1 };
-	vector<double> c2 = { 0, 1, 0, 0, 0, 1, 1, 0, 1 };
-	vector<double> b2 = { 0, 0, 1, 0, 1, 0, 1, 0, 1 };
-	vector<double> a2 = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
-	vector<vector<double> > P2 = { a2, b2, c2, d2 };
+	vector<float> d2 = { 1, 0, 0, 0, 1, 0, 0, 1, 1 };
+	vector<float> c2 = { 0, 1, 0, 0, 0, 1, 1, 0, 1 };
+	vector<float> b2 = { 0, 0, 1, 0, 1, 0, 1, 0, 1 };
+	vector<float> a2 = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
+	vector<vector<float> > P2 = { a2, b2, c2, d2 };
 
 	net.sim(&P2);
 
 	net.round_output();
 	net.print_output();
-	vector<vector<double> > out = net.get_output_cpy();
+	vector<vector<float> > out = net.get_output_cpy();
 
 
 	/*Additionals features*/

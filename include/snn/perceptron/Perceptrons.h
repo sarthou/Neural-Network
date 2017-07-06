@@ -46,7 +46,7 @@ namespace SNN
 		string get_type() { return "identity"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_binary_step : public Perceptron // {0,1}
@@ -62,7 +62,7 @@ namespace SNN
 		string get_type() { return "binary_step"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_logistic : public Perceptron // (0,1)
@@ -78,7 +78,7 @@ namespace SNN
 		string get_type() { return "logistic"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_tanH : public Perceptron // (-1,1)
@@ -94,7 +94,7 @@ namespace SNN
 		string get_type() { return "tanH"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_arcTan : public Perceptron // (-pi/2, pi/2)
@@ -110,7 +110,7 @@ namespace SNN
 		string get_type() { return "arcTan"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_softsign : public Perceptron // (-1, 1)
@@ -126,7 +126,7 @@ namespace SNN
 		string get_type() { return "softsign"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_rectifier : public Perceptron // [0, inf)
@@ -142,13 +142,13 @@ namespace SNN
 		string get_type() { return "rectifier"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_rectifier_param : public Perceptron // (-inf, inf)
 	{
 	public:
-		Perceptron_rectifier_param(int p_layer, int p_id, double a = 0.) : Perceptron(p_layer, p_id) { m_a = a; };
+		Perceptron_rectifier_param(int p_layer, int p_id, float a = 0.) : Perceptron(p_layer, p_id) { m_a = a; };
 		Perceptron_rectifier_param(Perceptron_rectifier_param const& perceptron) : Perceptron(perceptron) { m_a = perceptron.m_a; };
 		~Perceptron_rectifier_param() {};
 
@@ -157,16 +157,16 @@ namespace SNN
 		void activate();
 		string get_type() { return "rectifier_param"; };
 	private:
-		double m_a;
+		float m_a;
 
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_ELU : public Perceptron // (-a, inf) Exponential Linear Unit
 	{
 	public:
-		Perceptron_ELU(int p_layer, int p_id, double a = 0.) : Perceptron(p_layer, p_id) { m_a = a; };
+		Perceptron_ELU(int p_layer, int p_id, float a = 0.) : Perceptron(p_layer, p_id) { m_a = a; };
 		Perceptron_ELU(Perceptron_ELU const& perceptron) : Perceptron(perceptron) { m_a = perceptron.m_a; };
 		~Perceptron_ELU() {};
 
@@ -175,10 +175,10 @@ namespace SNN
 		void activate();
 		string get_type() { return "ELU"; };
 	private:
-		double m_a;
+		float m_a;
 
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_softPlus : public Perceptron // (0, inf)
@@ -194,7 +194,7 @@ namespace SNN
 		string get_type() { return "softPlus"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_bent_identity : public Perceptron // (-inf, inf)
@@ -210,7 +210,7 @@ namespace SNN
 		string get_type() { return "bent_identity"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_sinusoid : public Perceptron // (-1, 1)
@@ -226,7 +226,7 @@ namespace SNN
 		string get_type() { return "sinusoid"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_sinc : public Perceptron // (-0.217, 1)
@@ -242,7 +242,7 @@ namespace SNN
 		string get_type() { return "sinc"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 	class Perceptron_gaussian : public Perceptron // (0, 1]
@@ -258,7 +258,7 @@ namespace SNN
 		string get_type() { return "gaussian"; };
 	private:
 		void derivate();
-		double derivate_single();
+		float derivate_single();
 	};
 
 } //namespace SNN_network

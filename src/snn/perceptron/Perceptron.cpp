@@ -75,14 +75,14 @@ namespace SNN
 		m_w.resize(m_input_perceptrons->size());
 	}
 
-	bool Perceptron::set_input(const vector<vector<double>*>& p_input)
+	bool Perceptron::set_input(const vector<vector<float>*>& p_input)
 	{
-		bool ok = true;
+		p_input;
 
-		return ok;
+		return true;
 	}
 
-	void Perceptron::set_weigh(const vector<double>& p_w)
+	void Perceptron::set_weigh(const vector<float>& p_w)
 	{
 		if (p_w.size() == m_w.size())
 			m_w = p_w;

@@ -26,13 +26,13 @@ namespace SNN
 		m_net = nullptr;
 
 		m_config.nb_epochs = 50;
-		m_config.step = 0.1;
-		m_config.stop_error = 0.1;
+		m_config.step = 0.1f;
+		m_config.stop_error = 0.1f;
 		m_config.training_type = Steepest_descent;
 		m_config.error_type = mae;
 
-		m_error = 0.;
-		m_stop = 0.;
+		m_error = 0.f;
+		m_stop = 0.f;
 	}
 
 	Trainer::~Trainer()
@@ -40,7 +40,7 @@ namespace SNN
 
 	}
 
-	void Trainer::train(Network* net, vector<vector<double> >& P, vector<vector<double> >& T)
+	void Trainer::train(Network* net, vector<vector<float> >& P, vector<vector<float> >& T)
 	{
 		m_P = P;
 		m_T = T;
@@ -123,7 +123,7 @@ namespace SNN
 					m_dont_evolve = true;
 
 				end = clock();
-				long long int elapsed_seconds = 1000.f * (double)(end - start) / CLOCKS_PER_SEC;
+				long long int elapsed_seconds = 1000.f * (float)(end - start) / CLOCKS_PER_SEC;
 				
 				std::cout << "time: " << elapsed_seconds << endl;
 			}
@@ -150,10 +150,10 @@ namespace SNN
 
 		tmp_P.resize(m_P.size());
 		tmp_T.resize(m_T.size());
-		for (vector<vector<double> >::iterator it = tmp_P.begin(); it != tmp_P.end(); ++it)
-			(*it) = vector<double>(1, 0.);
-		for (vector<vector<double> >::iterator it = tmp_T.begin(); it != tmp_T.end(); ++it)
-			(*it) = vector<double>(1, 0.);
+		for (vector<vector<float> >::iterator it = tmp_P.begin(); it != tmp_P.end(); ++it)
+			(*it) = vector<float>(1, 0.);
+		for (vector<vector<float> >::iterator it = tmp_T.begin(); it != tmp_T.end(); ++it)
+			(*it) = vector<float>(1, 0.);
 
 		m_mean_error = 0;
 		m_dont_evolve = false;
@@ -166,7 +166,7 @@ namespace SNN
 
 	void Trainer::close_train()
 	{
-		for (vector<vector<double>*>::iterator it = m_P_ptr.begin(); it != m_P_ptr.end(); ++it)
+		for (vector<vector<float>*>::iterator it = m_P_ptr.begin(); it != m_P_ptr.end(); ++it)
 			delete (*it);
 
 		for (vector<vector<Trainig_process*>>::iterator it_layer = m_process.begin(); it_layer != m_process.end(); ++it_layer)
@@ -271,7 +271,7 @@ namespace SNN
 					type = m_net->m_types.back();
 			}
 
-			double param = 0.;
+			float param = 0.;
 			if (m_net->m_params.size() > 0)
 				param = m_net->m_params.back();
 
@@ -370,18 +370,18 @@ namespace SNN
 	void Trainer::init_weigh()
 	{
 		default_random_engine generator;
-		uniform_real_distribution<double> distribution(-0.5, 0.5);
+		uniform_real_distribution<float> distribution(-0.5, 0.5);
 		random_device rd;
 		generator.seed(rd());
 
-		vector<double> tmp_weigh;
+		vector<float> tmp_weigh;
 
 		for (vector<vector<Perceptron*>>::iterator it_layer = m_net->m_perceptrons.begin(); it_layer != m_net->m_perceptrons.end(); ++it_layer)
 			for (vector<Perceptron*>::iterator it_perceptron = it_layer->begin(); it_perceptron != it_layer->end(); ++it_perceptron)
 			{
 				(*it_perceptron)->set_bia(distribution(generator));
 				tmp_weigh = (*it_perceptron)->get_weigh();
-				for (vector<double>::iterator w_it = tmp_weigh.begin(); w_it != tmp_weigh.end(); ++w_it)
+				for (vector<float>::iterator w_it = tmp_weigh.begin(); w_it != tmp_weigh.end(); ++w_it)
 					(*w_it) = distribution(generator);
 				(*it_perceptron)->set_weigh(tmp_weigh);
 			}
@@ -399,7 +399,7 @@ namespace SNN
 
 		unsigned long int from = 0;
 		unsigned long int to = 0;
-		double tmp_value = 0.;
+		float tmp_value = 0.;
 
 		for (index = 0; index < vect_size; index++)
 		{
@@ -438,7 +438,7 @@ namespace SNN
 
 		if (m_config.error_type == mae)
 		{
-			vector<vector<double> >* output = m_net->get_output();
+			vector<vector<float> >* output = m_net->get_output();
 			for (unsigned int vect_i = 0; vect_i < m_T.size(); vect_i++)
 			{
 				for (unsigned int i = 0; i < m_T[vect_i].size(); i++)
@@ -451,7 +451,7 @@ namespace SNN
 		}
 		else
 		{
-			vector<vector<double> >* output = m_net->get_output();
+			vector<vector<float> >* output = m_net->get_output();
 			for (unsigned int vect_i = 0; vect_i < m_T.size(); vect_i++)
 			{
 				for (unsigned int i = 0; i < m_T[vect_i].size(); i++)
@@ -468,15 +468,15 @@ namespace SNN
 	{
 		
 		for (unsigned int i = 0; i < m_P.size(); i++)
-			m_P_ptr.push_back(new vector<double>(m_P[i]));
+			m_P_ptr.push_back(new vector<float>(m_P[i]));
 	}
 
-	bool Trainer::vector_is_uniforme(vector<vector<double> >& p_vector)
+	bool Trainer::vector_is_uniforme(vector<vector<float> >& p_vector)
 	{
 		bool uniform = true;
-		vector<vector<double> >::iterator it_begin = p_vector.begin();
+		vector<vector<float> >::iterator it_begin = p_vector.begin();
 		unsigned int size = (*it_begin).size();
-		for (vector<vector<double> >::iterator it = it_begin + 1; it != p_vector.end(); ++it)
+		for (vector<vector<float> >::iterator it = it_begin + 1; it != p_vector.end(); ++it)
 		{
 			if (size != (*it).size())
 				uniform = false;

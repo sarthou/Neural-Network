@@ -55,7 +55,7 @@ namespace SNN
 		faile_to_configure();
 	}
 
-	Network::Network(vector<perceptron_type_t> p_types, vector<double> p_params)
+	Network::Network(vector<perceptron_type_t> p_types, vector<float> p_params)
 	{
 		init();
 		if (p_types.size() > 1)
@@ -101,7 +101,7 @@ namespace SNN
 		faile_to_configure();
 	}
 
-	Network::Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types, vector<double> p_params)
+	Network::Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types, vector<float> p_params)
 	{
 		init();
 		if (p_types.size() > p_nb_perceptrons.size() + 1)
@@ -242,9 +242,9 @@ namespace SNN
 	{
 		if (m_out.size() > 0)
 		{
-			for (vector<vector<double> >::iterator it = m_out.begin(); it != m_out.end(); ++it)
+			for (vector<vector<float> >::iterator it = m_out.begin(); it != m_out.end(); ++it)
 			{
-				for (vector<double>::iterator it2 = it->begin(); it2 != it->end(); ++it2)
+				for (vector<float>::iterator it2 = it->begin(); it2 != it->end(); ++it2)
 				{
 					std::cout << ' ' << *it2;
 				}
@@ -264,51 +264,48 @@ namespace SNN
 		}
 	}
 
-	void Network::sim(vector<vector<double> >* P, bool clr)
+	void Network::sim(vector<vector<float> >* P, bool clr)
+	{
+		Matrix<float> mat(P->size(), (*P)[0].size(), *P);
+		sim(mat, clr);
+	}
+
+	void Network::sim(Matrix<float>&  P, bool clr)
 	{
 #ifdef _WIN32
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
 #endif
 		if (m_is_train)
 		{
-			set_P_as_pointer(P);
 			m_out.clear();
 
-			bool same_size = vector_is_uniforme(m_P);
+			bool input_set = true;
 
-			if (same_size)
+			//set data into input layer
+			for (unsigned int id = 0; id < m_perceptrons[0].size(); id++)
+				input_set &= m_perceptrons[0][id]->set_input(P.get_row(id));
+
+			if (input_set)
 			{
+				unsigned int last_layer = m_perceptrons.size() - 1;
 
-				bool input_set = true;
+				//activate internal layers
+				for (unsigned int layer = 1; layer < last_layer; layer++)
+					for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
+						m_perceptrons[layer][id]->activate();
 
-				//set data into input layer
-				for(unsigned int id = 0; id < m_perceptrons[0].size(); id++)
-					input_set &= m_perceptrons[0][id]->set_input(m_P);
-
-				if (input_set)
+				//activate output layer
+				for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
 				{
-					unsigned int last_layer = m_perceptrons.size() - 1;
-					
-					//activate internal layers
-					for (unsigned int layer = 1; layer < last_layer; layer++)
-						for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
-							m_perceptrons[layer][id]->activate();
-
-					//activate output layer
-					for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
-					{
-						m_perceptrons[last_layer][id]->activate();
-						m_out.push_back(m_perceptrons[last_layer][id]->get_output_cpy());
-					}
-
-					if (clr)
-						clr_internal_values();
+					m_perceptrons[last_layer][id]->activate();
+					m_out.push_back(m_perceptrons[last_layer][id]->get_output_cpy());
 				}
-				else
-					cout << "Sim => Inputs sizes error." << endl;
+
+				if (clr)
+					clr_internal_values();
 			}
 			else
-				cout << "Sim => Inputs sizes are not the same." << endl;
+				cout << "Sim => Inputs sizes error." << endl;
 		}
 		else
 			cout << "Sim => Network not train." << endl;
@@ -341,7 +338,7 @@ namespace SNN
 					type = m_types[layer];
 			}
 
-			double param = 0;
+			float param = 0;
 			if (m_params.size() > 0)
 			{
 				if (m_params.size() <= 2)
@@ -376,7 +373,7 @@ namespace SNN
 					type = m_types[layer];
 			}
 
-			double param = 0;
+			float param = 0;
 			if (m_params.size() > 0)
 			{
 				if (m_params.size() <= 2)
@@ -449,12 +446,12 @@ namespace SNN
 #endif
 	}
 
-	bool Network::vector_is_uniforme(vector<vector<double>*>& p_vector)
+	bool Network::vector_is_uniforme(vector<vector<float>*>& p_vector)
 	{
 		bool uniform = true;
-		vector<vector<double>*>::iterator it_begin = p_vector.begin();
+		vector<vector<float>*>::iterator it_begin = p_vector.begin();
 		unsigned int size = (*it_begin)->size();
-		for (vector<vector<double>*>::iterator it = it_begin + 1; it != p_vector.end(); ++it)
+		for (vector<vector<float>*>::iterator it = it_begin + 1; it != p_vector.end(); ++it)
 		{
 			if (size != (*it)->size())
 				uniform = false;
@@ -478,7 +475,7 @@ namespace SNN
 		return positive;
 	}
 
-	Perceptron* Network::creat_perceptron(int layer, int id, perceptron_type_t type, double param)
+	Perceptron* Network::creat_perceptron(int layer, int id, perceptron_type_t type, float param)
 	{
 		Perceptron* tmp_perceptron = nullptr;
 		switch (type)
@@ -573,19 +570,19 @@ namespace SNN
 
 	void Network::round_output()
 	{
-		for (vector<vector<double> >::iterator it_vect = m_out.begin(); it_vect != m_out.end(); ++it_vect)
-			for (vector<double>::iterator it = it_vect->begin(); it != it_vect->end(); ++it)
+		for (vector<vector<float> >::iterator it_vect = m_out.begin(); it_vect != m_out.end(); ++it_vect)
+			for (vector<float>::iterator it = it_vect->begin(); it != it_vect->end(); ++it)
 				(*it) = round(*it);
 	}
 
-	void Network::set_P_as_pointer(vector<vector<double>>* P)
+	void Network::set_P_as_pointer(vector<vector<float>>* P)
 	{
 		for (unsigned int i =0; i < m_P.size(); i++)
 			delete(m_P[i]);
 
 		m_P.clear();
 		for (unsigned int i = 0; i < (*P).size(); i++)
-			m_P.push_back(new vector<double>((*P)[i]));
+			m_P.push_back(new vector<float>((*P)[i]));
 	}
 
 } // namespace SNN_network

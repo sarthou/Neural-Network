@@ -34,7 +34,7 @@ namespace SNN
 		Trainer();
 		~Trainer();
 
-		void train(Network* net, vector<vector<double> >& P, vector<vector<double> >& T);
+		void train(Network* net, vector<vector<float> >& P, vector<vector<float> >& T);
 
 		void set_config(trainig_config_t p_config) { m_config = p_config; };
 
@@ -43,18 +43,18 @@ namespace SNN
 		vector<vector<Perceptron*>> ptr_perceptrons;
 		vector<vector<Trainig_process*>> m_process;
 
-		vector<vector<double>*> m_P_ptr;
-		vector<vector<double> > m_P;
-		vector<vector<double> > m_T;
-		vector<vector<double> > tmp_P;
-		vector<vector<double> > tmp_T;
+		vector<vector<float>*> m_P_ptr;
+		vector<vector<float> > m_P;
+		vector<vector<float> > m_T;
+		vector<vector<float> > tmp_P;
+		vector<vector<float> > tmp_T;
 
 		trainig_config_t m_config;
-		double m_error;
+		float m_error;
 
-		vector<double> m_stop_vector;
-		double m_stop;
-		double m_mean_error;
+		vector<float> m_stop_vector;
+		float m_stop;
+		float m_mean_error;
 		bool m_dont_evolve;
 
 		ofstream m_debug_file;
@@ -78,7 +78,7 @@ namespace SNN
 
 		void compute_error();
 
-		bool vector_is_uniforme(vector<vector<double> >& p_vector);
+		bool vector_is_uniforme(vector<vector<float> >& p_vector);
 		void set_as_pointer();
 	};
 

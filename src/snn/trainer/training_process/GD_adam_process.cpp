@@ -13,13 +13,13 @@
 namespace SNN
 {
 
-	GD_adam_process::GD_adam_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
+	GD_adam_process::GD_adam_process(Perceptron* p_perceptron, float p_step) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
-		m_m = 0;
-		m_v = 0;
-		B1 = 0.9;
-		B2 = 0.999;
+		m_m = 0.f;
+		m_v = 0.f;
+		B1 = 0.9f;
+		B2 = 0.999f;
 	}
 
 	GD_adam_process::~GD_adam_process()
@@ -39,13 +39,13 @@ namespace SNN
 
 		add_to_precedent(process, m_gradient);
 
-		m_delta = m_step * m_m / sqrt(m_v + 0.00000001);
+		m_delta = m_step * m_m / sqrt(m_v + 0.00000001f);
 	}
 
 	void GD_adam_process::set_default_configuration(trainig_config_t* configuration)
 	{
 		if (configuration->step == UNDEFINED)
-			configuration->step = 0.001;
+			configuration->step = 0.001f;
 	}
 
 } // namespace SNN_trainer

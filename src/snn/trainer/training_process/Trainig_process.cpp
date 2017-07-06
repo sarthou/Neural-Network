@@ -21,7 +21,7 @@ namespace SNN
 		m_w_gradient.resize(m_perceptron->get_weigh().size());
 	}
 
-	void Trainig_process::set_error(double T)
+	void Trainig_process::set_error(float T)
 	{
 		if (1 != m_perceptron->m_out.size())
 			cout << "Internal training error" << endl;
@@ -41,7 +41,7 @@ namespace SNN
 		m_gradient = 0;
 	}
 
-	void Trainig_process::add_to_precedent(vector<Trainig_process*>* process, double factor)
+	void Trainig_process::add_to_precedent(vector<Trainig_process*>* process, float factor)
 	{
 		if (m_perceptron->m_layer > 0)
 		{

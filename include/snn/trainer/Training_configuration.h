@@ -41,13 +41,13 @@ namespace SNN
 		string debug_file = "debug.txt";
 
 		error_type_t error_type = mse;
-		double stop_error = 0.00001;
+		float stop_error = (float)0.00001;
 		unsigned int nb_epochs = 5000;
 		bool stop_evolution = false;
 
 		trainig_type_t training_type = Steepest_descent;
-		double step = UNDEFINED;
-		double momentum_factor = UNDEFINED;
+		float step = UNDEFINED;
+		float momentum_factor = UNDEFINED;
 	};
 
 } //namespace SNN_network

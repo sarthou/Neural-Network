@@ -24,18 +24,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_deriv) = 1.;
+			(*it_deriv) = 1.f;
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_identity::derivate_single()
+	float Perceptron_identity::derivate_single()
 	{
-		return 1.;
+		return 1.f;
 	}
 
 	void Perceptron_binary_step::activate()
@@ -43,13 +43,13 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
 			if ((*it) >= 0.)
-				(*it_out) = 1.;
+				(*it_out) = 1.f;
 			else
-				(*it_out) = 0.;
+				(*it_out) = 0.f;
 
 			++it_out;
 		}
@@ -59,11 +59,11 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) != 0.)
-				(*it_deriv) = 0.;
+			if ((*it) != 0.f)
+				(*it_deriv) = 0.f;
 			else
 				(*it_deriv) = INFINITY;
 
@@ -71,10 +71,10 @@ namespace SNN
 		}
 	}
 
-	double Perceptron_binary_step::derivate_single()
+	float Perceptron_binary_step::derivate_single()
 	{
-		if (m_sum[0] != 0.)
-			return 0.;
+		if (m_sum[0] != 0.f)
+			return 0.f;
 		else
 			return INFINITY;
 	}
@@ -84,10 +84,10 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_out) = 1. / (1. + exp(-(*it)));
+			(*it_out) = 1.f / (1.f + exp(-(*it)));
 
 			++it_out;
 		}
@@ -97,18 +97,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_out.begin(); it != m_out.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_out.begin(); it != m_out.end(); ++it)
 		{
-			(*it_deriv) = (*it)*(1. - (*it));
+			(*it_deriv) = (*it)*(1.f - (*it));
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_logistic::derivate_single()
+	float Perceptron_logistic::derivate_single()
 	{
-		return m_out[0] * (1 - m_out[0]);
+		return m_out[0] * (1.f - m_out[0]);
 	}
 
 	void Perceptron_tanH::activate()
@@ -116,10 +116,10 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_out) = (2. / (1. + exp(-2 * (*it)))) - 1.;
+			(*it_out) = (2.f / (1.f + exp(-2.f * (*it)))) - 1.f;
 
 			++it_out;
 		}
@@ -129,18 +129,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_out.begin(); it != m_out.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_out.begin(); it != m_out.end(); ++it)
 		{
-			(*it_deriv) = 1. - (*it)*(*it);
+			(*it_deriv) = 1.f - (*it)*(*it);
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_tanH::derivate_single()
+	float Perceptron_tanH::derivate_single()
 	{
-		return (1 - m_out[0]* m_out[0]);
+		return (1.f - m_out[0]* m_out[0]);
 	}
 
 	void Perceptron_arcTan::activate()
@@ -148,8 +148,8 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
 			(*it_out) = atan(*it);
 
@@ -161,18 +161,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_deriv) = 1. / ((*it)*(*it) + 1.);
+			(*it_deriv) = 1.f / ((*it)*(*it) + 1.f);
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_arcTan::derivate_single()
+	float Perceptron_arcTan::derivate_single()
 	{
-		return 1. / (m_out[0] *m_out[0] + 1.);
+		return 1.f / (m_out[0] *m_out[0] + 1.f);
 	}
 
 	void Perceptron_softsign::activate()
@@ -180,10 +180,10 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_out) = (*it) / (1. + abs(*it));
+			(*it_out) = (*it) / (1.f + abs(*it));
 
 			++it_out;
 		}
@@ -193,18 +193,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_deriv) = 1. / ((abs((*it)) + 1.)*(abs((*it)) + 1.));
+			(*it_deriv) = 1.f / ((abs((*it)) + 1.f)*(abs((*it)) + 1.f));
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_softsign::derivate_single()
+	float Perceptron_softsign::derivate_single()
 	{
-		return  1. / ((abs(m_out[0]) + 1.)*(abs(m_out[0]) + 1.)); 
+		return  1.f / ((abs(m_out[0]) + 1.f)*(abs(m_out[0]) + 1.f));
 	}
 
 	void Perceptron_rectifier::activate()
@@ -212,13 +212,13 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) >= 0.)
+			if ((*it) >= 0.f)
 				(*it_out) = (*it);
 			else
-				(*it_out) = 0.;
+				(*it_out) = 0.f;
 
 			++it_out;
 		}
@@ -228,22 +228,22 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) < 0.)
-				(*it_deriv) = 0.;
+			if ((*it) < 0.f)
+				(*it_deriv) = 0.f;
 			else
-				(*it_deriv) = 1.;
+				(*it_deriv) = 1.f;
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_rectifier::derivate_single()
+	float Perceptron_rectifier::derivate_single()
 	{
-		if (m_out[0] < 0.)
-			return 0.;
+		if (m_out[0] < 0.f)
+			return 0.f;
 		else
 			return 1.;
 	}
@@ -253,10 +253,10 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) >= 0.)
+			if ((*it) >= 0.f)
 				(*it_out) = (*it);
 			else
 				(*it_out) = m_a*(*it);
@@ -269,24 +269,24 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) < 0.)
+			if ((*it) < 0.f)
 				(*it_deriv) = m_a;
 			else
-				(*it_deriv) = 1.;
+				(*it_deriv) = 1.f;
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_rectifier_param::derivate_single()
+	float Perceptron_rectifier_param::derivate_single()
 	{
-		if (m_out[0] < 0.)
+		if (m_out[0] < 0.f)
 			return m_a;
 		else
-			return 1.;
+			return 1.f;
 	}
 
 	void Perceptron_ELU::activate()
@@ -294,13 +294,13 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) >= 0.)
+			if ((*it) >= 0.f)
 				(*it_out) = (*it);
 			else
-				(*it_out) = m_a*(exp(*it) - 1.);
+				(*it_out) = m_a*(exp(*it) - 1.f);
 
 			++it_out;
 		}
@@ -310,26 +310,26 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) < 0.)
+			if ((*it) < 0.f)
 				(*it_deriv) = m_a + (*it_out);
 			else
-				(*it_deriv) = 1.;
+				(*it_deriv) = 1.f;
 
 			++it_deriv;
 			++it_out;
 		}
 	}
 
-	double Perceptron_ELU::derivate_single()
+	float Perceptron_ELU::derivate_single()
 	{
-		if (m_out[0] < 0.)
+		if (m_out[0] < 0.f)
 			return m_a + m_out[0];
 		else
-			return 1.;
+			return 1.f;
 	}
 
 	void Perceptron_softPlus::activate()
@@ -337,10 +337,10 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_out) = log(1. + exp(*it));
+			(*it_out) = log(1.f + exp(*it));
 
 			++it_out;
 		}
@@ -350,18 +350,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_deriv) = 1. / (1. + exp(-(*it)));
+			(*it_deriv) = 1.f / (1.f + exp(-(*it)));
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_softPlus::derivate_single()
+	float Perceptron_softPlus::derivate_single()
 	{
-		return 1. / (1. + exp(-m_out[0]));
+		return (float)(1.f / (1.f + exp(-m_out[0])));
 	}
 
 	void Perceptron_bent_identity::activate()
@@ -369,10 +369,10 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_out) = (sqrt((*it)*(*it) + 1.) - 1.) / 2. + (*it);
+			(*it_out) = (sqrt((*it)*(*it) + 1.f) - 1.f) / 2.f + (*it);
 
 			++it_out;
 		}
@@ -382,18 +382,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_deriv) = (*it) / (2. * sqrt((*it)*(*it) + 1.)) + 1.;
+			(*it_deriv) = (*it) / (2.f * sqrt((*it)*(*it) + 1.f)) + 1.f;
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_bent_identity::derivate_single()
+	float Perceptron_bent_identity::derivate_single()
 	{
-		return m_out[0] / (2. * sqrt(m_out[0] * m_out[0] + 1.)) + 1.;
+		return (float)(m_out[0] / (2.f * sqrt(m_out[0] * m_out[0] + 1.f)) + 1.f);
 	}
 
 	void Perceptron_sinusoid::activate()
@@ -401,8 +401,8 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
 			(*it_out) = sin(*it);
 
@@ -414,8 +414,8 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
 			(*it_deriv) = cos(*it);
 
@@ -423,7 +423,7 @@ namespace SNN
 		}
 	}
 
-	double Perceptron_sinusoid::derivate_single()
+	float Perceptron_sinusoid::derivate_single()
 	{
 		return cos(m_out[0]);
 	}
@@ -433,11 +433,11 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) == 0.)
-				(*it_out) = 1.;
+			if ((*it) == 0.f)
+				(*it_out) = 1.f;
 			else
 				(*it_out) = sin(*it) / (*it);
 
@@ -449,11 +449,11 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			if ((*it) == 0.)
-				(*it_deriv) = 0.;
+			if ((*it) == 0.f)
+				(*it_deriv) = 0.f;
 			else
 				(*it_deriv) = cos((*it)) / (*it) + sin((*it)) / ((*it)*(*it));
 
@@ -461,10 +461,10 @@ namespace SNN
 		}
 	}
 
-	double Perceptron_sinc::derivate_single()
+	float Perceptron_sinc::derivate_single()
 	{
-		if (m_out[0] == 0.)
-			return 0.;
+		if (m_out[0] == 0.f)
+			return 0.f;
 		else
 			return cos(m_out[0]) / m_out[0] + sin(m_out[0]) / (m_out[0] * m_out[0]);
 	}
@@ -474,8 +474,8 @@ namespace SNN
 		sum();
 		m_out = m_sum;
 
-		vector<double>::iterator it_out = m_out.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_out = m_out.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
 			(*it_out) = exp(-(*it)*(*it));
 
@@ -487,18 +487,18 @@ namespace SNN
 	{
 		m_derivate = m_sum;
 
-		vector<double>::iterator it_deriv = m_derivate.begin();
-		for (vector<double>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		vector<float>::iterator it_deriv = m_derivate.begin();
+		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
 		{
-			(*it_deriv) = -2. * exp(-(*it)*(*it));
+			(*it_deriv) = -2.f * exp(-(*it)*(*it));
 
 			++it_deriv;
 		}
 	}
 
-	double Perceptron_gaussian::derivate_single()
+	float Perceptron_gaussian::derivate_single()
 	{
-		return -2. * exp(-m_out[0]* m_out[0]);
+		return (float)(-2.f * exp(-m_out[0]* m_out[0]));
 	}
 
 } // namespace SNN_network
