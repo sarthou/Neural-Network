@@ -50,9 +50,9 @@ namespace SNN
 		Network();
 		Network(vector<int> p_nb_perceptrons);
 		Network(vector<perceptron_type_t> p_types);
-		Network(vector<perceptron_type_t> p_types, vector<double> p_params);
+		Network(vector<perceptron_type_t> p_types, vector<float> p_params);
 		Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types);
-		Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types, vector<double> p_params);
+		Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types, vector<float> p_params);
 		Network(Network const& network);
 		~Network();
 
@@ -60,28 +60,28 @@ namespace SNN
 
 		void print();
 		void print_output();
-		void sim(vector<vector<double> >* P, bool clr = true);
+		void sim(vector<vector<float> >* P, bool clr = true);
 		void clr_internal_values();
 
-		vector<vector<double> >* get_output() { return &m_out; };
-		vector<vector<double> > get_output_cpy() { return m_out; };
+		vector<vector<float> >* get_output() { return &m_out; };
+		vector<vector<float> > get_output_cpy() { return m_out; };
 
 		void round_output();
 
 	private:
-		vector<vector<double>*> m_P;
-		vector<vector<double>> m_out;
+		vector<vector<float>*> m_P;
+		vector<vector<float>> m_out;
 		vector<vector<Perceptron*>> m_perceptrons;
 		vector<int> m_nb_perceptrons;
 		vector<perceptron_type_t> m_types;
-		vector<double> m_params;
+		vector<float> m_params;
 		bool m_is_train;
 		bool m_is_configure;
 
 		bool is_configure() { return m_is_configure; };
 		void set_it_train() { if (m_is_configure) m_is_train = true; };
 
-		void sim(Matrix<double>&  P, bool clr = true);
+		void sim(Matrix<float>&  P, bool clr = true);
 
 		void generate_network();
 		void generate_copy_network(Network const& network);
@@ -90,13 +90,13 @@ namespace SNN
 
 		void init();
 		void faile_to_configure();
-		bool vector_is_uniforme(vector<vector<double>*>& p_vector);
+		bool vector_is_uniforme(vector<vector<float>*>& p_vector);
 		bool vector_is_positive(vector<int>& p_vector);
 
-		Perceptron* creat_perceptron(int layer, int id, perceptron_type_t type, double param = 0);
+		Perceptron* creat_perceptron(int layer, int id, perceptron_type_t type, float param = 0);
 		Perceptron* copy_perceptron(Perceptron& perceptron);
 
-		void set_P_as_pointer(vector<vector<double>>* P);
+		void set_P_as_pointer(vector<vector<float>>* P);
 	};
 
 } // namespace SNN_network

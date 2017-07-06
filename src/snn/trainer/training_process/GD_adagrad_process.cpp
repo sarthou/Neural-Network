@@ -13,7 +13,7 @@
 namespace SNN
 {
 
-	GD_adagrad_process::GD_adagrad_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
+	GD_adagrad_process::GD_adagrad_process(Perceptron* p_perceptron, float p_step) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
 		ss_gradient = 0;
@@ -35,13 +35,13 @@ namespace SNN
 
 		add_to_precedent(process, m_gradient);
 
-		m_delta = m_gradient*m_step*20/ sqrt(ss_gradient + 0.00000001);
+		m_delta = m_gradient*m_step*20/ sqrt(ss_gradient + 0.00000001f);
 	}
 
 	void GD_adagrad_process::set_default_configuration(trainig_config_t* configuration)
 	{
 		if(configuration->step == UNDEFINED)
-			configuration->step = 0.05;
+			configuration->step = 0.05f;
 	}
 
 } // namespace SNN_trainer

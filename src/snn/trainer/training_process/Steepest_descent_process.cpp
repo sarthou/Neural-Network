@@ -13,7 +13,7 @@
 namespace SNN
 {
 
-	Steepest_descent_process::Steepest_descent_process(Perceptron* p_perceptron, double p_step) : Trainig_process(p_perceptron)
+	Steepest_descent_process::Steepest_descent_process(Perceptron* p_perceptron, float p_step) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
 	}
@@ -38,7 +38,7 @@ namespace SNN
 	void Steepest_descent_process::set_default_configuration(trainig_config_t* configuration)
 	{
 		if (configuration->step == UNDEFINED)
-			configuration->step = 0.1;
+			configuration->step = 0.1f;
 	}
 
 } // namespace SNN_trainer

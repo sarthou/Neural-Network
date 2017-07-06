@@ -20,7 +20,7 @@ namespace SNN
 	class GD_adam_process : public Trainig_process
 	{
 	public:
-		GD_adam_process(Perceptron* p_perceptron, double p_step);
+		GD_adam_process(Perceptron* p_perceptron, float p_step);
 		~GD_adam_process();
 
 		void propagate(vector<Trainig_process*>* process, bool out = false);
@@ -28,13 +28,13 @@ namespace SNN
 		static void set_default_configuration(trainig_config_t* configuration);
 
 	private:
-		double m_step;
+		float m_step;
 
-		double m_m;
-		double m_v;
+		float m_m;
+		float m_v;
 
-		double B1;
-		double B2;
+		float B1;
+		float B2;
 	};
 } // SNN_network
 

@@ -32,16 +32,16 @@ namespace SNN
 		Perceptron& operator=(Perceptron const& perceptron);
 
 		void set_input(vector<Perceptron*>* p_input_perceptrons);
-		virtual bool set_input(const vector<vector<double>*>& p_input);
-		virtual bool set_input(const vector<double>& p_input) { p_input; return true; };
+		virtual bool set_input(const vector<vector<float>*>& p_input);
+		virtual bool set_input(const vector<float>& p_input) { p_input; return true; };
 
-		void set_weigh(const vector<double>& p_w);
-		vector<double> get_weigh() { return m_w; };
-		void set_bia(double p_bia) { m_bia = p_bia; };
-		double get_bia() { return m_bia; };
+		void set_weigh(const vector<float>& p_w);
+		vector<float> get_weigh() { return m_w; };
+		void set_bia(float p_bia) { m_bia = p_bia; };
+		float get_bia() { return m_bia; };
 
-		vector<double>* get_output() { return &m_out; };
-		vector<double> get_output_cpy() { return m_out; };
+		vector<float>* get_output() { return &m_out; };
+		vector<float> get_output_cpy() { return m_out; };
 		void clr() { m_out.clear(); m_sum.clear(); m_derivate.clear(); };
 
 		virtual void activate() = 0;
@@ -51,18 +51,18 @@ namespace SNN
 		int m_layer;
 		int m_id;
 
-		double m_bia;
-		vector<double> m_w;
+		float m_bia;
+		vector<float> m_w;
 
 		vector<Perceptron*>* m_input_perceptrons;
-		vector<double> m_out;
+		vector<float> m_out;
 
-		vector<double> m_sum;
-		vector<double> m_derivate;
+		vector<float> m_sum;
+		vector<float> m_derivate;
 
 		void sum();
 		virtual void derivate() = 0;
-		virtual double derivate_single() = 0;
+		virtual float derivate_single() = 0;
 	};
 
 } // namespace SNN_network

@@ -13,7 +13,7 @@
 namespace SNN
 {
 
-	GD_momentum_process::GD_momentum_process(Perceptron* p_perceptron, double p_step, double momentum_factor) : Trainig_process(p_perceptron)
+	GD_momentum_process::GD_momentum_process(Perceptron* p_perceptron, float p_step, float momentum_factor) : Trainig_process(p_perceptron)
 	{
 		m_step = p_step;
 		m_delta_1 = 0;
@@ -42,10 +42,10 @@ namespace SNN
 	void GD_momentum_process::set_default_configuration(trainig_config_t* configuration)
 	{
 		if (configuration->step == UNDEFINED)
-			configuration->step = 0.05;
+			configuration->step = 0.05f;
 
 		if (configuration->momentum_factor == UNDEFINED)
-			configuration->momentum_factor = 0.05;
+			configuration->momentum_factor = 0.05f;
 	}
 
 } // namespace SNN_trainer

@@ -27,11 +27,11 @@ namespace SNN
 		void activate() {};
 		string get_type() { return "input"; };
 
-		bool set_input(const vector<vector<double>*>& p_input) { m_out = *p_input[m_id]; return true; };
-		bool set_input(const vector<double>& p_input) { m_out = p_input; return true; };
+		bool set_input(const vector<vector<float>*>& p_input) { m_out = *p_input[m_id]; return true; };
+		bool set_input(const vector<float>& p_input) { m_out = p_input; return true; };
 	private:
 		void derivate() {};
-		double derivate_single() { return INFINITY; };
+		float derivate_single() { return INFINITY; };
 	};
 } // namespace SNN_network
 

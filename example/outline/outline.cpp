@@ -6,7 +6,7 @@
 
 using namespace SNN;
 
-bool Get_P_T(vector<vector<double> >* T, vector<vector<double> >* P)
+bool Get_P_T(vector<vector<float> >* T, vector<vector<float> >* P)
 {
 	int half_size = (3 - 1) / 2;
 
@@ -22,7 +22,7 @@ bool Get_P_T(vector<vector<double> >* T, vector<vector<double> >* P)
 		for (int xi = 1 + half_size; xi < x - half_size; xi++)
 			for (int yi = 1 + half_size; yi < y - half_size; yi++)
 			{
-				T->at(0).push_back(output.image[xi][yi] / 255.);
+				T->at(0).push_back(output.image[xi][yi] / 255.f);
 				for(int local_x = -half_size; local_x <= half_size; local_x++)
 					for (int local_y = -half_size; local_y <= half_size; local_y++)
 					{
@@ -45,7 +45,7 @@ bool generate_img(Network* net, char* file_name)
 	int x = input.height;
 	int y = input.width;
 
-	vector<vector<double> > P(9, vector<double>());
+	vector<vector<float> > P(9, vector<float>());
 
 	for (int xi = half_size; xi < x - half_size; xi++)
 		for (int yi = half_size; yi < y - half_size; yi++)
@@ -58,7 +58,7 @@ bool generate_img(Network* net, char* file_name)
 	net->sim(&P);
 
 	net->round_output();
-	vector<vector<double> > out = net->get_output_cpy();
+	vector<vector<float> > out = net->get_output_cpy();
 	for (unsigned int i = 0; i < out.size(); i++)
 		for(unsigned int j = 0; j < out[i].size(); j++)
 		out[i][j] = out[i][j]*255;
@@ -78,7 +78,7 @@ int main()
 	/*Create your network*/
 	vector<int> nb = { 6,6 };
 	vector<perceptron_type_t> type = { logistic, sinusoid };
-	vector<double> param = {};
+	vector<float> param = {};
 	Network net(nb, type, param);
 
 	net.print();
@@ -91,28 +91,28 @@ int main()
 	config.debug_file = "debug.txt";
 
 	config.error_type = mae;
-	config.stop_error = 0.16;
+	config.stop_error = 0.16f;
 	config.nb_epochs = 500;
 	config.stop_evolution = false;
 
 	config.training_type = GD_nesterov;
-	config.step = 0.0003;
-	config.momentum_factor = 0.00015;
+	config.step = 0.0003f;
+	config.momentum_factor = 0.00015f;
 
 	Trainer trainer;
 	trainer.set_config(config);
 
 	/*Train your network*/
 
-	vector<vector<double> > P(9, vector<double>());
-	vector<vector<double> > T(1, vector<double>());
+	vector<vector<float> > P(9, vector<float>());
+	vector<vector<float> > T(1, vector<float>());
 
 	Get_P_T(&T, &P);
 
 	trainer.train(&net, P, T);
 
 	config.training_type = Steepest_descent;
-	config.step = 0.01;
+	config.step = 0.01f;
 	config.stop_evolution = false;
 
 	trainer.set_config(config);
