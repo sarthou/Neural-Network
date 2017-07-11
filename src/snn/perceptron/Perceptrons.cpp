@@ -41,17 +41,14 @@ namespace SNN
 	void Perceptron_binary_step::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
-			if ((*it) >= 0.)
-				(*it_out) = 1.f;
+			if (m_sum[i] >= 0.)
+				m_out[i] = 1.f;
 			else
-				(*it_out) = 0.f;
-
-			++it_out;
+				m_out[i] = 0.f;
 		}
 	}
 
@@ -82,15 +79,10 @@ namespace SNN
 	void Perceptron_logistic::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = 1.f / (1.f + exp(-(*it)));
-
-			++it_out;
-		}
+		for(unsigned int i = 0; i < m_sum.size(); i++)
+			m_out[i] = 1.f / (1.f + exp(-m_sum[i]));
 	}
 
 	void Perceptron_logistic::derivate()
@@ -114,15 +106,10 @@ namespace SNN
 	void Perceptron_tanH::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = (2.f / (1.f + exp(-2.f * (*it)))) - 1.f;
-
-			++it_out;
-		}
+		for(unsigned int i = 0; i < m_sum.size(); i++)
+			m_out[i] = (2.f / (1.f + exp(-2.f * m_sum[i]))) - 1.f;
 	}
 
 	void Perceptron_tanH::derivate()
@@ -146,15 +133,10 @@ namespace SNN
 	void Perceptron_arcTan::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = atan(*it);
-
-			++it_out;
-		}
+		for(unsigned int i =0; i < m_sum.size(); i++)
+			m_out[i] = atan(m_sum[i]);
 	}
 
 	void Perceptron_arcTan::derivate()
@@ -178,15 +160,10 @@ namespace SNN
 	void Perceptron_softsign::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = (*it) / (1.f + abs(*it));
-
-			++it_out;
-		}
+		for(unsigned int i = 0; i < m_sum.size(); i++)
+			m_out[i] = m_sum[i] / (1.f + abs(m_sum[i]));
 	}
 
 	void Perceptron_softsign::derivate()
@@ -210,17 +187,14 @@ namespace SNN
 	void Perceptron_rectifier::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
-			if ((*it) >= 0.f)
-				(*it_out) = (*it);
+			if (m_sum[i] >= 0.f)
+				m_out[i] = m_sum[i];
 			else
-				(*it_out) = 0.f;
-
-			++it_out;
+				m_out[i] = 0.f;
 		}
 	}
 
@@ -251,17 +225,14 @@ namespace SNN
 	void Perceptron_rectifier_param::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
-			if ((*it) >= 0.f)
-				(*it_out) = (*it);
+			if (m_sum[i] >= 0.f)
+				m_out[i] = m_sum[i];
 			else
-				(*it_out) = m_a*(*it);
-
-			++it_out;
+				m_out[i] = m_a*m_sum[i];
 		}
 	}
 
@@ -292,17 +263,14 @@ namespace SNN
 	void Perceptron_ELU::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
-			if ((*it) >= 0.f)
-				(*it_out) = (*it);
+			if (m_sum[i] >= 0.f)
+				m_out[i] = m_sum[i];
 			else
-				(*it_out) = m_a*(exp(*it) - 1.f);
-
-			++it_out;
+				m_out[i] = m_a*(exp(m_sum[i]) - 1.f);
 		}
 	}
 
@@ -335,15 +303,10 @@ namespace SNN
 	void Perceptron_softPlus::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = log(1.f + exp(*it));
-
-			++it_out;
-		}
+		for(unsigned int i = 0; i < m_sum.size(); i++)
+			m_out[i] = log(1.f + exp(m_sum[i]));
 	}
 
 	void Perceptron_softPlus::derivate()
@@ -367,15 +330,10 @@ namespace SNN
 	void Perceptron_bent_identity::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = (sqrt((*it)*(*it) + 1.f) - 1.f) / 2.f + (*it);
-
-			++it_out;
-		}
+		for(unsigned int i = 0; i < m_sum.size(); i++)
+			m_out[i] = (sqrt(m_sum[i]* m_sum[i] + 1.f) - 1.f) / 2.f + m_sum[i];
 	}
 
 	void Perceptron_bent_identity::derivate()
@@ -399,15 +357,10 @@ namespace SNN
 	void Perceptron_sinusoid::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = sin(*it);
-
-			++it_out;
-		}
+		for(unsigned int i = 0; i < m_sum.size(); i++)
+			m_out[i] = sin(m_sum[i]);
 	}
 
 	void Perceptron_sinusoid::derivate()
@@ -431,17 +384,14 @@ namespace SNN
 	void Perceptron_sinc::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
+		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
-			if ((*it) == 0.f)
-				(*it_out) = 1.f;
+			if (m_sum[i] == 0.f)
+				m_out[i] = 1.f;
 			else
-				(*it_out) = sin(*it) / (*it);
-
-			++it_out;
+				m_out[i] = sin(m_sum[i]) / m_sum[i];
 		}
 	}
 
@@ -472,15 +422,10 @@ namespace SNN
 	void Perceptron_gaussian::activate()
 	{
 		sum();
-		m_out = m_sum;
+		m_out.resize(m_sum.size());
 
-		vector<float>::iterator it_out = m_out.begin();
-		for (vector<float>::iterator it = m_sum.begin(); it != m_sum.end(); ++it)
-		{
-			(*it_out) = exp(-(*it)*(*it));
-
-			++it_out;
-		}
+		for(unsigned int i = 0; i < m_sum.size(); i++)
+			m_out[i] = exp(-m_sum[i]*m_sum[i]);
 	}
 
 	void Perceptron_gaussian::derivate()
