@@ -18,6 +18,8 @@
 #include "snn/trainer/training_process/GD_nesterov_process.h"
 #include "snn/trainer/training_process/GD_momentum_process.h"
 #include "snn/trainer/training_process/Steepest_descent_process.h"
+
+#include "snn/utility/Matrix.h"
 #include <vector>
 
 #include <iostream>
@@ -34,7 +36,7 @@ namespace SNN
 		Trainer();
 		~Trainer();
 
-		void train(Network* net, vector<vector<float> >& P, vector<vector<float> >& T);
+		void train(Network* net, Matrix<float>& P, Matrix<float>& T);
 
 		void set_config(trainig_config_t p_config) { m_config = p_config; };
 
@@ -44,10 +46,6 @@ namespace SNN
 		vector<vector<Trainig_process*>> m_process;
 
 		vector<vector<float>*> m_P_ptr;
-		vector<vector<float> > m_P;
-		vector<vector<float> > m_T;
-		vector<vector<float> > tmp_P;
-		vector<vector<float> > tmp_T;
 
 		trainig_config_t m_config;
 		float m_error;
@@ -59,12 +57,12 @@ namespace SNN
 
 		ofstream m_debug_file;
 
-		void init_train();
+		void init_train(Matrix<float>& P, Matrix<float>& T);
 		void close_train();
-		bool can_be_train();
+		bool can_be_train(Matrix<float>& P, Matrix<float>& T);
 
-		void set_input_perceptrons();
-		void set_output_perceptrons();
+		void set_input_perceptrons(Matrix<float>& P);
+		void set_output_perceptrons(Matrix<float>& T);
 		void set_input();
 
 		void set_default_configuration();
@@ -72,14 +70,14 @@ namespace SNN
 		Trainig_process* creat_process(SNN::Perceptron* p_instances);
 
 		void init_weigh();
-		void randomise();
+		void randomise(Matrix<float>& P, Matrix<float>& T);
 
-		void select_single_data(unsigned int p_index);
+		void select_single_data(unsigned int p_index, Matrix<float>& singleP, Matrix<float>& singleT, Matrix<float>& P, Matrix<float>& T);
 
-		void compute_error();
+		void compute_error(Matrix<float>& T);
 
 		bool vector_is_uniforme(vector<vector<float> >& p_vector);
-		void set_as_pointer();
+		void set_as_pointer(Matrix<float>& P);
 	};
 
 } // namespace SNN_network
