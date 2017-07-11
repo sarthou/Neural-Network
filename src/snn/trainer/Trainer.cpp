@@ -114,19 +114,22 @@ namespace SNN
 					small_error = true;
 
 				//detect no evolution
-				m_mean_error += m_error;
-				m_stop_vector.push_back(m_mean_error / (nb_epochs + 1));
-				if (m_stop_vector.size() == 9)
+				if (m_config.stop_evolution)
 				{
-					m_stop += m_stop_vector[0];
-					m_stop_vector.erase(m_stop_vector.begin());
-				}
-				m_stop = -m_stop + m_mean_error / (nb_epochs + 1);
+					m_mean_error += m_error;
+					m_stop_vector.push_back(m_mean_error / (nb_epochs + 1));
+					if (m_stop_vector.size() == 9)
+					{
+						m_stop += m_stop_vector[0];
+						m_stop_vector.erase(m_stop_vector.begin());
+					}
+					m_stop = -m_stop + m_mean_error / (nb_epochs + 1);
 
-				if ((abs(m_stop) < m_config.stop_error) && m_dont_evolve && m_config.stop_evolution)
-					small_error = true; //break the training process
-				else if (abs(m_stop) < m_config.stop_error)
-					m_dont_evolve = true;
+					if ((abs(m_stop) < m_config.stop_error) && m_dont_evolve && m_config.stop_evolution)
+						small_error = true; //break the training process
+					else if (abs(m_stop) < m_config.stop_error)
+						m_dont_evolve = true;
+				}
 
 				end = clock();
 				long long int elapsed_seconds = (long long int)(1000.f * (float)(end - start) / CLOCKS_PER_SEC);
