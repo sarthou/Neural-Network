@@ -27,7 +27,6 @@ namespace SNN
 		void activate() {};
 		string get_type() { return "input"; };
 
-		bool set_input(const vector<vector<float>*>& p_input) { m_out = *p_input[m_id]; return true; };
 		bool set_input(const vector<float>& p_input) { m_out = p_input; return true; };
 	private:
 		void derivate() {};

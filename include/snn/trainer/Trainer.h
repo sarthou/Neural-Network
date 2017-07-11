@@ -45,8 +45,6 @@ namespace SNN
 		vector<vector<Perceptron*>> ptr_perceptrons;
 		vector<vector<Trainig_process*>> m_process;
 
-		vector<vector<float>*> m_P_ptr;
-
 		trainig_config_t m_config;
 		float m_error;
 
@@ -63,7 +61,6 @@ namespace SNN
 
 		void set_input_perceptrons(Matrix<float>& P);
 		void set_output_perceptrons(Matrix<float>& T);
-		void set_input();
 
 		void set_default_configuration();
 		void set_trainig_process();
@@ -75,9 +72,6 @@ namespace SNN
 		void select_single_data(unsigned int p_index, Matrix<float>& singleP, Matrix<float>& singleT, Matrix<float>& P, Matrix<float>& T);
 
 		void compute_error(Matrix<float>& T);
-
-		bool vector_is_uniforme(vector<vector<float> >& p_vector);
-		void set_as_pointer(Matrix<float>& P);
 	};
 
 } // namespace SNN_network

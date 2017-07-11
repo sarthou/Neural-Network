@@ -146,10 +146,7 @@ namespace SNN
 			set_output_perceptrons(T);
 		}
 
-		set_as_pointer(P);
-
 		//reconfigure network for training
-		set_input();
 		set_default_configuration();
 		set_trainig_process();
 
@@ -170,9 +167,6 @@ namespace SNN
 
 	void Trainer::close_train()
 	{
-		for (vector<vector<float>*>::iterator it = m_P_ptr.begin(); it != m_P_ptr.end(); ++it)
-			delete (*it);
-
 		for (vector<vector<Trainig_process*>>::iterator it_layer = m_process.begin(); it_layer != m_process.end(); ++it_layer)
 			for (vector<Trainig_process*>::iterator it_process = it_layer->begin(); it_process != it_layer->end(); ++it_process)
 				delete (*it_process);
@@ -279,13 +273,6 @@ namespace SNN
 				m_net->m_perceptrons.back().push_back(perceptron);
 			}
 		}
-	}
-
-	void Trainer::set_input()
-	{
-		vector<vector<Perceptron*>>::iterator it_input_layer = m_net->m_perceptrons.begin();
-		for (vector<Perceptron*>::iterator it_perceptron = it_input_layer->begin(); it_perceptron != it_input_layer->end(); ++it_perceptron)
-			(*it_perceptron)->set_input(m_P_ptr);
 	}
 
 	void Trainer::set_default_configuration()
@@ -417,10 +404,10 @@ namespace SNN
 	void Trainer::select_single_data(unsigned int p_index, Matrix<float>& singleP, Matrix<float>& singleT, Matrix<float>& P, Matrix<float>& T)
 	{
 		for (unsigned int i = 0; i < P.get_row_count(); i++)
-			singleP(i,0) = P(i,p_index);
+			singleP[i] = P(i,p_index);
 
 		for (unsigned int i = 0; i < T.get_row_count(); i++)
-			singleT(i,0) = T(i,p_index);
+			singleT[i] = T(i,p_index);
 	}
 
 	void Trainer::compute_error(Matrix<float>& T)
@@ -454,30 +441,6 @@ namespace SNN
 			}
 		}
 		m_error = m_error / cpt;
-	}
-
-	void Trainer::set_as_pointer(Matrix<float>& P)
-	{
-		
-		for (unsigned int i = 0; i < P.get_row_count(); i++)
-			m_P_ptr.push_back(new vector<float>(P.get_row(i), P.get_row(i)+P.get_col_count()));
-	}
-
-	bool Trainer::vector_is_uniforme(vector<vector<float> >& p_vector)
-	{
-		bool uniform = true;
-		vector<vector<float> >::iterator it_begin = p_vector.begin();
-		unsigned int size = (*it_begin).size();
-		for (vector<vector<float> >::iterator it = it_begin + 1; it != p_vector.end(); ++it)
-		{
-			if (size != (*it).size())
-				uniform = false;
-		}
-
-		if (p_vector.size() == 0)
-			uniform = false;
-
-		return uniform;
 	}
 
 } // namespace SNN_network
