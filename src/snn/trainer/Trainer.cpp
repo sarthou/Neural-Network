@@ -47,8 +47,8 @@ namespace SNN
 		if (can_be_train(P, T))
 		{
 			//create local training data
-			Matrix<float>single_P = Matrix<float>(P.get_row_count(), 1);
-			Matrix<float>single_T = Matrix<float>(T.get_row_count(), 1);
+			Matrix<float> single_P(P.get_row_count(), 1);
+			Matrix<float> single_T(T.get_row_count(), 1);
 
 			//init all training
 			init_train(P, T);
