@@ -77,7 +77,7 @@ namespace SNN
 					//set eroor on last layer
 					m_current_layer = m_nb_layer - 1; //last layer
 					for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer + 1].size(); m_current_id++)
-						m_process[m_current_layer][m_current_id]->set_error(single_T.get_row(m_current_id).front());
+						m_process[m_current_layer][m_current_id]->set_error( *single_T.get_row(m_current_id) );
 
 					//propagate on all layers
 					for (m_current_layer = m_nb_layer - 1; m_current_layer >= 0; m_current_layer--)
@@ -460,7 +460,7 @@ namespace SNN
 	{
 		
 		for (unsigned int i = 0; i < P.get_row_count(); i++)
-			m_P_ptr.push_back(new vector<float>(P.get_row(i)));
+			m_P_ptr.push_back(new vector<float>(P.get_row(i), P.get_row(i)+P.get_col_count()));
 	}
 
 	bool Trainer::vector_is_uniforme(vector<vector<float> >& p_vector)

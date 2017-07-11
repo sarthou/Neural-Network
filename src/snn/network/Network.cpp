@@ -9,10 +9,13 @@
 //============================================================================
 #include "snn/network/Network.h"
 #include <math.h>
+#include <vector>
 
 #ifdef _WIN32
 #include <Windows.h>
 #endif
+
+using namespace std;
 
 namespace SNN
 {
@@ -283,7 +286,7 @@ namespace SNN
 
 			//set data into input layer
 			for (unsigned int id = 0; id < m_perceptrons[0].size(); id++)
-				input_set &= m_perceptrons[0][id]->set_input(P.get_row(id));
+				input_set &= m_perceptrons[0][id]->set_input(vector<float>(P.get_row(id), P.get_row(id)+P.get_col_count()));
 
 			if (input_set)
 			{
