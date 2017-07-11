@@ -109,7 +109,7 @@ int main()
 
 	Get_P_T(&T, &P);
 
-	trainer.train(&net, P, T);
+	trainer.train(&net, Matrix<float>(P.size(), P.at(0).size(), P), Matrix<float>(T.size(), T.at(0).size(), T));
 
 	config.training_type = Steepest_descent;
 	config.step = 0.01f;

@@ -1,5 +1,6 @@
 #include "snn/network/Network.h"
 #include "snn/trainer/Trainer.h"
+#include "snn/utility/Matrix.h"
 #include <iostream>
 
 using namespace SNN;
@@ -44,7 +45,7 @@ int test()
 	vector<float> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
 	vector<vector<float> > T = { Ta };
 
-	trainer.train(&net, P, T);
+	trainer.train(&net, Matrix<float>(P.size(), P.at(0).size(), P), Matrix<float>(T.size(), T.at(0).size(), T));
 
 	/*Use your training network*/
 
