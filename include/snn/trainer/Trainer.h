@@ -53,6 +53,10 @@ namespace SNN
 		float m_mean_error;
 		bool m_dont_evolve;
 
+		//data information
+		unsigned int P_nb_row;
+		unsigned int T_nb_row;
+
 		ofstream m_debug_file;
 
 		void init_train(Matrix<float>& P, Matrix<float>& T);

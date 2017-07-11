@@ -158,6 +158,10 @@ namespace SNN
 		m_mean_error = 0;
 		m_dont_evolve = false;
 
+		//init data informations
+		P_nb_row = P.get_row_count();
+		T_nb_row = T.get_row_count();
+
 		//create debug file
 		if (m_config.debug_level > 1)
 			m_debug_file.open(m_config.debug_file);
@@ -385,14 +389,14 @@ namespace SNN
 			from = distribution(generator);
 			to = distribution(generator);
 
-			for (unsigned int i = 0; i < P.get_row_count(); i++)
+			for (unsigned int i = 0; i < P_nb_row; i++)
 			{
 				tmp_value = P(i,from);
 				P(i, from) = P(i,to);
 				P(i, to) = tmp_value;
 			}
 
-			for (unsigned int i = 0; i < T.get_row_count(); i++)
+			for (unsigned int i = 0; i < T_nb_row; i++)
 			{
 				tmp_value = T(i, from);
 				T(i, from) = T(i, to);
@@ -403,10 +407,10 @@ namespace SNN
 
 	void Trainer::select_single_data(unsigned int p_index, Matrix<float>& singleP, Matrix<float>& singleT, Matrix<float>& P, Matrix<float>& T)
 	{
-		for (unsigned int i = 0; i < P.get_row_count(); i++)
+		for (unsigned int i = 0; i < P_nb_row; i++)
 			singleP[i] = P(i,p_index);
 
-		for (unsigned int i = 0; i < T.get_row_count(); i++)
+		for (unsigned int i = 0; i < T_nb_row; i++)
 			singleT[i] = T(i,p_index);
 	}
 
@@ -414,13 +418,14 @@ namespace SNN
 	{
 		unsigned long int cpt = 0;
 		m_error = 0.;
+		unsigned int col_count = T.get_col_count();
 
 		if (m_config.error_type == mae)
 		{
 			vector<vector<float> >* output = m_net->get_output();
-			for (unsigned int vect_i = 0; vect_i < T.get_row_count(); vect_i++)
+			for (unsigned int vect_i = 0; vect_i < T_nb_row; vect_i++)
 			{
-				for (unsigned int i = 0; i < T.get_col_count(); i++)
+				for (unsigned int i = 0; i < col_count; i++)
 				{
 					m_error += abs((*output)[vect_i][i] - T(vect_i,i));
 					cpt++;
@@ -431,9 +436,9 @@ namespace SNN
 		else
 		{
 			vector<vector<float> >* output = m_net->get_output();
-			for (unsigned int vect_i = 0; vect_i < T.get_row_count(); vect_i++)
+			for (unsigned int vect_i = 0; vect_i < T_nb_row; vect_i++)
 			{
-				for (unsigned int i = 0; i < T.get_col_count(); i++)
+				for (unsigned int i = 0; i < col_count; i++)
 				{
 					m_error += ((*output)[vect_i][i] - T(vect_i,i))*((*output)[vect_i][i] - T(vect_i,i));
 					cpt++;
