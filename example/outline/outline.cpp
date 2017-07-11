@@ -109,8 +109,8 @@ int main()
 
 	Get_P_T(&T, &P);
 
-	Matrix<float> P_mat = Matrix<float>(P.size(), P.at(0).size(), P);
-	Matrix<float> T_mat = Matrix<float>(T.size(), T.at(0).size(), T);
+	Matrix<float> P_mat(P.size(), P.at(0).size(), P);
+	Matrix<float> T_mat(T.size(), T.at(0).size(), T);
 	trainer.train(&net, P_mat, T_mat);
 
 	config.training_type = Steepest_descent;

@@ -77,7 +77,7 @@ namespace SNN
 					//set eroor on last layer
 					m_current_layer = m_nb_layer - 1; //last layer
 					for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer + 1].size(); m_current_id++)
-						m_process[m_current_layer][m_current_id]->set_error(single_T.get_row(m_current_id).front());
+						m_process[m_current_layer][m_current_id]->set_error( *single_T.get_row(m_current_id) );
 
 					//propagate on all layers
 					for (m_current_layer = m_nb_layer - 1; m_current_layer >= 0; m_current_layer--)
@@ -149,10 +149,7 @@ namespace SNN
 			set_output_perceptrons(T);
 		}
 
-		set_as_pointer(P);
-
 		//reconfigure network for training
-		set_input();
 		set_default_configuration();
 		set_trainig_process();
 
@@ -164,6 +161,10 @@ namespace SNN
 		m_mean_error = 0;
 		m_dont_evolve = false;
 
+		//init data informations
+		P_nb_row = P.get_row_count();
+		T_nb_row = T.get_row_count();
+
 		//create debug file
 		if (m_config.debug_level > 1)
 			m_debug_file.open(m_config.debug_file);
@@ -173,9 +174,6 @@ namespace SNN
 
 	void Trainer::close_train()
 	{
-		for (vector<vector<float>*>::iterator it = m_P_ptr.begin(); it != m_P_ptr.end(); ++it)
-			delete (*it);
-
 		for (vector<vector<Trainig_process*>>::iterator it_layer = m_process.begin(); it_layer != m_process.end(); ++it_layer)
 			for (vector<Trainig_process*>::iterator it_process = it_layer->begin(); it_process != it_layer->end(); ++it_process)
 				delete (*it_process);
@@ -282,13 +280,6 @@ namespace SNN
 				m_net->m_perceptrons.back().push_back(perceptron);
 			}
 		}
-	}
-
-	void Trainer::set_input()
-	{
-		vector<vector<Perceptron*>>::iterator it_input_layer = m_net->m_perceptrons.begin();
-		for (vector<Perceptron*>::iterator it_perceptron = it_input_layer->begin(); it_perceptron != it_input_layer->end(); ++it_perceptron)
-			(*it_perceptron)->set_input(m_P_ptr);
 	}
 
 	void Trainer::set_default_configuration()
@@ -401,14 +392,14 @@ namespace SNN
 			from = distribution(generator);
 			to = distribution(generator);
 
-			for (unsigned int i = 0; i < P.get_row_count(); i++)
+			for (unsigned int i = 0; i < P_nb_row; i++)
 			{
 				tmp_value = P(i,from);
 				P(i, from) = P(i,to);
 				P(i, to) = tmp_value;
 			}
 
-			for (unsigned int i = 0; i < T.get_row_count(); i++)
+			for (unsigned int i = 0; i < T_nb_row; i++)
 			{
 				tmp_value = T(i, from);
 				T(i, from) = T(i, to);
@@ -419,24 +410,25 @@ namespace SNN
 
 	void Trainer::select_single_data(unsigned int p_index, Matrix<float>& singleP, Matrix<float>& singleT, Matrix<float>& P, Matrix<float>& T)
 	{
-		for (unsigned int i = 0; i < P.get_row_count(); i++)
-			singleP(i,0) = P(i,p_index);
+		for (unsigned int i = 0; i < P_nb_row; i++)
+			singleP[i] = P(i,p_index);
 
-		for (unsigned int i = 0; i < T.get_row_count(); i++)
-			singleT(i,0) = T(i,p_index);
+		for (unsigned int i = 0; i < T_nb_row; i++)
+			singleT[i] = T(i,p_index);
 	}
 
 	void Trainer::compute_error(Matrix<float>& T)
 	{
 		unsigned long int cpt = 0;
 		m_error = 0.;
+		unsigned int col_count = T.get_col_count();
 
 		if (m_config.error_type == mae)
 		{
 			vector<vector<float> >* output = m_net->get_output();
-			for (unsigned int vect_i = 0; vect_i < T.get_row_count(); vect_i++)
+			for (unsigned int vect_i = 0; vect_i < T_nb_row; vect_i++)
 			{
-				for (unsigned int i = 0; i < T.get_col_count(); i++)
+				for (unsigned int i = 0; i < col_count; i++)
 				{
 					m_error += abs((*output)[vect_i][i] - T(vect_i,i));
 					cpt++;
@@ -447,9 +439,9 @@ namespace SNN
 		else
 		{
 			vector<vector<float> >* output = m_net->get_output();
-			for (unsigned int vect_i = 0; vect_i < T.get_row_count(); vect_i++)
+			for (unsigned int vect_i = 0; vect_i < T_nb_row; vect_i++)
 			{
-				for (unsigned int i = 0; i < T.get_col_count(); i++)
+				for (unsigned int i = 0; i < col_count; i++)
 				{
 					m_error += ((*output)[vect_i][i] - T(vect_i,i))*((*output)[vect_i][i] - T(vect_i,i));
 					cpt++;
@@ -457,30 +449,6 @@ namespace SNN
 			}
 		}
 		m_error = m_error / cpt;
-	}
-
-	void Trainer::set_as_pointer(Matrix<float>& P)
-	{
-		
-		for (unsigned int i = 0; i < P.get_row_count(); i++)
-			m_P_ptr.push_back(new vector<float>(P.get_row(i)));
-	}
-
-	bool Trainer::vector_is_uniforme(vector<vector<float> >& p_vector)
-	{
-		bool uniform = true;
-		vector<vector<float> >::iterator it_begin = p_vector.begin();
-		unsigned int size = (*it_begin).size();
-		for (vector<vector<float> >::iterator it = it_begin + 1; it != p_vector.end(); ++it)
-		{
-			if (size != (*it).size())
-				uniform = false;
-		}
-
-		if (p_vector.size() == 0)
-			uniform = false;
-
-		return uniform;
 	}
 
 } // namespace SNN_network
