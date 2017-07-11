@@ -88,21 +88,4 @@ namespace SNN
 			m_w = p_w;
 	}
 
-	void Perceptron::sum()
-	{
-		if (m_w.size() > 0)
-		{
-			int size = (*m_input_perceptrons)[0]->m_out.size();
-			m_sum.resize(size);
-			for (unsigned int i = 0; i < m_sum.size(); i++)
-				m_sum[i] = -m_bia;
-
-			for (unsigned int vect = 0; vect < m_input_perceptrons->size(); vect++)
-			{
-				for (unsigned int i = 0; i < (*m_input_perceptrons)[vect]->m_out.size(); i++)
-					m_sum[i] += m_w[vect] * (*m_input_perceptrons)[vect]->m_out[i];
-			}
-		}
-	}
-
 } // namespace SNN_network
