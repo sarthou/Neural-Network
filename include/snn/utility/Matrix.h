@@ -14,19 +14,19 @@ public:
 	using size_type = TSize;
 
 	Matrix(size_type row_count, size_type col_count) :
-		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type(row_count*col_count) }
+		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }
 	{
 
 	}
 
 	Matrix(size_type row_count, size_type col_count, const value_type* data) :
-		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type(row_count*col_count) }
+		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }
 	{
 		std::memcpy(m_data, data, row_count*col_count);
 	}
 
 	Matrix(size_type row_count, size_type col_count, const std::vector<std::vector<value_type>>& data) :
-		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type(row_count*col_count) }
+		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }
 	{
 		if (data.size() != row_count)
 		{
@@ -66,6 +66,11 @@ public:
 	const value_type& operator()(size_type row, size_type col) const
 	{
 		return m_data[row*m_col_count + col];
+	}
+
+	value_type& operator[](size_type index)
+	{
+		return m_data[index];
 	}
 
 	value_type* get_row(size_type row)
