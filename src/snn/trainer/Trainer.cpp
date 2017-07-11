@@ -129,7 +129,7 @@ namespace SNN
 					m_dont_evolve = true;
 
 				end = clock();
-				long long int elapsed_seconds = 1000.f * (float)(end - start) / CLOCKS_PER_SEC;
+				long long int elapsed_seconds = (long long int)(1000.f * (float)(end - start) / CLOCKS_PER_SEC);
 				
 				std::cout << "time: " << elapsed_seconds << endl;
 			}
@@ -393,7 +393,7 @@ namespace SNN
 		unsigned long int to = 0;
 		float tmp_value = 0.;
 
-		for (index = 0; index < vect_size; index++)
+		for (index = 0; index < vect_size / 2; index++)
 		{
 			from = distribution(generator);
 			to = distribution(generator);

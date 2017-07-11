@@ -26,7 +26,7 @@ bool Get_P_T(vector<vector<float> >* T, vector<vector<float> >* P)
 				for(int local_x = -half_size; local_x <= half_size; local_x++)
 					for (int local_y = -half_size; local_y <= half_size; local_y++)
 					{
-						P->at((local_x + half_size) * 3 + (local_y + half_size)).push_back(input.image[xi + local_x][yi + local_y]);
+						P->at((local_x + half_size) * 3 + (local_y + half_size)).push_back((float)(input.image[xi + local_x][yi + local_y]));
 					}
 			}
 		return true;
@@ -52,7 +52,7 @@ bool generate_img(Network* net, char* file_name)
 		{
 			for (int local_x = -half_size; local_x <= half_size; local_x++)
 				for (int local_y = -half_size; local_y <= half_size; local_y++)
-					P[(local_x + half_size) * 3 + (local_y + half_size)].push_back(input.image[xi + local_x][yi + local_y]);
+					P[(local_x + half_size) * 3 + (local_y + half_size)].push_back((float)(input.image[xi + local_x][yi + local_y]));
 		}
 
 	net->sim(&P);
@@ -65,7 +65,7 @@ bool generate_img(Network* net, char* file_name)
 
 	for (int xi = half_size; xi < x - half_size; xi++)
 		for (int yi = half_size; yi < y - half_size; yi++)
-			input.image[xi][yi] = out[0][(xi - half_size)* (y - 2 * half_size) + (yi - half_size)];
+			input.image[xi][yi] = (unsigned long)out[0][(xi - half_size)* (y - 2 * half_size) + (yi - half_size)];
 
 	bmp_editor.input_bmp = input;
 	bmp_editor.write_bmp("out.bmp");
@@ -109,7 +109,9 @@ int main()
 
 	Get_P_T(&T, &P);
 
-	trainer.train(&net, Matrix<float>(P.size(), P.at(0).size(), P), Matrix<float>(T.size(), T.at(0).size(), T));
+	Matrix<float> P_mat = Matrix<float>(P.size(), P.at(0).size(), P);
+	Matrix<float> T_mat = Matrix<float>(T.size(), T.at(0).size(), T);
+	trainer.train(&net, P_mat, T_mat);
 
 	config.training_type = Steepest_descent;
 	config.step = 0.01f;

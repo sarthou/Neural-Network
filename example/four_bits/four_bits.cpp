@@ -45,7 +45,9 @@ int test()
 	vector<float> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
 	vector<vector<float> > T = { Ta };
 
-	trainer.train(&net, Matrix<float>(P.size(), P.at(0).size(), P), Matrix<float>(T.size(), T.at(0).size(), T));
+	Matrix<float> P_mat = Matrix<float>(P.size(), P.at(0).size(), P);
+	Matrix<float> T_mat = Matrix<float>(T.size(), T.at(0).size(), T);
+	trainer.train(&net, P_mat, T_mat);
 
 	/*Use your training network*/
 
