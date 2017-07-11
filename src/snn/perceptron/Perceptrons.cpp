@@ -41,7 +41,8 @@ namespace SNN
 	void Perceptron_binary_step::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
@@ -79,7 +80,8 @@ namespace SNN
 	void Perceptron_logistic::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i = 0; i < m_sum.size(); i++)
 			m_out[i] = 1.f / (1.f + exp(-m_sum[i]));
@@ -106,7 +108,8 @@ namespace SNN
 	void Perceptron_tanH::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i = 0; i < m_sum.size(); i++)
 			m_out[i] = (2.f / (1.f + exp(-2.f * m_sum[i]))) - 1.f;
@@ -133,7 +136,8 @@ namespace SNN
 	void Perceptron_arcTan::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i =0; i < m_sum.size(); i++)
 			m_out[i] = atan(m_sum[i]);
@@ -160,7 +164,8 @@ namespace SNN
 	void Perceptron_softsign::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if(m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i = 0; i < m_sum.size(); i++)
 			m_out[i] = m_sum[i] / (1.f + abs(m_sum[i]));
@@ -187,7 +192,8 @@ namespace SNN
 	void Perceptron_rectifier::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
@@ -225,7 +231,8 @@ namespace SNN
 	void Perceptron_rectifier_param::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
@@ -263,7 +270,8 @@ namespace SNN
 	void Perceptron_ELU::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
@@ -303,7 +311,8 @@ namespace SNN
 	void Perceptron_softPlus::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i = 0; i < m_sum.size(); i++)
 			m_out[i] = log(1.f + exp(m_sum[i]));
@@ -330,7 +339,8 @@ namespace SNN
 	void Perceptron_bent_identity::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i = 0; i < m_sum.size(); i++)
 			m_out[i] = (sqrt(m_sum[i]* m_sum[i] + 1.f) - 1.f) / 2.f + m_sum[i];
@@ -357,7 +367,8 @@ namespace SNN
 	void Perceptron_sinusoid::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i = 0; i < m_sum.size(); i++)
 			m_out[i] = sin(m_sum[i]);
@@ -384,7 +395,8 @@ namespace SNN
 	void Perceptron_sinc::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for (unsigned int i = 0; i < m_sum.size(); i++)
 		{
@@ -422,7 +434,8 @@ namespace SNN
 	void Perceptron_gaussian::activate()
 	{
 		sum();
-		m_out.resize(m_sum.size());
+		if (m_out.size() != m_sum.size())
+			m_out.resize(m_sum.size());
 
 		for(unsigned int i = 0; i < m_sum.size(); i++)
 			m_out[i] = exp(-m_sum[i]*m_sum[i]);
