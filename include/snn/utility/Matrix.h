@@ -58,32 +58,32 @@ public:
 		delete[] m_data;
 	}
 
-	value_type& operator()(size_type row, size_type col)
+	inline value_type& operator()(size_type row, size_type col)
 	{
 		return m_data[row*m_col_count + col];
 	}
 
-	const value_type& operator()(size_type row, size_type col) const
+	inline const value_type& operator()(size_type row, size_type col) const
 	{
 		return m_data[row*m_col_count + col];
 	}
 
-	value_type& operator[](size_type index)
+	inline value_type& operator[](size_type index)
 	{
 		return m_data[index];
 	}
 
-	value_type* get_row(size_type row)
+	inline value_type* get_row(size_type row)
 	{
 		return &m_data[row*m_col_count];
 	}
 
-	size_type get_row_count() const
+	inline size_type get_row_count() const
 	{
 		return m_row_count;
 	}
 
-	size_type get_col_count() const
+	inline size_type get_col_count() const
 	{
 		return m_col_count;
 	}
