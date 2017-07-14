@@ -5,7 +5,7 @@
 
 using namespace SNN;
 
-int test()
+int main()
 {	
 	/*Create your network*/
 	vector<int> nb = { 1 };

@@ -76,7 +76,7 @@ bool generate_img(Network* net, char* file_name)
 int main()
 {
 	/*Create your network*/
-	vector<int> nb = { 6,6 };
+	vector<int> nb = { 6, 6 };
 	vector<perceptron_type_t> type = { logistic, sinusoid };
 	vector<float> param = {};
 	Network net(nb, type, param);
@@ -113,12 +113,13 @@ int main()
 	Matrix<float> T_mat(T.size(), T.at(0).size(), T);
 	trainer.train(&net, P_mat, T_mat);
 
+	config.stop_error = 0.15f;
+	config.nb_epochs = 50;
 	config.training_type = Steepest_descent;
-	config.step = 0.01f;
-	config.stop_evolution = false;
+	config.step = 0.00005f;
 
 	trainer.set_config(config);
-	//trainer.train(&net, P, T);
+	trainer.train(&net, P_mat, T_mat);
 
 	/*Use your training network*/
 
@@ -126,11 +127,11 @@ int main()
 
 
 	/*Additionals features*/
-	/*net.print();
+	net.print();
 
 	Network net2;
 	net2 = net;
-	net2.print();*/
+	net2.print();
 
 	system("PAUSE"); // only if you use windows
 
