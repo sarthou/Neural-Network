@@ -24,7 +24,7 @@ namespace SNN
 
 		Perceptron_input& operator=(Perceptron_input const& perceptron) { Perceptron::operator=(perceptron); return *this; };
 
-		bool set_input(const vector<float>& p_input) { m_out = p_input; return true; };
+		inline void set_input(const vector<float>& p_input) { m_out = p_input; };
 
 	};
 } // namespace SNN_network

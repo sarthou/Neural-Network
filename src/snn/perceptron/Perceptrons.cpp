@@ -31,10 +31,11 @@ namespace SNN
 	void activate_binary_step(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for (unsigned int i = 0; i < sum.size(); i++)
+		for (unsigned int i = 0; i < size; i++)
 		{
 			if (sum[i] >= 0.)
 				out[i] = 1.f;
@@ -56,10 +57,11 @@ namespace SNN
 	void activate_logistic(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i = 0; i < sum.size(); i++)
+		for(unsigned int i = 0; i < size; i++)
 			out[i] = 1.f / (1.f + exp(-sum[i]));
 	}
 
@@ -73,10 +75,11 @@ namespace SNN
 	void activate_tanH(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i = 0; i < sum.size(); i++)
+		for(unsigned int i = 0; i < size; i++)
 			out[i] = (2.f / (1.f + exp(-2.f * sum[i]))) - 1.f;
 	}
 
@@ -90,10 +93,11 @@ namespace SNN
 	void activate_arcTan(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i =0; i < sum.size(); i++)
+		for(unsigned int i =0; i < size; i++)
 			out[i] = atan(sum[i]);
 	}
 
@@ -107,10 +111,11 @@ namespace SNN
 	void activate_softsign(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if(out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if(out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i = 0; i < sum.size(); i++)
+		for(unsigned int i = 0; i < size; i++)
 			out[i] = sum[i] / (1.f + abs(sum[i]));
 	}
 
@@ -124,10 +129,11 @@ namespace SNN
 	void activate_rectifier(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for (unsigned int i = 0; i < sum.size(); i++)
+		for (unsigned int i = 0; i < size; i++)
 		{
 			if (sum[i] >= 0.f)
 				out[i] = sum[i];
@@ -148,10 +154,11 @@ namespace SNN
 	/*Perceptron rectifier_param*/
 	void activate_rectifier_param(vector<float>& sum, vector<float>& out, float a)
 	{
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for (unsigned int i = 0; i < sum.size(); i++)
+		for (unsigned int i = 0; i < size; i++)
 		{
 			if (sum[i] >= 0.f)
 				out[i] = sum[i];
@@ -171,10 +178,11 @@ namespace SNN
 	/*Perceptron_ELU*/
 	void activate_ELU(vector<float>& sum, vector<float>& out, float a)
 	{
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for (unsigned int i = 0; i < sum.size(); i++)
+		for (unsigned int i = 0; i < size; i++)
 		{
 			if (sum[i] >= 0.f)
 				out[i] = sum[i];
@@ -195,10 +203,11 @@ namespace SNN
 	void activate_softPlus(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i = 0; i < sum.size(); i++)
+		for(unsigned int i = 0; i < size; i++)
 			out[i] = log(1.f + exp(sum[i]));
 	}
 
@@ -212,10 +221,11 @@ namespace SNN
 	void activate_bent_identity(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i = 0; i < sum.size(); i++)
+		for(unsigned int i = 0; i < size; i++)
 			out[i] = (sqrt(sum[i]* sum[i] + 1.f) - 1.f) / 2.f + sum[i];
 	}
 
@@ -229,10 +239,11 @@ namespace SNN
 	void activate_sinusoid(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i = 0; i < sum.size(); i++)
+		for(unsigned int i = 0; i < size; i++)
 			out[i] = sin(sum[i]);
 	}
 
@@ -246,10 +257,11 @@ namespace SNN
 	void activate_sinc(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for (unsigned int i = 0; i < sum.size(); i++)
+		for (unsigned int i = 0; i < size; i++)
 		{
 			if (sum[i] == 0.f)
 				out[i] = 1.f;
@@ -271,10 +283,11 @@ namespace SNN
 	void activate_gaussian(vector<float>& sum, vector<float>& out, float a)
 	{
 		(void)a;
-		if (out.size() != sum.size())
-			out.resize(sum.size());
+		unsigned int size = sum.size();
+		if (out.size() != size)
+			out.resize(size);
 
-		for(unsigned int i = 0; i < sum.size(); i++)
+		for(unsigned int i = 0; i < size; i++)
 			out[i] = exp(-sum[i]*sum[i]);
 	}
 

@@ -51,8 +51,8 @@ namespace SNN
 		Perceptron& operator=(Perceptron const& perceptron);
 
 		void set_input(vector<Perceptron*>* p_input_perceptrons);
-		virtual bool set_input(const vector<vector<float>*>& p_input);
-		virtual bool set_input(const vector<float>& p_input) { p_input; return true; };
+		virtual void set_input(const vector<vector<float>*>& p_input) { (void)p_input; };
+		virtual void set_input(const vector<float>& p_input) { (void)p_input; };
 
 		void set_weigh(const vector<float>& p_w);
 		inline vector<float> get_weigh() { return m_w; };

@@ -44,8 +44,8 @@ namespace SNN
 		void sim(vector<vector<float> >* P, bool clr = true);
 		void clr_internal_values();
 
-		vector<vector<float> >* get_output() { return &m_out; };
-		vector<vector<float> > get_output_cpy() { return m_out; };
+		inline vector<vector<float> >* get_output() { return &m_out; };
+		inline vector<vector<float> > get_output_cpy() { return m_out; };
 
 		void round_output();
 
@@ -76,8 +76,6 @@ namespace SNN
 
 		Perceptron* creat_perceptron(int layer, int id, perceptron_type_t type, float param = 0);
 		Perceptron* copy_perceptron(Perceptron& perceptron);
-
-		void set_P_as_pointer(vector<vector<float>>* P);
 	};
 
 } // namespace SNN_network
