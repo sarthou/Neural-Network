@@ -219,7 +219,7 @@ namespace SNN
 				if ((*it_layer).size() != 0)
 				{
 					vector<Perceptron*>::iterator it_perceptron = it_layer->begin();
-					string type = (*it_perceptron)->get_type();
+					string type = ((*it_perceptron)->get_type)();
 					int nb_percep = (*it_layer).size();
 
 					cout << "Layer " << layer << "\t:\t" << nb_percep << "\tperceptrons " << type << endl;
@@ -295,12 +295,12 @@ namespace SNN
 				//activate internal layers
 				for (unsigned int layer = 1; layer < last_layer; layer++)
 					for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
-						m_perceptrons[layer][id]->activate();
+						(m_perceptrons[layer][id]->activate)();
 
 				//activate output layer
 				for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
 				{
-					m_perceptrons[last_layer][id]->activate();
+					(m_perceptrons[last_layer][id]->activate)();
 					m_out.push_back(m_perceptrons[last_layer][id]->get_output_cpy());
 				}
 
@@ -480,93 +480,17 @@ namespace SNN
 
 	Perceptron* Network::creat_perceptron(int layer, int id, perceptron_type_t type, float param)
 	{
-		Perceptron* tmp_perceptron = nullptr;
-		switch (type)
-		{
-		case identities:
-			tmp_perceptron = new Perceptron_identity(layer, id);
-			break;
-		case binary_step:
-			tmp_perceptron = new Perceptron_binary_step(layer, id);
-			break;
-		case logistic:
-			tmp_perceptron = new Perceptron_logistic(layer, id);
-			break;
-		case tanH:
-			tmp_perceptron = new Perceptron_tanH(layer, id);
-			break;
-		case arcTan:
-			tmp_perceptron = new Perceptron_arcTan(layer, id);
-			break;
-		case softsign:
-			tmp_perceptron = new Perceptron_softsign(layer, id);
-			break;
-		case rectifier:
-			tmp_perceptron = new Perceptron_rectifier(layer, id);
-			break;
-		case rectifier_param:
-			tmp_perceptron = new Perceptron_rectifier_param(layer, id, param);
-			break;
-		case ELU:
-			tmp_perceptron = new Perceptron_ELU(layer, id, param);
-			break;
-		case softPlus:
-			tmp_perceptron = new Perceptron_softPlus(layer, id);
-			break;
-		case bent_identity:
-			tmp_perceptron = new Perceptron_bent_identity(layer, id);
-			break;
-		case sinusoid:
-			tmp_perceptron = new Perceptron_sinusoid(layer, id);
-			break;
-		case sinc:
-			tmp_perceptron = new Perceptron_sinc(layer, id);
-			break;
-		case gaussian:
-			tmp_perceptron = new Perceptron_gaussian(layer, id);
-			break;
-		default:
-			tmp_perceptron = new Perceptron_identity(layer, id);
-			break;
-		}
+		Perceptron* tmp_perceptron = new Perceptron(layer, id, type, param);
 		return tmp_perceptron;
 	}
 
 	Perceptron* Network::copy_perceptron(Perceptron& perceptron)
 	{
 		Perceptron* tmp_perceptron = nullptr;
-		if(perceptron.get_type() == "input")
+		if( (perceptron.get_type)() == "input")
 			tmp_perceptron = new Perceptron_input((Perceptron_input&)perceptron);
-		else if (perceptron.get_type() == "identity")
-			tmp_perceptron = new Perceptron_identity((Perceptron_identity&)perceptron);
-		else if (perceptron.get_type() == "binary_step")
-			tmp_perceptron = new Perceptron_binary_step((Perceptron_binary_step&)perceptron);
-		else if (perceptron.get_type() == "logistic")
-			tmp_perceptron = new Perceptron_logistic((Perceptron_logistic&)perceptron);
-		else if (perceptron.get_type() == "tanH")
-			tmp_perceptron = new Perceptron_tanH((Perceptron_tanH&)perceptron);
-		else if (perceptron.get_type() == "arcTan")
-			tmp_perceptron = new Perceptron_arcTan((Perceptron_arcTan&)perceptron);
-		else if (perceptron.get_type() == "softsign")
-			tmp_perceptron = new Perceptron_softsign((Perceptron_softsign&)perceptron);
-		else if (perceptron.get_type() == "rectifier")
-			tmp_perceptron = new Perceptron_rectifier((Perceptron_rectifier&)perceptron);
-		else if (perceptron.get_type() == "rectifier_param")
-			tmp_perceptron = new Perceptron_rectifier_param((Perceptron_rectifier_param&)perceptron);
-		else if (perceptron.get_type() == "ELU")
-			tmp_perceptron = new Perceptron_ELU((Perceptron_ELU&)perceptron);
-		else if (perceptron.get_type() == "softPlus")
-			tmp_perceptron = new Perceptron_softPlus((Perceptron_softPlus&)perceptron);
-		else if (perceptron.get_type() == "bent_identity")
-			tmp_perceptron = new Perceptron_bent_identity((Perceptron_bent_identity&)perceptron);
-		else if (perceptron.get_type() == "sinusoid")
-			tmp_perceptron = new Perceptron_sinusoid((Perceptron_sinusoid&)perceptron);
-		else if (perceptron.get_type() == "sinc")
-			tmp_perceptron = new Perceptron_sinc((Perceptron_sinc&)perceptron);
-		else if (perceptron.get_type() == "gaussian")
-			tmp_perceptron = new Perceptron_gaussian((Perceptron_gaussian&)perceptron);
-		else
-			tmp_perceptron = new Perceptron_identity((Perceptron_identity&)perceptron);
+		else 
+			tmp_perceptron = new Perceptron((Perceptron&)perceptron);
 
 		return tmp_perceptron;
 	}

@@ -11,7 +11,7 @@
 #ifndef TRAINING_PROCESS_H
 #define TRAINING_PROCESS_H
 
-#include "snn/perceptron/Perceptrons.h"
+#include "snn/perceptron/Perceptron.h"
 #include "snn/trainer/Training_configuration.h"
 
 #include <iostream>
@@ -42,9 +42,7 @@ namespace SNN
 		float m_error;
 		float m_delta;
 
-		void derivate_perceptron() { m_perceptron->derivate(); };
-		float get_derivate() { return *(m_perceptron->m_derivate.begin()); };
-		float get_single_derivate() { return m_perceptron->derivate_single(); };
+		float get_single_derivate() { return (m_perceptron->derivate_single)(); };
 
 		void add_to_precedent(vector<Trainig_process*>* process, float factor);
 	};

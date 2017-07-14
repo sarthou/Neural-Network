@@ -12,7 +12,6 @@
 #define NETWORK_H
 
 #include "snn/perceptron/Perceptron.h"
-#include "snn/perceptron/Perceptrons.h"
 #include "snn/perceptron/Perceptron_input.h"
 
 #include "snn/utility/Matrix.h"
@@ -23,24 +22,6 @@
 namespace SNN
 {
 	class Trainer;
-
-	enum perceptron_type_t
-	{
-		identities,
-		binary_step,
-		logistic,
-		tanH,
-		arcTan,
-		softsign,
-		rectifier,
-		rectifier_param,
-		ELU,
-		softPlus,
-		bent_identity,
-		sinusoid,
-		sinc,
-		gaussian
-	};
 
 	using namespace std;
 	class Network
