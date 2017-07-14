@@ -18,19 +18,14 @@ namespace SNN
 	class Perceptron_input : public Perceptron
 	{
 	public:
-		Perceptron_input(int p_layer, int p_id) : Perceptron(p_layer, p_id) {};
+		Perceptron_input(int p_layer, int p_id) : Perceptron(p_layer, p_id, input) {};
 		Perceptron_input(Perceptron_input const& perceptron) : Perceptron(perceptron) {};
 		~Perceptron_input() {};
 
 		Perceptron_input& operator=(Perceptron_input const& perceptron) { Perceptron::operator=(perceptron); return *this; };
 
-		void activate() {};
-		string get_type() { return "input"; };
-
 		bool set_input(const vector<float>& p_input) { m_out = p_input; return true; };
-	private:
-		void derivate() {};
-		float derivate_single() { return INFINITY; };
+
 	};
 } // namespace SNN_network
 

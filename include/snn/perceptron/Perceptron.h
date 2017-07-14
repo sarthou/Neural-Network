@@ -18,6 +18,25 @@ namespace SNN
 {
 	using namespace std;
 
+	enum perceptron_type_t
+	{
+		identities,
+		binary_step,
+		logistic,
+		tanH,
+		arcTan,
+		softsign,
+		rectifier,
+		rectifier_param,
+		ELU,
+		softPlus,
+		bent_identity,
+		sinusoid,
+		sinc,
+		gaussian,
+		input
+	};
+
 	class Trainig_process;
 
 	class Perceptron
@@ -25,7 +44,7 @@ namespace SNN
 		friend class Trainig_process;
 		friend class Trainer;
 	public:
-		Perceptron(int p_layer, int p_id);
+		Perceptron(int p_layer, int p_id, perceptron_type_t type = identities, float param = 0);
 		Perceptron(Perceptron const& perceptron);
 		virtual ~Perceptron();
 
@@ -36,23 +55,32 @@ namespace SNN
 		virtual bool set_input(const vector<float>& p_input) { p_input; return true; };
 
 		void set_weigh(const vector<float>& p_w);
-		vector<float> get_weigh() { return m_w; };
+		inline vector<float> get_weigh() { return m_w; };
 		void set_bia(float p_bia) { m_bia = p_bia; };
-		float get_bia() { return m_bia; };
+		inline float get_bia() { return m_bia; };
 
-		vector<float>* get_output() { return &m_out; };
-		vector<float> get_output_cpy() { return m_out; };
-		void clr() { m_out.clear(); m_sum.clear(); m_derivate.clear(); };
+		inline vector<float>* get_output() { return &m_out; };
+		inline vector<float> get_output_cpy() { return m_out; };
+		inline void clr() { m_out.clear(); m_sum.clear(); m_derivate.clear(); };
 
-		virtual void activate() = 0;
-		virtual string get_type() = 0;
+		inline void activate()
+		{
+			sum();
+			(*activate_ptr)(m_sum, m_out, m_a);
+		}
+		inline string get_type()
+		{
+			return (*get_type_ptr)();
+		}
 
 	protected:
 		int m_layer;
 		int m_id;
+		perceptron_type_t m_type;
 
 		float m_bia;
 		vector<float> m_w;
+		float m_a;
 
 		vector<Perceptron*>* m_input_perceptrons;
 		vector<float> m_out;
@@ -64,20 +92,34 @@ namespace SNN
 		{
 			if (m_w.size() > 0)
 			{
-				int size = (*m_input_perceptrons)[0]->m_out.size();
+				unsigned int size = (*m_input_perceptrons)[0]->m_out.size();
 				m_sum.resize(size);
-				for (unsigned int i = 0; i < m_sum.size(); i++)
+				for (unsigned int i = 0; i < size; i++)
 					m_sum[i] = -m_bia;
 
+				Perceptron* perceptron = nullptr;
+				size = (*m_input_perceptrons)[0]->m_out.size();
+				float w = 0;
 				for (unsigned int vect = 0; vect < m_input_perceptrons->size(); vect++)
 				{
-					for (unsigned int i = 0; i < (*m_input_perceptrons)[vect]->m_out.size(); i++)
-						m_sum[i] += m_w[vect] * (*m_input_perceptrons)[vect]->m_out[i];
+					perceptron = (*m_input_perceptrons)[vect];
+					w = m_w[vect];
+					for (unsigned int i = 0; i < size; i++)
+						m_sum[i] += w * perceptron->m_out[i];
 				}
 			}
 		}
-		virtual void derivate() = 0;
-		virtual float derivate_single() = 0;
+
+		void set_functions();
+		void (*activate_ptr)(vector<float>&, vector<float>&, float);
+		string(*get_type_ptr)(void);
+
+		float (*derivate_single_ptr)(float, float);
+		inline float derivate_single()
+		{
+			return (*derivate_single_ptr)(m_out[0], m_a);
+		}
+
 	};
 
 } // namespace SNN_network
