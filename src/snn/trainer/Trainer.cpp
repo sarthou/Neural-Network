@@ -80,9 +80,10 @@ namespace SNN
 						m_process[m_current_layer][m_current_id]->set_error( *single_T.get_row(m_current_id) );
 
 					//propagate on all layers
+					int last_layer_num = int(ptr_perceptrons.size() - 2);
 					for (m_current_layer = m_nb_layer - 1; m_current_layer >= 0; m_current_layer--)
 					{
-						bool is_last = m_current_layer == int(ptr_perceptrons.size() - 2);
+						bool is_last = m_current_layer == last_layer_num;
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer + 1].size(); m_current_id++)
 						{
 							if (m_current_layer > 0)
@@ -386,20 +387,21 @@ namespace SNN
 		unsigned long int from = 0;
 		unsigned long int to = 0;
 		float tmp_value = 0.;
+		unsigned int i = 0;
 
 		for (index = 0; index < vect_size / 2; index++)
 		{
 			from = distribution(generator);
 			to = distribution(generator);
 
-			for (unsigned int i = 0; i < P_nb_row; i++)
+			for (i = 0; i < P_nb_row; i++)
 			{
 				tmp_value = P(i,from);
 				P(i, from) = P(i,to);
 				P(i, to) = tmp_value;
 			}
 
-			for (unsigned int i = 0; i < T_nb_row; i++)
+			for (i = 0; i < T_nb_row; i++)
 			{
 				tmp_value = T(i, from);
 				T(i, from) = T(i, to);
@@ -419,9 +421,9 @@ namespace SNN
 
 	void Trainer::compute_error(Matrix<float>& T)
 	{
-		unsigned long int cpt = 0;
 		m_error = 0.;
 		unsigned int col_count = T.get_col_count();
+		unsigned long int cpt = T_nb_row*col_count;
 
 		if (m_config.error_type == mae)
 		{
@@ -429,12 +431,8 @@ namespace SNN
 			for (unsigned int vect_i = 0; vect_i < T_nb_row; vect_i++)
 			{
 				for (unsigned int i = 0; i < col_count; i++)
-				{
 					m_error += abs((*output)[vect_i][i] - T(vect_i,i));
-					cpt++;
-				}
 			}
-			m_error = abs(m_error);
 		}
 		else
 		{
@@ -442,10 +440,7 @@ namespace SNN
 			for (unsigned int vect_i = 0; vect_i < T_nb_row; vect_i++)
 			{
 				for (unsigned int i = 0; i < col_count; i++)
-				{
 					m_error += ((*output)[vect_i][i] - T(vect_i,i))*((*output)[vect_i][i] - T(vect_i,i));
-					cpt++;
-				}
 			}
 		}
 		m_error = m_error / cpt;

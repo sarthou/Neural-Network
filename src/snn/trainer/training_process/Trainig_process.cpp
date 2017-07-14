@@ -23,10 +23,7 @@ namespace SNN
 
 	void Trainig_process::set_error(float T)
 	{
-		if (1 != m_perceptron->m_out.size())
-			cout << "Internal training error" << endl;
-		else
-			m_error = m_perceptron->m_out[0] - T;
+		m_error = m_perceptron->m_out[0] - T;
 	}
 
 	void Trainig_process::compute()
@@ -45,11 +42,8 @@ namespace SNN
 	{
 		if (m_perceptron->m_layer > 0)
 		{
-			if (m_perceptron->m_w.size() == process->size())
-			{
-				for (unsigned int i = 0; i < process->size(); i++)
-					(*process)[i]->add_to_gradient(factor*m_perceptron->m_w[i]);
-			}
+			for (unsigned int i = 0; i < process->size(); i++)
+				(*process)[i]->add_to_gradient(factor*m_perceptron->m_w[i]);
 		}
 	}
 

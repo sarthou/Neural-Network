@@ -27,10 +27,10 @@ namespace SNN
 		virtual ~Trainig_process() {};
 
 		virtual void set_error(float T);
-		virtual void propagate(vector<Trainig_process*>* process, bool out = false) { process; out; };
+		virtual void propagate(vector<Trainig_process*>* process, bool out = false) { (void)process; (void)out; };
 		virtual void compute();
 
-		virtual void add_to_gradient(float value) { m_gradient += value; };
+		inline void add_to_gradient(float value) { m_gradient += value; };
 
 	protected:
 		Perceptron* m_perceptron;
@@ -42,7 +42,7 @@ namespace SNN
 		float m_error;
 		float m_delta;
 
-		float get_single_derivate() { return (m_perceptron->derivate_single)(); };
+		inline float get_single_derivate() { return m_perceptron->derivate_single(); };
 
 		void add_to_precedent(vector<Trainig_process*>* process, float factor);
 	};
