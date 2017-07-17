@@ -1,3 +1,13 @@
+//============================================================================
+// Name        : Matrix.h
+// Authors     : Julien Combattelli
+// EMail       : open.pode@gmail.com
+// Date		   : 18 jul. 2017
+// Version     : V2.0
+// Copyright   : This file is part of SNN_network project which is released under
+//               MIT license.
+//============================================================================
+
 #ifndef UTIL_MATRIX_H_
 #define UTIL_MATRIX_H_
 

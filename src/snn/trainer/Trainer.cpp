@@ -2,8 +2,8 @@
 // Name        : Trainer.cpp
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 29 jun. 2017
-// Version     : V1.5
+// Date		   : 18 jul. 2017
+// Version     : V2.0
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
