@@ -5,8 +5,8 @@ This project is an easy tool to create and train neuralsnetworks in C++. Fully m
 The SNN V2 is six times faster than the previous one and can perform 16,000 individual data in less than 1 second without optimization.
 
 ![SNN training](https://github.com/sarthou/Neural-Network/blob/master/images/ele.gif "SNN during outline training")
-![training input](https://github.com/sarthou/Neural-Network/blob/master/images/test_input.bmp "training input")
-![training input](https://github.com/sarthou/Neural-Network/blob/master/images/test_output.bmp "training input")
+![training input](https://github.com/sarthou/Neural-Network/blob/master/images/test_input.bmp "training input") <!-- .element height="30%" width="30%" -->
+![training input](https://github.com/sarthou/Neural-Network/blob/master/images/test_output.bmp "training input") <!-- .element height="30%" width="30%" -->
 
 ## Create your network
 
