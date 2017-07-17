@@ -14,17 +14,17 @@ bool Get_P_T(vector<vector<float> >* T, vector<vector<float> >* P)
 	bmp_t input = bmp_editor.read_bmp("input.bmp");
 	bmp_t output = bmp_editor.read_bmp("output.bmp");
 
-	int x = min(input.width, output.width);
-	int y = min(output.height, output.height);
+	int y = min(input.width, output.width);
+	int x = min(output.height, output.height);
 
 	if ((T->size() == 1) && (P->size() == 9))
 	{
-		for (int xi = 1 + half_size; xi < x - half_size; xi++)
-			for (int yi = 1 + half_size; yi < y - half_size; yi++)
+		for (long int xi = 1 + half_size; xi < x - half_size; xi++)
+			for (long int yi = 1 + half_size; yi < y - half_size; yi++)
 			{
 				T->at(0).push_back(output.image[xi][yi] / 255.f);
-				for(int local_x = -half_size; local_x <= half_size; local_x++)
-					for (int local_y = -half_size; local_y <= half_size; local_y++)
+				for(long int local_x = -half_size; local_x <= half_size; local_x++)
+					for (long int local_y = -half_size; local_y <= half_size; local_y++)
 					{
 						P->at((local_x + half_size) * 3 + (local_y + half_size)).push_back((float)(input.image[xi + local_x][yi + local_y]));
 					}
@@ -77,7 +77,7 @@ int main()
 {
 	/*Create your network*/
 	vector<int> nb = { 6, 6 };
-	vector<perceptron_type_t> type = { logistic, sinusoid };
+	vector<perceptron_type_t> type = { logistic, identities ,sinusoid };
 	vector<float> param = {};
 	Network net(nb, type, param);
 
