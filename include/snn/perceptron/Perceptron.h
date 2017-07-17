@@ -20,21 +20,21 @@ namespace SNN
 
 	enum perceptron_type_t
 	{
-		identities,
-		binary_step,
-		logistic,
-		tanH,
-		arcTan,
-		softsign,
-		rectifier,
-		rectifier_param,
-		ELU,
-		softPlus,
-		bent_identity,
-		sinusoid,
-		sinc,
-		gaussian,
-		input
+		identities,			// (-inf, inf)
+		binary_step,		// {0,1}
+		logistic,			// (0,1)
+		tanH,				// (-1,1)
+		arcTan,				// (-pi/2, pi/2)
+		softsign,			// (-1, 1)
+		rectifier,			// [0, inf)
+		rectifier_param,	// (-inf, inf)
+		ELU,				// (-a, inf)
+		softPlus,			// (0, inf)
+		bent_identity,		// (-inf, inf)
+		sinusoid,			// (-1, 1)
+		sinc,				// (-0.217, 1)
+		gaussian,			// (0, 1]
+		input				// don't use
 	};
 
 	class Trainig_process;
