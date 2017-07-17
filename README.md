@@ -4,6 +4,8 @@ This project is an easy tool to create and train neuralsnetworks in C++. Fully m
 
 The SNN V2 is six times faster than the previous one and can perform 16,000 individual data in less than 1 second without optimization.
 
+![SNN training](https://github.com/sarthou/Neural-Network/blob/master/images/ele.gif "SNN during outline training")
+
 ## Create your network
 
 First, you must define the number of internal layers and the number of perceptrons in each of them. For this we use a vector in which each element represents a layer and the value of the element represents the number of perceptrons in this layer.
