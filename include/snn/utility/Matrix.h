@@ -14,19 +14,22 @@ public:
 	using size_type = TSize;
 
 	Matrix(size_type row_count, size_type col_count) :
-		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }
+		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }, row_index{ new unsigned int[row_count]}
 	{
-
+		for (unsigned int i = 0; i < row_count; i++)
+			row_index[i] = i*col_count;
 	}
 
 	Matrix(size_type row_count, size_type col_count, const value_type* data) :
-		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }
+		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }, row_index{ new unsigned int[row_count] }
 	{
 		std::memcpy(m_data, data, row_count*col_count);
+		for (unsigned int i = 0; i < row_count; i++)
+			row_index[i] = i*col_count;
 	}
 
 	Matrix(size_type row_count, size_type col_count, const std::vector<std::vector<value_type>>& data) :
-		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }
+		m_row_count(row_count), m_col_count(col_count), m_data{ new value_type[row_count*col_count] }, row_index{ new unsigned int[row_count] }
 	{
 		if (data.size() != row_count)
 		{
@@ -48,6 +51,8 @@ public:
 
 			}
 		}
+		for (unsigned int i = 0; i < row_count; i++)
+			row_index[i] = i*col_count;
 	}
 
 	Matrix(const Matrix&) = delete;
@@ -56,16 +61,17 @@ public:
 	~Matrix()
 	{
 		delete[] m_data;
+		delete[] row_index;
 	}
 
 	inline value_type& operator()(size_type row, size_type col)
 	{
-		return m_data[row*m_col_count + col];
+		return m_data[row_index[row] + col];
 	}
 
 	inline const value_type& operator()(size_type row, size_type col) const
 	{
-		return m_data[row*m_col_count + col];
+		return m_data[row_index[row] + col];
 	}
 
 	inline value_type& operator[](size_type index)
@@ -75,7 +81,7 @@ public:
 
 	inline value_type* get_row(size_type row)
 	{
-		return &m_data[row*m_col_count];
+		return &m_data[row_index[row]];
 	}
 
 	inline size_type get_row_count() const
@@ -104,6 +110,7 @@ private:
 	const size_type m_col_count;
 
 	value_type* m_data;
+	unsigned int* row_index;
 };
 
 #endif /* UTIL_MATRIX_H_ */
