@@ -123,7 +123,7 @@ int main()
 
 	/*Use your training network*/
 
-	generate_img(&net, "moto.bmp");
+	generate_img(&net, "test_moto.bmp");
 
 
 	/*Additionals features*/
