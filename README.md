@@ -2,6 +2,8 @@
 
 This project is an easy tool to create and train neuralsnetworks in C++. Fully modular, you will be able to create a personalized network with several layers and many types of perceptrons.
 
+The SNN V2 is six times faster than the previous one and can perform 16,000 individual data in less than 1 second without optimization.
+
 ## Create your network
 
 First, you must define the number of internal layers and the number of perceptrons in each of them. For this we use a vector in which each element represents a layer and the value of the element represents the number of perceptrons in this layer.
@@ -109,19 +111,34 @@ trainer.set_config(config);
 You must specify the input training data (P) and the expected output (T) related to the input.
 The example below is to learn how to count in four-bit binary.
 ```C++
-vector<double> d = { 0, 0, 0, 0, 0, 1, 1, 0 };
-vector<double> c = { 0, 0, 0, 0, 1, 1, 0, 1 };
-vector<double> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
-vector<double> a = { 0, 1, 0, 1, 0, 0, 0, 1 };
-vector<vector<double>*> P = { &a, &b, &c, &d};
+vector<float> d = { 0, 0, 0, 0, 0, 1, 1, 0 };
+vector<float> c = { 0, 0, 0, 0, 1, 1, 0, 1 };
+vector<float> b = { 0, 0, 1, 1, 0, 0, 0, 1 };
+vector<float> a = { 0, 1, 0, 1, 0, 0, 0, 1 };
+vector<vector<float> > P = { a, b, c, d};
 
-vector<double> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
-vector<vector<double>*> T = {&Ta};
+vector<float> Ta = { 0, 1, 2, 3, 4, 12, 8, 7 };
+vector<vector<float> > T = {Ta};
+
+Matrix<float> P_mat(P.size(), P.at(0).size(), P);
+Matrix<float> T_mat(T.size(), T.at(0).size(), T);
+```
+
+Or :
+
+```C++
+Matrix<float> P_mat(4, 8, {
+		{ 0, 0, 0, 0, 0, 1, 1, 0 },
+		{ 0, 0, 0, 0, 1, 1, 0, 1 },
+		{ 0, 0, 1, 1, 0, 0, 0, 1 },
+		{ 0, 1, 0, 1, 0, 0, 0, 1 }
+	});
+Matrix<float> T_mat(1, 8, {{ 0, 1, 2, 3, 4, 12, 8, 7 }});
 ```
 
 Once you you have created your data, you just have to train your network.
 ```C++
-trainer.train(&net, P, T);
+trainer.train(&net, P_mat, T_mat);
 ```
 
 n.b : You can continue to train your network as many times as you want.
@@ -130,13 +147,14 @@ n.b : You can continue to train your network as many times as you want.
 
 To use the network, you just have to put your input data into a vector and run the network.
 ```C++
-vector<double> d = { 1, 0, 0, 0, 1, 0, 0, 1, 1 };
-vector<double> c = { 0, 1, 0, 0, 0, 1, 1, 0, 1 };
-vector<double> b = { 0, 0, 1, 0, 1, 0, 1, 0, 1 };
-vector<double> a = { 0, 0, 0, 1, 0, 1, 0, 1, 1 };
-vector<vector<double>*> P = { &a, &b, &c, &d };
+Matrix<float> P(4, 9, {
+		{ 1, 0, 0, 0, 1, 0, 0, 1, 1 },
+		{ 0, 1, 0, 0, 0, 1, 1, 0, 1 },
+		{ 0, 0, 1, 0, 1, 0, 1, 0, 1 },
+		{ 0, 0, 0, 1, 0, 1, 0, 1, 1 }
+	});
 
-net.sim(P);
+net.sim(&P);
 ```
 
 You can get the output by using the get_output or get_output_cpy functions.
@@ -146,7 +164,7 @@ Finally you can print the output data with the print_output function.
 ```C++
 net.round_output();
 net.print_output();
-vector<vector<double>> out = net.get_output_cpy();
+vector<vector<float> > out = net.get_output_cpy();
 ```
 
 ## Additionals features
