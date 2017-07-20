@@ -22,11 +22,13 @@
 namespace SNN
 {
 	class Trainer;
+	class Serializer;
 
 	using namespace std;
 	class Network
 	{
 		friend class Trainer;
+		friend class Serializer;
 	public:
 		Network();
 		Network(vector<int> p_nb_perceptrons);
