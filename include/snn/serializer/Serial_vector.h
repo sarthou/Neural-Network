@@ -53,13 +53,15 @@ namespace SNN
 		int16_t get_next_int()
 		{
 			int16_t result;
-			result = (m_data[m_index++] | (m_data[m_index++] << 8));
+			result = m_data[m_index++];
+			result |= m_data[m_index++] << 8;
 			return result;
 		}
 		uint16_t get_next_uint()
 		{
 			uint16_t result;
-			result = (m_data[m_index++] | (m_data[m_index++] << 8));
+			result = m_data[m_index++];
+			result |= m_data[m_index++] << 8;
 			return result;
 		}
 		float get_next_float()

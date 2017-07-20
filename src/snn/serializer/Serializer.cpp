@@ -18,35 +18,39 @@ namespace SNN
 	{
 		Serial_vector net_encode;
 
-		/*Globals networks features*/
-		net_encode.push_back( (char)net.m_nb_perceptrons.size() ); // nb layers
-		for (char i = 0; i < (char)net.m_nb_perceptrons.size(); i++)
-			net_encode.push_back((char)net.m_nb_perceptrons[i] ); // nb_perceprtons in each layers
-
-		net_encode.push_back( (char)net.m_types.size() );
-		for (char i = 0; i < (char)net.m_types.size(); i++)
-			net_encode.push_back( (char)net.m_types[i] ); // types of each layers
-
-		net_encode.push_back( (char)net.m_params.size() );
-		for (char i = 0; i < (char)net.m_params.size(); i++)
-			net_encode.push_back( net.m_params[i] ); // params of each layers
-
-		/*Input and output description*/
-		net_encode.push_back( (unsigned int)net.m_perceptrons.begin()->size() );
-
-		net_encode.push_back( (unsigned int)net.m_perceptrons[net.m_nb_perceptrons.size()].size() );
-
-		/*Perceptrons features*/
-		vector<int> nb_percep = net.m_nb_perceptrons;
-		nb_percep.push_back(net.m_perceptrons[net.m_nb_perceptrons.size()].size()); // add the output
-		for (unsigned int layer = 0; layer < nb_percep.size(); layer++)
+		if (net.m_is_train)
 		{
-			for (int id = 0; id < nb_percep[layer]; id++)
+
+			/*Globals networks features*/
+			net_encode.push_back((char)net.m_nb_perceptrons.size()); // nb layers
+			for (char i = 0; i < (char)net.m_nb_perceptrons.size(); i++)
+				net_encode.push_back((char)net.m_nb_perceptrons[i]); // nb_perceprtons in each layers
+
+			net_encode.push_back((char)net.m_types.size());
+			for (char i = 0; i < (char)net.m_types.size(); i++)
+				net_encode.push_back((char)net.m_types[i]); // types of each layers
+
+			net_encode.push_back((char)net.m_params.size());
+			for (char i = 0; i < (char)net.m_params.size(); i++)
+				net_encode.push_back(net.m_params[i]); // params of each layers
+
+			/*Input and output description*/
+			net_encode.push_back((unsigned int)net.m_perceptrons.begin()->size());
+
+			net_encode.push_back((unsigned int)net.m_perceptrons[net.m_nb_perceptrons.size()].size());
+
+			/*Perceptrons features*/
+			vector<int> nb_percep = net.m_nb_perceptrons;
+			nb_percep.push_back(net.m_perceptrons[net.m_nb_perceptrons.size()].size()); // add the output
+			for (unsigned int layer = 0; layer < nb_percep.size(); layer++)
 			{
-				net_encode.push_back(net.m_perceptrons[layer + 1][id]->get_bia());
-				net_encode.push_back((unsigned int)net.m_perceptrons[layer + 1][id]->get_weigh().size());
-				for(unsigned int i = 0; i < (unsigned int)net.m_perceptrons[layer + 1][id]->get_weigh().size(); i++)
-					net_encode.push_back(net.m_perceptrons[layer + 1][id]->get_weigh()[i]);
+				for (int id = 0; id < nb_percep[layer]; id++)
+				{
+					net_encode.push_back(net.m_perceptrons[layer + 1][id]->get_bia());
+					net_encode.push_back((unsigned int)net.m_perceptrons[layer + 1][id]->get_weigh().size());
+					for (unsigned int i = 0; i < (unsigned int)net.m_perceptrons[layer + 1][id]->get_weigh().size(); i++)
+						net_encode.push_back(net.m_perceptrons[layer + 1][id]->get_weigh()[i]);
+				}
 			}
 		}
 
