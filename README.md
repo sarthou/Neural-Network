@@ -1,8 +1,7 @@
 # Neural-Network
 
-This project is an easy tool to create and train neuralsnetworks in C++. Fully modular, you will be able to create a personalized network with several layers and many types of perceptrons.
+This project is an easy tool to create and train neurals networks in C++. Fully modular, you will be able to create a personalized network with several layers and many types of perceptrons.
 
-The SNN V2 is six times faster than the previous one and can perform 16,000 individual data in less than 1 second without optimization.
 
 ![SNN training](https://github.com/sarthou/Neural-Network/blob/master/images/ele.gif "SNN during outline training")
 ![training example](https://github.com/sarthou/Neural-Network/blob/master/images/training_example.png "training example") <!-- .element height="30%" width="30%" -->
