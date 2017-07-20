@@ -27,7 +27,7 @@ namespace SNN
 
 	//protected:
 		vector<char> encode(Network& net);
-		Network decode(vector<char> data);
+		Network decode(vector<char>& data);
 		
 	};
 }

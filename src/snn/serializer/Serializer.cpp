@@ -53,7 +53,7 @@ namespace SNN
 		return net_encode.get_data();
 	}
 
-	Network Serializer::decode(vector<char> data)
+	Network Serializer::decode(vector<char>& data)
 	{
 		Serial_vector net_encode(data);
 		unsigned int size;

@@ -12,6 +12,7 @@
 
 #include <vector>
 #include "snn/trainer/Trainer.h"
+#include <cstdint>
 
 namespace SNN
 {
@@ -21,7 +22,7 @@ namespace SNN
 	{
 	public:
 		Serial_vector() { m_index = 0; m_data.resize(0); };
-		Serial_vector(vector<char> data) { m_index = 0; m_data = data; };
+		Serial_vector(vector<char>& data) { m_index = 0; m_data = data; };
 		~Serial_vector() {};
 
 		void to_begin() { m_index = 0; };
@@ -49,15 +50,15 @@ namespace SNN
 
 		char get_next_char() { return m_data[m_index++]; };
 		unsigned char get_next_uchar() { return (unsigned char)m_data[m_index++]; };
-		int get_next_int()
+		int16_t get_next_int()
 		{
-			int result;
+			int16_t result;
 			result = (m_data[m_index++] | (m_data[m_index++] << 8));
 			return result;
 		}
-		unsigned int get_next_uint()
+		uint16_t get_next_uint()
 		{
-			unsigned int result;
+			uint16_t result;
 			result = (m_data[m_index++] | (m_data[m_index++] << 8));
 			return result;
 		}
