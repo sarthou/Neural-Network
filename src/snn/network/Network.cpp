@@ -281,23 +281,31 @@ namespace SNN
 		if (m_is_train)
 		{
 			m_out.clear();
+			unsigned int size;
 
 			//set data into input layer
-			for (unsigned int id = 0; id < m_perceptrons[0].size(); id++)
+			size = m_perceptrons[0].size();
+			for (unsigned int id = 0; id < size; id++)
 				m_perceptrons[0][id]->set_input(vector<float>(P.get_row(id), P.get_row(id)+P.get_col_count()));
 
 			unsigned int last_layer = m_perceptrons.size() - 1;
 
 			//activate internal layers
 			for (unsigned int layer = 1; layer < last_layer; layer++)
-				for (unsigned int id = 0; id < m_perceptrons[layer].size(); id++)
+			{
+				size = m_perceptrons[layer].size();
+				for (unsigned int id = 0; id < size; id++)
 					m_perceptrons[layer][id]->activate();
+			}
 
 			//activate output layer
-			for (unsigned int id = 0; id < m_perceptrons[last_layer].size(); id++)
+			size = m_perceptrons[last_layer].size();
+			Perceptron* percept;
+			for (unsigned int id = 0; id <size; id++)
 			{
-				(m_perceptrons[last_layer][id]->activate)();
-				m_out.push_back(m_perceptrons[last_layer][id]->get_output_cpy());
+				percept = m_perceptrons[last_layer][id];
+				(percept->activate)();
+				m_out.push_back(percept->get_output_cpy());
 			}
 
 			if (clr)

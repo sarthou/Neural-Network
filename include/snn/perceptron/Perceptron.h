@@ -91,24 +91,25 @@ namespace SNN
 
 		inline void sum()
 		{
-			if (m_w.size() > 0)
-			{
-				unsigned int size = (*m_input_perceptrons)[0]->m_out.size();
-				if(m_sum.size() != size)
-					m_sum.resize(size);
-				for (unsigned int i = 0; i < size; i++)
-					m_sum[i] = -m_bia;
+			unsigned int size = (*m_input_perceptrons)[0]->m_out.size();
+			if(m_sum.size() != size)
+				m_sum.resize(size);
 
-				Perceptron* perceptron = nullptr;
-				size = (*m_input_perceptrons)[0]->m_out.size();
-				float w = 0;
-				for (unsigned int vect = 0; vect < m_input_perceptrons->size(); vect++)
-				{
-					perceptron = (*m_input_perceptrons)[vect];
-					w = m_w[vect];
-					for (unsigned int i = 0; i < size; i++)
-						m_sum[i] += w * perceptron->m_out[i];
-				}
+			for (unsigned int i = 0; i < size; i++)
+				m_sum[i] = -m_bia;
+
+			Perceptron* perceptron = nullptr;
+			vector<float>* out;
+			size = (*m_input_perceptrons)[0]->m_out.size();
+			float w = 0;
+			unsigned int vect_size = m_input_perceptrons->size();
+			for (unsigned int vect = 0; vect < vect_size; vect++)
+			{
+				perceptron = (*m_input_perceptrons)[vect];
+				out = &perceptron->m_out;
+				w = m_w[vect];
+				for (unsigned int i = 0; i < size; i++)
+					m_sum[i] += w * (*out)[i];
 			}
 		}
 

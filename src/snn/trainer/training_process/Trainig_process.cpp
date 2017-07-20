@@ -30,11 +30,12 @@ namespace SNN
 	{
 		m_perceptron->m_bia -= m_delta;
 
-		if (m_perceptron->m_input_perceptrons->size() == m_w_gradient.size())
-		{
-			for (unsigned int i = 0; i < m_perceptron->m_input_perceptrons->size(); i++)
-				m_perceptron->m_w[i] += (*m_perceptron->m_input_perceptrons)[i]->m_out[0] * m_delta;
-		}
+		vector<Perceptron*>* percpts = m_perceptron->m_input_perceptrons;
+		vector<float>* w = &m_perceptron->m_w;
+		unsigned int size = percpts->size();
+ 		for (unsigned int i = 0; i < size; i++)
+			(*w)[i] += (*percpts)[i]->m_out[0] * m_delta;
+
 		m_gradient = 0;
 	}
 
@@ -42,7 +43,8 @@ namespace SNN
 	{
 		if (m_perceptron->m_layer > 0)
 		{
-			for (unsigned int i = 0; i < process->size(); i++)
+			unsigned int size = process->size();
+			for (unsigned int i = 0; i < size; i++)
 				(*process)[i]->add_to_gradient(factor*m_perceptron->m_w[i]);
 		}
 	}
