@@ -98,9 +98,9 @@ namespace SNN
 						for (m_current_id = 0; m_current_id < ptr_perceptrons[m_current_layer + 1].size(); m_current_id++)
 							m_process[m_current_layer][m_current_id]->compute();
 
-					m_net->clr_internal_values();
-				}
 
+				}
+				m_net->clr_internal_values();
 				m_net->sim(P);
 				compute_error(T);
 

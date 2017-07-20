@@ -31,11 +31,11 @@ namespace SNN
 		friend class Serializer;
 	public:
 		Network();
-		Network(vector<int> p_nb_perceptrons);
-		Network(vector<perceptron_type_t> p_types);
-		Network(vector<perceptron_type_t> p_types, vector<float> p_params);
-		Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types);
-		Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types, vector<float> p_params);
+		Network(vector<int>& p_nb_perceptrons);
+		Network(vector<perceptron_type_t>& p_types);
+		Network(vector<perceptron_type_t>& p_types, vector<float>& p_params);
+		Network(vector<int>& p_nb_perceptrons, vector<perceptron_type_t>& p_types);
+		Network(vector<int>& p_nb_perceptrons, vector<perceptron_type_t>& p_types, vector<float>& p_params);
 		Network(Network const& network);
 		~Network();
 

@@ -28,7 +28,7 @@ namespace SNN
 		m_is_configure = true;
 	}
 
-	Network::Network(vector<int> p_nb_perceptrons)
+	Network::Network(vector<int>& p_nb_perceptrons)
 	{
 		if (!vector_is_positive(p_nb_perceptrons))
 			cout << "non positive numbers of perceptrons" << endl;
@@ -43,7 +43,7 @@ namespace SNN
 		faile_to_configure();
 	}
 
-	Network::Network(vector<perceptron_type_t> p_types)
+	Network::Network(vector<perceptron_type_t>& p_types)
 	{
 		init();
 		if (p_types.size() > 1)
@@ -58,7 +58,7 @@ namespace SNN
 		faile_to_configure();
 	}
 
-	Network::Network(vector<perceptron_type_t> p_types, vector<float> p_params)
+	Network::Network(vector<perceptron_type_t>& p_types, vector<float>& p_params)
 	{
 		init();
 		if (p_types.size() > 1)
@@ -76,7 +76,7 @@ namespace SNN
 		faile_to_configure();
 	}
 
-	Network::Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types)
+	Network::Network(vector<int>& p_nb_perceptrons, vector<perceptron_type_t>& p_types)
 	{
 		init();
 		if (p_types.size() > p_nb_perceptrons.size() + 1)
@@ -104,7 +104,7 @@ namespace SNN
 		faile_to_configure();
 	}
 
-	Network::Network(vector<int> p_nb_perceptrons, vector<perceptron_type_t> p_types, vector<float> p_params)
+	Network::Network(vector<int>& p_nb_perceptrons, vector<perceptron_type_t>& p_types, vector<float>& p_params)
 	{
 		init();
 		if (p_types.size() > p_nb_perceptrons.size() + 1)
@@ -359,24 +359,6 @@ namespace SNN
 		for (vector<vector<Perceptron*> >::const_iterator it = network.m_perceptrons.begin(); it != network.m_perceptrons.end(); ++it)
 		{
 			vector<Perceptron*> temp_vect;
-
-			perceptron_type_t type = logistic;
-			if (m_types.size() > 0)
-			{
-				if (m_types.size() <= 2)
-					type = m_types[0];
-				else
-					type = m_types[layer];
-			}
-
-			float param = 0;
-			if (m_params.size() > 0)
-			{
-				if (m_params.size() <= 2)
-					param = m_params[0];
-				else
-					param = m_params[layer];
-			}
 
 			for (unsigned int i = 0; i < (*it).size(); i++)
 			{
