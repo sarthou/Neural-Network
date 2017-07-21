@@ -26,7 +26,7 @@ bmp::~bmp()
 
 }
 
-bmp_t bmp::read_bmp(char* file_name)
+bmp_t bmp::read_bmp(const char* file_name)
 {
     errno = 0;
     FILE * file = fopen(file_name, "rb");
@@ -47,7 +47,7 @@ bmp_t bmp::read_bmp(char* file_name)
     return(input_bmp);
 }
 
-void bmp::write_bmp(char* file_name)
+void bmp::write_bmp(const char* file_name)
 {
     errno = 0;
     FILE * file = fopen(file_name, "wb");

@@ -35,7 +35,7 @@ bool Get_P_T(vector<vector<float> >* T, vector<vector<float> >* P)
 		return false;
 }
 
-bool generate_img(Network* net, char* file_name)
+bool generate_img(Network* net, const char* file_name)
 {
 	int half_size = (3 - 1) / 2;
 

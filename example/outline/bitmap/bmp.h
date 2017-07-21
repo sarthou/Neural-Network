@@ -33,8 +33,8 @@ public:
   bmp();
   ~bmp();
 
-  bmp_t read_bmp(char* file_name);
-  void write_bmp(char* file_name);
+  bmp_t read_bmp(const char* file_name);
+  void write_bmp(const char* file_name);
 
   bmp_t input_bmp;
   bmp_t output_bmp;
