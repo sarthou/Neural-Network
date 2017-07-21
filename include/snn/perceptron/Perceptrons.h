@@ -32,7 +32,7 @@ namespace SNN
 	void activate_sinusoid(vector<float>& sum, vector<float>& out, float a);
 	void activate_sinc(vector<float>& sum, vector<float>& out, float a);
 	void activate_gaussian(vector<float>& sum, vector<float>& out, float a);
-	inline void activate_input(vector<float>& sum, vector<float>& out, float a) { (void)out, (void)sum; (void)a; };
+	inline void activate_input(vector<float>& sum, vector<float>& out, float a) { (void)out, (void)sum; (void)a; }
 
 	/*derivate_single functions*/
 	float derivate_single_identities(float out, float a);
@@ -49,25 +49,25 @@ namespace SNN
 	float derivate_single_sinusoid(float out, float a);
 	float derivate_single_sinc(float out, float a);
 	float derivate_single_gaussian(float out, float a);
-	inline float derivate_single_input(float out, float a) { (void)out, (void)a; return INFINITY; };
+	inline float derivate_single_input(float out, float a) { (void)out, (void)a; return INFINITY; }
 
 	/*get_type functions*/
-	inline string get_type_identities() { return "identity"; };
-	inline string get_type_binary_step() { return "binary_step"; };
-	inline string get_type_logistic() { return "logistic"; };
-	inline string get_type_tanH() { return "tanH"; };
-	inline string get_type_arcTan() { return "arcTan"; };
-	inline string get_type_softsign() { return "softsign"; };
-	inline string get_type_rectifier() { return "rectifier"; };
-	inline string get_type_rectifier_param() { return "rectifier_param"; };
-	inline string get_type_ELU() { return "ELU"; };
-	inline string get_type_softPlus() { return "softPlus"; };
-	inline string get_type_bent_identity() { return "bent_identity"; };
-	inline string get_type_sinusoid() { return "sinusoid"; };
-	inline string get_type_sinc() { return "sinc"; };
-	inline string get_type_gaussian() { return "gaussian"; };
-	inline string get_type_input() { return "input"; };
+	inline string get_type_identities() { return "identity"; }
+	inline string get_type_binary_step() { return "binary_step"; }
+	inline string get_type_logistic() { return "logistic"; }
+	inline string get_type_tanH() { return "tanH"; }
+	inline string get_type_arcTan() { return "arcTan"; }
+	inline string get_type_softsign() { return "softsign"; }
+	inline string get_type_rectifier() { return "rectifier"; }
+	inline string get_type_rectifier_param() { return "rectifier_param"; }
+	inline string get_type_ELU() { return "ELU"; }
+	inline string get_type_softPlus() { return "softPlus"; }
+	inline string get_type_bent_identity() { return "bent_identity"; }
+	inline string get_type_sinusoid() { return "sinusoid"; }
+	inline string get_type_sinc() { return "sinc"; }
+	inline string get_type_gaussian() { return "gaussian"; }
+	inline string get_type_input() { return "input"; }
 
-};
+}
 
 #endif

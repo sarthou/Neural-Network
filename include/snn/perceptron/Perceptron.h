@@ -52,17 +52,17 @@ namespace SNN
 		Perceptron& operator=(Perceptron const& perceptron);
 
 		void set_input(vector<Perceptron*>* p_input_perceptrons);
-		virtual void set_input(const vector<vector<float>*>& p_input) { (void)p_input; };
-		virtual void set_input(const vector<float>& p_input) { (void)p_input; };
+		virtual void set_input(const vector<vector<float>*>& p_input) { (void)p_input; }
+		virtual void set_input(const vector<float>& p_input) { (void)p_input; }
 
 		void set_weigh(const vector<float>& p_w);
-		inline vector<float> get_weigh() { return m_w; };
-		void set_bia(float p_bia) { m_bia = p_bia; };
-		inline float get_bia() { return m_bia; };
+		inline vector<float> get_weigh() { return m_w; }
+		void set_bia(float p_bia) { m_bia = p_bia; }
+		inline float get_bia() { return m_bia; }
 
-		inline vector<float>* get_output() { return &m_out; };
-		inline vector<float> get_output_cpy() { return m_out; };
-		inline void clr() { m_out.clear(); m_sum.clear(); m_derivate.clear(); };
+		inline vector<float>* get_output() { return &m_out; }
+		inline vector<float> get_output_cpy() { return m_out; }
+		inline void clr() { m_out.clear(); m_sum.clear(); m_derivate.clear(); }
 
 		inline void activate()
 		{
