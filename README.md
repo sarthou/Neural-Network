@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network) 
+[![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network)
 
 # Neural-Network
 
@@ -6,8 +6,8 @@ This project is an easy tool to create and train neurals networks in C++. Fully 
 
 The SNN V2 is six times faster than the previous one and can perform 16,000 individual data in less than 200ms without optimization on i5 6300hq.
 
-![SNN training](https://github.com/sarthou/Neural-Network/blob/master/images/ele.gif "SNN during outline training")
-![training example](https://github.com/sarthou/Neural-Network/blob/master/images/training_example.png "training example") <!-- .element height="30%" width="30%" -->
+![SNN training](https://github.com/sarthou/Neural-Network/blob/master/resource/ele.gif "SNN during outline training")
+![training example](https://github.com/sarthou/Neural-Network/blob/master/resource/training_example.png "training example") <!-- .element height="30%" width="30%" -->
 
 ## Create your network
 
