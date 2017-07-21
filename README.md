@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network) 
+
 # Neural-Network
 
 This project is an easy tool to create and train neurals networks in C++. Fully modular, you will be able to create a personalized network with several layers and many types of perceptrons.
