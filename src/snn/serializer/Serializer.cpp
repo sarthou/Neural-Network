@@ -101,9 +101,6 @@ namespace SNN
 				net.m_perceptrons[layer + 1][id]->set_weigh(w);
 			}
 		}
-
-		net.print();
-
 		return net;
 	}
 }

@@ -1,34 +1,32 @@
 //============================================================================
-// Name        : Serialize.h
+// Name        : Bin_serializer.h
 // Authors     : Guillaume Sarthou
 // EMail       : open.pode@gmail.com
-// Date		   : 19 jul. 2017
+// Date		   : 22 jul. 2017
 // Version     : V2.1
 // Copyright   : This file is part of SNN_network project which is released under
 //               MIT license.
 //============================================================================
-#ifndef SERIALIZER_H
-#define SERIALIZER_H
+
+#ifndef BIN_SERIALIZER_H
+#define BIN_SERIALIZER_H
 
 #include <string>
-#include "snn/serializer/Serial_vector.h"
-
-#include "snn/network/Network.h"
+#include "snn/serializer/Serializer.h"
 
 namespace SNN
 {
 	using namespace std;
 
-	class Serializer
+	class Bin_serializer : public Serializer
 	{
 	public:
-		Serializer() {};
-		~Serializer() {};
+		Bin_serializer() {};
+		virtual ~Bin_serializer() {};
 
-	protected:
-		vector<char> encode(Network& net);
-		Network decode(vector<char>& data);
-		
+		void save(string file_name, Network& net);
+		void load(string file_name, Network& net);
+	private:
 	};
 }
 
