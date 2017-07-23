@@ -37,11 +37,11 @@ namespace SNN
 			/*Input and output description*/
 			net_encode.push_back((unsigned int)net.m_perceptrons.begin()->size());
 
-			net_encode.push_back((unsigned int)net.m_perceptrons[net.m_nb_perceptrons.size()].size());
+			net_encode.push_back((unsigned int)net.m_perceptrons[net.m_nb_perceptrons.size() + 1].size());
 
 			/*Perceptrons features*/
 			vector<int> nb_percep = net.m_nb_perceptrons;
-			nb_percep.push_back(net.m_perceptrons[net.m_nb_perceptrons.size()].size()); // add the output
+			nb_percep.push_back(net.m_perceptrons[net.m_nb_perceptrons.size() + 1].size()); // add the output
 			for (unsigned int layer = 0; layer < nb_percep.size(); layer++)
 			{
 				for (int id = 0; id < nb_percep[layer]; id++)

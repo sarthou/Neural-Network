@@ -48,20 +48,30 @@ namespace SNN
 				m_data.push_back(result[i]);
 		};
 
-		char get_next_char() { return m_data[m_index++]; };
-		unsigned char get_next_uchar() { return (unsigned char)m_data[m_index++]; };
+		char get_next_char() { 
+			char data = m_data[m_index]; 
+			m_index++; 
+			return data; };
+		unsigned char get_next_uchar() { 
+			unsigned char data = (unsigned char)m_data[m_index]; 
+			m_index++; 
+			return data; };
 		int16_t get_next_int()
 		{
 			int16_t result;
-			result = m_data[m_index++];
-			result |= m_data[m_index++] << 8;
+			result = m_data[m_index];
+			m_index++;
+			result |= m_data[m_index] << 8;
+			m_index++;
 			return result;
 		}
 		uint16_t get_next_uint()
 		{
 			uint16_t result;
-			result = m_data[m_index++];
-			result |= m_data[m_index++] << 8;
+			result = m_data[m_index];
+			m_index++;
+			result |= m_data[m_index] << 8;
+			m_index++;
 			return result;
 		}
 		float get_next_float()
@@ -70,7 +80,10 @@ namespace SNN
 			char data[sizeof(float)];
 			
 			for (unsigned int i = 0; i < sizeof(result); i++)
-				data[i] = m_data[m_index++];
+			{
+				data[i] = m_data[m_index];
+				m_index++;
+			}
 
 			memcpy(&result, data, sizeof(result));
 			return result;
