@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network)
+[![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network) [![License][License-Image]][License-Url] [![Release][Release-Image]][Release-Url]
 
 # Neural-Network
 
@@ -183,3 +183,9 @@ net.print();
 Network cpy_net;
 cpy_net = net;
 ```
+
+
+[License-Url]: http://opensource.org/licenses/MIT
+[License-Image]: https://img.shields.io/badge/License-MIT-blue.svg
+[Release-Url]: https://github.com/sarthou/Neural-Network/releases/tag/V2.0
+[Release-image]: http://img.shields.io/badge/release-v2.0-1eb0fc.svg
