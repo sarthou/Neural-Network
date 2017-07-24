@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network) [![License][License-Image]][License-Url] [![Release][Release-Image]][Release-Url]
-
 # Neural-Network
+
+[![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network) [![License][License-Image]][License-Url] [![Release][Release-Image]][Release-Url]
 
 This project is an easy tool to create and train neurals networks in C++. Fully modular, you will be able to create a personalized network with several layers and many types of perceptrons.
 
@@ -8,6 +8,33 @@ The SNN V2 is six times faster than the previous one and can perform 16,000 indi
 
 ![SNN training](https://github.com/sarthou/Neural-Network/blob/master/resource/ele.gif "SNN during outline training")
 ![training example](https://github.com/sarthou/Neural-Network/blob/master/resource/training_example.png "training example") <!-- .element height="30%" width="30%" -->
+
+## Build the SNN
+
+**Step 1:** Install CMake
+
+- To build the SNN, you need to install CMake. The command on Debian/Ubuntu should look something like this:
+
+`sudo apt-get install cmake`
+
+**Step 2:** Build the SNN
+
+- Clone the repository where you want.
+- From the main directory of snn, run cmake (with eventually an appropriate generator).
+- Once cmake runs successfully, compile using 'make', install using 'sudo make install' and then 'sudo ldconfig'.
+- The commands should look something like this:
+
+```bash
+mkdir build
+cd build
+cmake .. 
+make
+sudo make install
+sudo ldconfig
+```
+
+You should now be able to use the snn library on you computer. 
+
 
 ## Create your network
 
