@@ -13,7 +13,6 @@ The SNN V2 is six times faster than the previous one and can perform 16,000 indi
 
 **Step 1:** Install CMake
 
-- See: <http://www.sfml-dev.org/tutorials/2.3/compile-with-cmake.php>
 - To build the SNN, you need to install CMake. The command on Debian/Ubuntu should look something like this:
 
 `sudo apt-get install cmake`
