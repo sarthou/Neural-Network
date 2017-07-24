@@ -20,7 +20,7 @@ The SNN V2 is six times faster than the previous one and can perform 16,000 indi
 **Step 2:** Build the SNN
 
 - Clone the repository where you want.
-- From the main directory of snn, run cmake (with eventually an appropriate generator)..
+- From the main directory of snn, run cmake (with eventually an appropriate generator).
 - Once cmake runs successfully, compile using 'make', install using 'sudo make install' and then 'sudo ldconfig'.
 - The commands should look something like this:
 
