@@ -1,4 +1,4 @@
-# Neural-Network
+# <img src="SNN.png" width="150"> Neural-Network
 
 [![Build Status](https://travis-ci.org/sarthou/Neural-Network.svg?branch=master)](https://travis-ci.org/sarthou/Neural-Network) [![License][License-Image]][License-Url] [![Release][Release-Image]][Release-Url]
 
@@ -27,13 +27,13 @@ The SNN V2 is six times faster than the previous one and can perform 16,000 indi
 ```bash
 mkdir build
 cd build
-cmake .. 
+cmake ..
 make
 sudo make install
 sudo ldconfig
 ```
 
-You should now be able to use the snn library on you computer. 
+You should now be able to use the snn library on you computer.
 
 
 ## Create your network
